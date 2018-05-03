@@ -86,6 +86,9 @@
     <Compile Include="main.asm">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Save_double_screen_working_with_case_choice.asm">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Save_screen_working.asm">
       <SubType>Code</SubType>
     </Compile>

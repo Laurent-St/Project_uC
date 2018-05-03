@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.7  C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\TestBuffer\main.asm Thu May 03 16:12:55 2018
+AVRASM ver. 2.2.7  C:\Users\Bejamin\Desktop\Microcontroller\TestForProject\Screen\main.asm Mon Apr 30 14:25:46 2018
 
 
 EQU  SIGNATURE_000 0000001e
@@ -695,47 +695,19 @@ EQU  ACIaddr      0000002e
 EQU  TWIaddr      00000030
 EQU  SPMRaddr     00000032
 EQU  INT_VECTORS_SIZE 00000034
-CSEG init         00000021
-CSEG Timer0OverflowInterrupt 000000b7
-CSEG initbuffer   000000f9
-CSEG loop         00000034
-CSEG playerbuffer 00000139
-CSEG loop2        0000003d
-CSEG ButtonLow2   0000004a
-CSEG ButtonHigh2  00000047
-CSEG follow       0000004c
-CSEG nocarry      00000052
-CSEG main         0000005a
-CSEG keyboard     0000005c
-CSEG CPressed     00000094
-CSEG BPressed     00000096
-CSEG Pressed0     00000098
-CSEG APressed     0000009a
-CSEG DPressed     0000009c
-CSEG Pressed3     0000009e
-CSEG Pressed2     000000a0
-CSEG Pressed1     000000a2
-CSEG EPressed     000000a4
-CSEG Pressed6     000000a6
-CSEG Pressed5     000000a8
-CSEG Pressed4     0000008e
-CSEG FPressed     000000aa
-CSEG Pressed9     000000ac
-CSEG Pressed8     00000090
-CSEG Pressed7     00000092
-CSEG noKeyboard   000000ae
-CSEG nocarry3     000000b4
-CSEG firstloop1   000000b9
-CSEG write5bits   000000ee
-CSEG firstloop2   000000c0
-CSEG secondloop   000000c6
-CSEG not_equal    000000ca
-CSEG waitloop     000000d0
-CSEG nocarry2     000000dd
-CSEG dontinitR17  000000ed
-CSEG ButtonLow    000000e6
-CSEG ButtonHigh   000000e3
-CSEG followinitR17 000000e8
-CSEG loop_write5  000000ef
-CSEG write_0      000000f3
-CSEG write_1      000000f2
+CSEG init         00000001
+CSEG initbuffer   00000049
+CSEG loop         00000006
+CSEG main         0000000d
+CSEG nocarry      00000015
+CSEG rowloop      00000015
+CSEG firstloop1   00000017
+CSEG write5bits   0000003e
+CSEG firstloop2   0000001e
+CSEG secondloop   00000024
+CSEG not_equal    00000028
+CSEG waitloop     0000002e
+CSEG nocarry2     0000003b
+CSEG loop_write5  0000003f
+CSEG write_0      00000043
+CSEG write_1      00000042

@@ -1,5 +1,5 @@
 ;
-; TestBuffer MAIN.asm
+; TestBuffer SAVE with working double diplay (2 buffers) and choice of the case with keyboard
 ;
 ; Created: 23-04-18 13:34:45
 ; Author : Laurent Storrer & Benjamin Wauthion
