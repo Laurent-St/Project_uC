@@ -18,6 +18,19 @@ RJMP Timer0OverflowInterrupt
 
 init:
 
+;%%%%% JOYSTICK AS INPUT %%%%%%%%;
+CBI DDRC,1 ;choose potentiometer along direction y
+; joystick initialization
+LDI R16, 0b11100111		; put ADC on, enables first conversion, enables auto trigger, put interrupt off, prescaler = 2
+STS ADCSRA, R16
+LDI R16, 0b00000000    ; free running mode
+STS ADCSRB, R16
+LDI R16, 0b01100001    ; selection ADC multiplexer and refernce voltage
+STS ADMUX, R16
+LDI R16, 0b00000000
+STS PRR,R16
+; result in ADCH
+
 ;%%%%%%%%%%%% PIN PB0 (switch) INITIALIZATION %%%%%%%%%%
 CBI DDRB,0;Pin PB0 is an input
 SBI PORTB,0; Enable the pull-up resistor
@@ -127,8 +140,8 @@ OUT TCNT0,R25 ; on utilise OUT car R0 est categorise comme un registre I/O
 main: 
 
 ;%%%%%%%%%%%%%%%%%%%% KEYBOARD LOOP %%%%%%%%%%%%%%%%%%%%%%%%%
-LDI R23,0x0 ;initialization of column position
-LDI R24,0x0 ;initialization of row position
+LDI R23,0x0 ;reinitialization of column position
+;LDI R24,0x0 ;initialization of row position
 
 keyboard:
 ;%%%%%% put all rows to 1 at the beginning %%%%%%%%%%
@@ -192,41 +205,86 @@ keyboard:
 
 ;%%%% when key is pressed %%%%%
 Pressed4: LDI R23,0x4
-RJMP noKeyboard
+CALL writeMiddleBit
+RJMP main
 Pressed8: LDI R23,0x40 ;=64 put in hexa=0x40, to go on the next line of cases
-RJMP noKeyboard
+CALL writeMiddleBit
+RJMP main
 Pressed7: LDI R23,0x7
-RJMP noKeyboard
+CALL writeMiddleBit
+RJMP main
 
 CPressed: LDI R23,0x44 ;=64+4 put in hexa=0x44, to go on the next line of cases + 4 case
-RJMP noKeyboard
+CALL writeMiddleBit
+RJMP main
 BPressed: LDI R23,0x43 ;=64+3 put in hexa=0x43, to go on the next line of cases + 3 case
-RJMP noKeyboard
+CALL writeMiddleBit
+RJMP main
 Pressed0: LDI R23, 0x0
-RJMP noKeyboard
+CALL writeMiddleBit
+RJMP main
 APressed: LDI R23,0x42 ;=64+2 put in hexa=0x42, to go on the next line of cases + 2 case
-RJMP noKeyboard
+CALL writeMiddleBit
+RJMP main
 DPressed: LDI R23,0x45 ;=64+5 put in hexa=0x45, to go on the next line of cases + 5 case
-RJMP noKeyboard
+CALL writeMiddleBit
+RJMP main
 Pressed3: LDI R23,0x3
-RJMP noKeyboard
+CALL writeMiddleBit
+RJMP main
 Pressed2: LDI R23,0x2
-RJMP noKeyboard
+CALL writeMiddleBit
+RJMP main
 Pressed1: LDI R23,0x1
-RJMP noKeyboard
+CALL writeMiddleBit
+RJMP main
 EPressed: LDI R23,0x46 ;=64+6 put in hexa=0x46, to go on the next line of cases + 6 case
-RJMP noKeyboard
+CALL writeMiddleBit
+RJMP main
 Pressed6: LDI R23,0x6
-RJMP noKeyboard
-Pressed5: LDI R23,0x5
-RJMP noKeyboard
+CALL writeMiddleBit
+RJMP main
+
+
+Pressed5: LDI R23,0x1D ;=(5+1+32-8) put in hexa to select the middle of the case
+CALL writeMiddleBit
+
+;take info from the joystick
+LDS R19, ADCH ; R19 [0,255]   8 bits in upper reg of 10 bit ADC, drop two lsb
+;init thresholds
+LDI R25,0xC8	;upper one 200 
+LDI R24,0x4B	;lower one 75
+
+CP R25, R19
+	BRLO goTobiggerthanHthreshold
+CP R19, R24
+	BRLO goTolowerthanLthreshold
+RJMP goToNotwrite
+
+/*RJMP goToNotwrite
+goTobiggerthanHthreshold: CALL biggerthanHthreshold
+RJMP goTowrite
+goTolowerthanLthreshold: CALL lowerthanLthreshold*/
+goTobiggerthanHthreshold: SUBI R23, 0x10
+RJMP goTowrite
+goTolowerthanLthreshold: LDI R24, 0x10
+ADD R23, R24
+
+goTowrite:
+CALL writeMiddleBit
+goToNotwrite:
+RJMP main
+
+
 FPressed: LDI R23,0x47 ;=64+7 put in hexa=0x47, to go on the next line of cases + 7 case
-RJMP noKeyboard
+CALL writeMiddleBit
+RJMP main
 Pressed9: LDI R23,0x41 ;=64+1 put in hexa=0x41, to go on the next line of cases + 1 case
-RJMP noKeyboard
+CALL writeMiddleBit
+RJMP main
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-noKeyboard: ;thus here X=0x200
+/*noKeyboard: ;thus here X=0x200
 LDI YL,0x00 ;pointer to values in the data memory
 LDI YH,0x02
 ADD YL,R23 ;add the value of R23 to X to change at its position
@@ -235,8 +293,7 @@ LDI R23,0x01
 ADD YH,R23 ;if there is a carry
 nocarry3:
 LDI R23,0b00000100 ;reuse R23, no link with previous R23
-ST Y,R23
-
+ST Y,R23*/
 
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 RJMP main
@@ -328,6 +385,18 @@ RETI
 
 
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FUNCTIONS %%%%%%%%%%%%%%%%%%%%%%%
+writeMiddleBit:
+	LDI YL,0x00 ;pointer to values in the data memory
+	LDI YH,0x02
+	ADD YL,R23 ;add the value of R23 to X to change at its position
+	BRCC nocarry3
+	LDI R23,0x01
+	ADD YH,R23 ;if there is a carry
+	nocarry3:
+	LDI R23,0b00000100 ;reuse R23, no link with previous R23
+	ST Y,R23
+RET
+
 write5bits:
 	LDI R22, 0x5
 	loop_write5:
@@ -345,6 +414,16 @@ write5bits:
 	DEC R22
 	BRNE loop_write5
 RET
+
+/*biggerthanHthreshold:
+SUBI R23, 0x10
+RET
+
+lowerthanLthreshold:
+LDI R24, 0x10
+ADD R23, R24
+RET*/
+
 ;%%%%%%%%%%%%%%%%%% BUFFERS STORED IN THE PROGRAM MEMORY: CANNOT BE CHANGED AT RUNTIME %%%%%%%%%%%%%%%%%%%%%
 ;Attention only the 5 LSB of each compartment will be used for the 5 columns
 

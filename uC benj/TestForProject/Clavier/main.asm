@@ -67,7 +67,7 @@ SBI PORTD,3
 ;%%%%%%%%%%%%%%%%%%%% MAIN LOOP %%%%%%%%%%%%%%%%%%%%%%%%%
 loop:
 ;take info from the joystick
-	LDS R21, ADCH ; R16 [0,255]   8 bits in upper reg of 10 bit ADC, drop two lsb
+	LDS R19, ADCH ; R16 [0,255]   8 bits in upper reg of 10 bit ADC, drop two lsb
 
 ;init thresholds
 LDI R22,0xC8	;upper one 200
@@ -137,7 +137,6 @@ RJMP loop
 
 
 Pressed4: CBI PORTC,3 ;put the lower LED on
-RJMP loop
 Pressed8: CBI PORTC,2 ;put the upper LED on
 RJMP loop
 Pressed7: CBI PORTC,3
@@ -153,11 +152,11 @@ RJMP loop
 
 ;press 0 ==> play with joystick
 Pressed0:
-	CP R22, R21
+	CP R22, R19
 	;BREQ biggerthanHthreshold
 	BRLO biggerthanHthreshold
 
-	CP R21, R23
+	CP R19, R23
 	;BREQ lowerthanLthreshold
 	BRLO lowerthanLthreshold
 

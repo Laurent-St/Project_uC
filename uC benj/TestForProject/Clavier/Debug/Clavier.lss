@@ -1,10 +1,10 @@
 
-AVRASM ver. 2.2.7  C:\Users\Bejamin\Desktop\Microcontroller\TestForProject\Clavier\main.asm Thu May 03 15:24:39 2018
+AVRASM ver. 2.2.7  C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\uC benj\TestForProject\Clavier\main.asm Thu May 03 17:40:21 2018
 
-[builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.150\avrasm\inc\m328pdef.inc'
-C:\Users\Bejamin\Desktop\Microcontroller\TestForProject\Clavier\main.asm(4): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.150\avrasm\inc\m328pdef.inc'
-[builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.150\avrasm\inc\m328pdef.inc'
-C:\Users\Bejamin\Desktop\Microcontroller\TestForProject\Clavier\main.asm(4): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.150\avrasm\inc\m328pdef.inc'
+[builtin](2): Including file 'D:/Atmel\7.0\Packs\atmel\ATmega_DFP\1.2.150\avrasm\inc\m328pdef.inc'
+C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\uC benj\TestForProject\Clavier\main.asm(4): Including file 'D:/Atmel\7.0\Packs\atmel\ATmega_DFP\1.2.150\avrasm\inc\m328pdef.inc'
+[builtin](2): Including file 'D:/Atmel\7.0\Packs\atmel\ATmega_DFP\1.2.150\avrasm\inc\m328pdef.inc'
+C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\uC benj\TestForProject\Clavier\main.asm(4): Including file 'D:/Atmel\7.0\Packs\atmel\ATmega_DFP\1.2.150\avrasm\inc\m328pdef.inc'
                                  
                                  
                                  
@@ -1037,7 +1037,7 @@ C:\Users\Bejamin\Desktop\Microcontroller\TestForProject\Clavier\main.asm(4): Inc
                                  .ORG 0x0000
 000000 c020                      RJMP init
                                  .ORG 0x0020 ; a mettre en dehors pour juste assigner le Timer0OverflowInterrupt a l'adresse 20
-000020 c09f                      RJMP Timer0OverflowInterrupt
+000020 c09e                      RJMP Timer0OverflowInterrupt
                                  
                                  init: 
                                  ;%%%%% JOYSTICK AS INPUT %%%%%%%%;
@@ -1098,7 +1098,7 @@ C:\Users\Bejamin\Desktop\Microcontroller\TestForProject\Clavier\main.asm(4): Inc
                                  ;%%%%%%%%%%%%%%%%%%%% MAIN LOOP %%%%%%%%%%%%%%%%%%%%%%%%%
                                  loop:
                                  ;take info from the joystick
-000048 9150 0079                 	LDS R21, ADCH ; R16 [0,255]   8 bits in upper reg of 10 bit ADC, drop two lsb
+000048 9130 0079                 	LDS R19, ADCH ; R16 [0,255]   8 bits in upper reg of 10 bit ADC, drop two lsb
                                  
                                  ;init thresholds
 00004a ec68                      LDI R22,0xC8	;upper one 200
@@ -1113,35 +1113,35 @@ C:\Users\Bejamin\Desktop\Microcontroller\TestForProject\Clavier\main.asm(4): Inc
 000050 985c                      CBI PORTD,4 ;write a zero on the first row (starting from below)
 000051 0000                      nop
 000052 9b48                      SBIS PIND,0
-000053 c035                      RJMP CPressed
+000053 c034                      RJMP CPressed
 000054 9b49                      SBIS PIND,1
-000055 c037                      RJMP BPressed
+000055 c036                      RJMP BPressed
 000056 9b4a                      SBIS PIND,2
-000057 c039                      RJMP Pressed0
+000057 c038                      RJMP Pressed0
 000058 9b4b                      SBIS PIND,3
-000059 c03e                      RJMP APressed
+000059 c03d                      RJMP APressed
 00005a 9a5c                      SBI PORTD,4 ;write a zero on the first row (starting from below)
                                  
 00005b 985d                      CBI PORTD,5;write a zero on the second row
 00005c 0000                      nop
 00005d 9b48                      SBIS PIND,0
-00005e c03d                      RJMP DPressed
+00005e c03c                      RJMP DPressed
 00005f 9b49                      SBIS PIND,1
-000060 c03f                      RJMP Pressed3
+000060 c03e                      RJMP Pressed3
 000061 9b4a                      SBIS PIND,2
-000062 c041                      RJMP Pressed2
+000062 c040                      RJMP Pressed2
 000063 9b4b                      SBIS PIND,3
-000064 c043                      RJMP Pressed1
+000064 c042                      RJMP Pressed1
 000065 9a5d                      SBI PORTD,5 ;write a zero on the first row (starting from below)
                                  
 000066 985e                      CBI PORTD,6;write a zero on the third row
 000067 0000                      nop
 000068 9b48                      SBIS PIND,0
-000069 c042                      RJMP EPressed
+000069 c041                      RJMP EPressed
 00006a 9b49                      SBIS PIND,1
-00006b c044                      RJMP Pressed6
+00006b c043                      RJMP Pressed6
 00006c 9b4a                      SBIS PIND,2
-00006d c046                      RJMP Pressed5
+00006d c045                      RJMP Pressed5
 00006e 9b4b                      SBIS PIND,3
 00006f c012                      RJMP Pressed4
 000070 9a5e                      SBI PORTD,6 ;write a zero on the first row (starting from below)
@@ -1149,13 +1149,13 @@ C:\Users\Bejamin\Desktop\Microcontroller\TestForProject\Clavier\main.asm(4): Inc
 000071 985f                      CBI PORTD,7;write a zero on the 4th row
 000072 0000                      nop
 000073 9b48                      SBIS PIND,0
-000074 c043                      RJMP FPressed
+000074 c042                      RJMP FPressed
 000075 9b49                      SBIS PIND,1
-000076 c045                      RJMP Pressed9
+000076 c044                      RJMP Pressed9
 000077 9b4a                      SBIS PIND,2
-000078 c00b                      RJMP Pressed8
+000078 c00a                      RJMP Pressed8
 000079 9b4b                      SBIS PIND,3
-00007a c00b                      RJMP Pressed7
+00007a c00a                      RJMP Pressed7
 00007b 9a5f                      SBI PORTD,7 ;write a zero on the first row (starting from below)
                                  
 00007c 9a43                      SBI PORTC,3 ;shut down the LED at the end of the loop
@@ -1168,107 +1168,106 @@ C:\Users\Bejamin\Desktop\Microcontroller\TestForProject\Clavier\main.asm(4): Inc
                                  
                                  
 000082 9843                      Pressed4: CBI PORTC,3 ;put the lower LED on
-000083 cfc4                      RJMP loop
-000084 9842                      Pressed8: CBI PORTC,2 ;put the upper LED on
-000085 cfc2                      RJMP loop
-000086 9843                      Pressed7: CBI PORTC,3
-000087 9842                      CBI PORTC,2
-000088 cfbf                      RJMP loop
+000083 9842                      Pressed8: CBI PORTC,2 ;put the upper LED on
+000084 cfc3                      RJMP loop
+000085 9843                      Pressed7: CBI PORTC,3
+000086 9842                      CBI PORTC,2
+000087 cfc0                      RJMP loop
                                  
-000089 e021                      CPressed: LDI R18, 0b00000001 ; activate interrupt for timer 0
-00008a 9320 006e                 STS TIMSK0,R18
-00008c cfbb                      RJMP loop
-00008d e021                      BPressed: LDI R18, 0b00000001 ; activate interrupt for timer 0
-00008e 9320 006e                 STS TIMSK0,R18
-000090 cfb7                      RJMP loop
+000088 e021                      CPressed: LDI R18, 0b00000001 ; activate interrupt for timer 0
+000089 9320 006e                 STS TIMSK0,R18
+00008b cfbc                      RJMP loop
+00008c e021                      BPressed: LDI R18, 0b00000001 ; activate interrupt for timer 0
+00008d 9320 006e                 STS TIMSK0,R18
+00008f cfb8                      RJMP loop
                                  
                                  ;press 0 ==> play with joystick
                                  Pressed0:
-000091 1765                      	CP R22, R21
+000090 1763                      	CP R22, R19
                                  	;BREQ biggerthanHthreshold
-000092 f188                      	BRLO biggerthanHthreshold
+000091 f188                      	BRLO biggerthanHthreshold
                                  
-000093 1757                      	CP R21, R23
+000092 1737                      	CP R19, R23
                                  	;BREQ lowerthanLthreshold
-000094 f1b0                      	BRLO lowerthanLthreshold
+000093 f1b0                      	BRLO lowerthanLthreshold
                                  
-000095 9a43                      	SBI PORTC,3
-000096 9a42                      	SBI PORTC,2
-000097 cfb0                      RJMP loop
+000094 9a43                      	SBI PORTC,3
+000095 9a42                      	SBI PORTC,2
+000096 cfb1                      RJMP loop
                                  
                                  
-000098 e021                      APressed: LDI R18, 0b00000001 ; activate interrupt for timer 0
-000099 9320 006e                 STS TIMSK0,R18
-00009b cfac                      RJMP loop
-00009c e021                      DPressed: LDI R18, 0b00000001 ; activate interrupt for timer 0
-00009d 9320 006e                 STS TIMSK0,R18
-00009f cfa8                      RJMP loop
-0000a0 e021                      Pressed3: LDI R18, 0b00000001 ; activate interrupt for timer 0
-0000a1 9320 006e                 STS TIMSK0,R18
-0000a3 cfa4                      RJMP loop
-0000a4 e021                      Pressed2: LDI R18, 0b00000001 ; activate interrupt for timer 0
-0000a5 9320 006e                 STS TIMSK0,R18
-0000a7 cfa0                      RJMP loop
-0000a8 e021                      Pressed1: LDI R18, 0b00000001 ; activate interrupt for timer 0
-0000a9 9320 006e                 STS TIMSK0,R18
-0000ab cf9c                      RJMP loop
-0000ac e021                      EPressed: LDI R18, 0b00000001 ; activate interrupt for timer 0
-0000ad 9320 006e                 STS TIMSK0,R18
-0000af cf98                      RJMP loop
-0000b0 e021                      Pressed6: LDI R18, 0b00000001 ; activate interrupt for timer 0
-0000b1 9320 006e                 STS TIMSK0,R18
-0000b3 cf94                      RJMP loop
-0000b4 e021                      Pressed5: LDI R18, 0b00000001 ; activate interrupt for timer 0
-0000b5 9320 006e                 STS TIMSK0,R18
-0000b7 cf90                      RJMP loop
-0000b8 e021                      FPressed: LDI R18, 0b00000001 ; activate interrupt for timer 0
-0000b9 9320 006e                 STS TIMSK0,R18
-0000bb cf8c                      RJMP loop
-0000bc e021                      Pressed9: LDI R18, 0b00000001 ; activate interrupt for timer 0
-0000bd 9320 006e                 STS TIMSK0,R18
-0000bf cf88                      RJMP loop
+000097 e021                      APressed: LDI R18, 0b00000001 ; activate interrupt for timer 0
+000098 9320 006e                 STS TIMSK0,R18
+00009a cfad                      RJMP loop
+00009b e021                      DPressed: LDI R18, 0b00000001 ; activate interrupt for timer 0
+00009c 9320 006e                 STS TIMSK0,R18
+00009e cfa9                      RJMP loop
+00009f e021                      Pressed3: LDI R18, 0b00000001 ; activate interrupt for timer 0
+0000a0 9320 006e                 STS TIMSK0,R18
+0000a2 cfa5                      RJMP loop
+0000a3 e021                      Pressed2: LDI R18, 0b00000001 ; activate interrupt for timer 0
+0000a4 9320 006e                 STS TIMSK0,R18
+0000a6 cfa1                      RJMP loop
+0000a7 e021                      Pressed1: LDI R18, 0b00000001 ; activate interrupt for timer 0
+0000a8 9320 006e                 STS TIMSK0,R18
+0000aa cf9d                      RJMP loop
+0000ab e021                      EPressed: LDI R18, 0b00000001 ; activate interrupt for timer 0
+0000ac 9320 006e                 STS TIMSK0,R18
+0000ae cf99                      RJMP loop
+0000af e021                      Pressed6: LDI R18, 0b00000001 ; activate interrupt for timer 0
+0000b0 9320 006e                 STS TIMSK0,R18
+0000b2 cf95                      RJMP loop
+0000b3 e021                      Pressed5: LDI R18, 0b00000001 ; activate interrupt for timer 0
+0000b4 9320 006e                 STS TIMSK0,R18
+0000b6 cf91                      RJMP loop
+0000b7 e021                      FPressed: LDI R18, 0b00000001 ; activate interrupt for timer 0
+0000b8 9320 006e                 STS TIMSK0,R18
+0000ba cf8d                      RJMP loop
+0000bb e021                      Pressed9: LDI R18, 0b00000001 ; activate interrupt for timer 0
+0000bc 9320 006e                 STS TIMSK0,R18
+0000be cf89                      RJMP loop
                                  
                                  
                                  Timer0OverflowInterrupt:  
-0000c0 9a19                      SBI PINB,1; by writing a 1 to the pin it will toggle the actual value of the port
+0000bf 9a19                      SBI PINB,1; by writing a 1 to the pin it will toggle the actual value of the port
                                  ;LDI R16, 0b00000100
                                  ;OUT TCCR0B, R16
-0000c1 2f14                      MOV R17,R20;0xB8 ; start value for TCNT
-0000c2 bd16                      OUT TCNT0,R17 ; on utilise OUT car R0 est categorise comme un registre I/O
-0000c3 9518                      RETI
+0000c0 2f14                      MOV R17,R20;0xB8 ; start value for TCNT
+0000c1 bd16                      OUT TCNT0,R17 ; on utilise OUT car R0 est categorise comme un registre I/O
+0000c2 9518                      RETI
                                  
                                  
                                  biggerthanHthreshold:	;Down is on
-0000c4 9843                      	CBI PORTC,3 ;put the lower LED on
-0000c5 9a42                      	SBI PORTC,2
+0000c3 9843                      	CBI PORTC,3 ;put the lower LED on
+0000c4 9a42                      	SBI PORTC,2
                                  	
-0000c6 985f                      	CBI PORTD,7;write a zero on the 4th row
-0000c7 0000                      	nop
-0000c8 9b4b                      	SBIS PIND,3
-0000c9 c008                      	RJMP Pressed72hit
+0000c5 985f                      	CBI PORTD,7;write a zero on the 4th row
+0000c6 0000                      	nop
+0000c7 9b4b                      	SBIS PIND,3
+0000c8 c008                      	RJMP Pressed72hit
                                  
-0000ca cf7d                      RJMP loop
+0000c9 cf7e                      RJMP loop
                                  
                                  lowerthanLthreshold:
-0000cb 9842                      	CBI PORTC,2 ;put the up LED on
-0000cc 9a43                      	SBI PORTC,3
+0000ca 9842                      	CBI PORTC,2 ;put the up LED on
+0000cb 9a43                      	SBI PORTC,3
                                  	
-0000cd 985f                      	CBI PORTD,7;write a zero on the 4th row
-0000ce 0000                      	nop
-0000cf 9b4b                      	SBIS PIND,3
-0000d0 c006                      	RJMP Pressed72nothit
-0000d1 cf76                      RJMP loop
+0000cc 985f                      	CBI PORTD,7;write a zero on the 4th row
+0000cd 0000                      	nop
+0000ce 9b4b                      	SBIS PIND,3
+0000cf c006                      	RJMP Pressed72nothit
+0000d0 cf77                      RJMP loop
                                  
                                  Pressed72hit: 
-0000d2 e021                      	LDI R18, 0b00000001 ; activate interrupt for timer 0
-0000d3 eb48                      	LDI R20,0xB8
-0000d4 9320 006e                 	STS TIMSK0,R18
-0000d6 cf71                      RJMP loop
+0000d1 e021                      	LDI R18, 0b00000001 ; activate interrupt for timer 0
+0000d2 eb48                      	LDI R20,0xB8
+0000d3 9320 006e                 	STS TIMSK0,R18
+0000d5 cf72                      RJMP loop
                                  
                                  Pressed72nothit: 
-0000d7 e021                      	LDI R18, 0b00000001 ; activate interrupt for timer 0
-0000d8 ed48                      	LDI R20,0xD8
-0000d9 9320 006e                 	STS TIMSK0,R18
+0000d6 e021                      	LDI R18, 0b00000001 ; activate interrupt for timer 0
+0000d7 ed48                      	LDI R20,0xD8
+0000d8 9320 006e                 	STS TIMSK0,R18
 
 
 RESOURCE USE INFORMATION
@@ -1288,8 +1287,8 @@ counted separately from r26..r31 here.
 "ATmega328P" register use summary:
 x  :   0 y  :   0 z  :   0 r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
 r5 :   0 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
-r13:   0 r14:   0 r15:   0 r16:  10 r17:   2 r18:  32 r19:   0 r20:   3 
-r21:   3 r22:   2 r23:   2 r24:   0 r25:   0 r26:   0 r27:   0 r28:   0 
+r13:   0 r14:   0 r15:   0 r16:  10 r17:   2 r18:  32 r19:   3 r20:   3 
+r21:   0 r22:   2 r23:   2 r24:   0 r25:   0 r26:   0 r27:   0 r28:   0 
 r29:   0 r30:   0 r31:   0 
 Registers used: 7 out of 35 (20.0%)
 
@@ -1307,7 +1306,7 @@ fmulsu:   0 icall :   0 ijmp  :   0 in    :   0 inc   :   0 jmp   :   0
 ld    :   0 ldd   :   0 ldi   :  25 lds   :   1 lpm   :   0 lsl   :   0 
 lsr   :   0 mov   :   1 movw  :   0 mul   :   0 muls  :   0 mulsu :   0 
 neg   :   0 nop   :   6 or    :   0 ori   :   0 out   :   2 pop   :   0 
-push  :   0 rcall :   0 ret   :   0 reti  :   1 rjmp  :  41 rol   :   0 
+push  :   0 rcall :   0 ret   :   0 reti  :   1 rjmp  :  40 rol   :   0 
 ror   :   0 sbc   :   0 sbci  :   0 sbi   :  29 sbic  :   0 sbis  :  18 
 sbiw  :   0 sbr   :   0 sbrc  :   0 sbrs  :   0 sec   :   0 seh   :   0 
 sei   :   1 sen   :   0 ser   :   0 ses   :   0 set   :   0 sev   :   0 
@@ -1318,7 +1317,7 @@ Instructions used: 14 out of 113 (12.4%)
 "ATmega328P" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x0001b8    378      0    378   32768   1.2%
+[.cseg] 0x000000 0x0001b6    376      0    376   32768   1.1%
 [.dseg] 0x000100 0x000100      0      0      0    2048   0.0%
 [.eseg] 0x000000 0x000000      0      0      0    1024   0.0%
 
