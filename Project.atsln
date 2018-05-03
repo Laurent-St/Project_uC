@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Atmel Studio Solution File, Format Version 11.00
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{18226A42-8477-4023-8AD2-40C49DA407C9}") = "TestBuffer", "TestBuffer\TestBuffer.asmproj", "{59B1D629-9DCC-43ED-A0FD-8AB0E4D622AB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7A4333AC-8F81-429F-9499-AC4591D24DA3}"
+	ProjectSection(SolutionItems) = preProject
+		Save_screen_working.asm = Save_screen_working.asm
+	EndProjectSection
+EndProject
+Project("{18226A42-8477-4023-8AD2-40C49DA407C9}") = "TestBuffer_interrupt", "TestBuffer_interrupt\TestBuffer_interrupt.asmproj", "{01DADFF0-FDA3-43E8-AA2E-538F3527AC82}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{59B1D629-9DCC-43ED-A0FD-8AB0E4D622AB}.Debug|AVR.ActiveCfg = Debug|AVR
+		{59B1D629-9DCC-43ED-A0FD-8AB0E4D622AB}.Debug|AVR.Build.0 = Debug|AVR
+		{59B1D629-9DCC-43ED-A0FD-8AB0E4D622AB}.Release|AVR.ActiveCfg = Release|AVR
+		{59B1D629-9DCC-43ED-A0FD-8AB0E4D622AB}.Release|AVR.Build.0 = Release|AVR
+		{01DADFF0-FDA3-43E8-AA2E-538F3527AC82}.Debug|AVR.ActiveCfg = Debug|AVR
+		{01DADFF0-FDA3-43E8-AA2E-538F3527AC82}.Debug|AVR.Build.0 = Debug|AVR
+		{01DADFF0-FDA3-43E8-AA2E-538F3527AC82}.Release|AVR.ActiveCfg = Release|AVR
+		{01DADFF0-FDA3-43E8-AA2E-538F3527AC82}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
