@@ -5,7 +5,8 @@
 ; Author : Laurent Storrer & Benjamin Wauthion
 ;
 
-;PROBLEM: it seems that the reading of the data buffer doesn't work: the pointer is going to far or too short
+; ATTENTION POINTERS X,Y AND Z OCCUPIES THE REGISTERs 26-31 --> those registers cannot be used
+; Register X: 26-27, Register Y: 28-29, Register Z:30-31
 
 .INCLUDE "m328pdef.inc"
 
@@ -17,6 +18,11 @@ RJMP Timer0OverflowInterrupt
 ;Program memory cannot be changed at runtime, while data memory can. So what we do is to define values at "initbuffer" label to which 
 
 init:
+;%%%%% LEDS AS OUTPUT %%%%%%%%
+SBI DDRC,2 ; pin PC2 is an output
+SBI PORTC,2 ; output Vcc => LED1 is turned off! (car la LED est active low, cf schema)
+SBI DDRC,3 ; pin PC3 is an output
+SBI PORTC,3 ; output Vcc => LED1 is turned off! (car la LED est active low, cf schema)
 
 ;%%%%% JOYSTICK AS INPUT %%%%%%%%;
 CBI DDRC,1 ;choose potentiometer along direction y
@@ -144,6 +150,9 @@ LDI R23,0x0 ;reinitialization of column position
 ;LDI R24,0x0 ;initialization of row position
 
 keyboard:
+	;take info from the joystick
+	LDS R19, ADCH ; R19 [0,255]   8 bits in upper reg of 10 bit ADC, drop two lsb
+
 ;%%%%%% put all rows to 1 at the beginning %%%%%%%%%%
 	SBI PORTB,4
 
@@ -200,6 +209,7 @@ keyboard:
 	RJMP Pressed7
 	SBI PORTD,7 ;write a zero on the first row (starting from below)
 
+	SBI PORTC,2
 	RJMP keyboard
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -246,32 +256,40 @@ CALL writeMiddleBit
 RJMP main
 
 
-Pressed5: LDI R23,0x1D ;=(5+1+32-8) put in hexa to select the middle of the case
-CALL writeMiddleBit
+Pressed5: 
+; MAIN PROBLEM: THE PROGRAM DOES NOT ENTER ONE OF THE 2 CONDITIONS (goTobiggerthanHtreshold or goTolowerthanHtreshold)
+
+LDI R23,0x1D ;=(5+1+32-8) put in hexa, to select the middle of the case
+CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
+LDI R23,0x1D ;because writeMiddleBit changed R23
 
 ;take info from the joystick
-LDS R19, ADCH ; R19 [0,255]   8 bits in upper reg of 10 bit ADC, drop two lsb
+;LDS R19, ADCH ; R19 [0,255]   8 bits in upper reg of 10 bit ADC, drop two lsb
 ;init thresholds
 LDI R25,0xC8	;upper one 200 
 LDI R24,0x4B	;lower one 75
 
 CP R25, R19
-	BRLO goTobiggerthanHthreshold
+BRLO goTobiggerthanHthreshold
 CP R19, R24
-	BRLO goTolowerthanLthreshold
+BRLO goTolowerthanLthreshold
 RJMP goToNotwrite
 
 /*RJMP goToNotwrite
 goTobiggerthanHthreshold: CALL biggerthanHthreshold
 RJMP goTowrite
 goTolowerthanLthreshold: CALL lowerthanLthreshold*/
-goTobiggerthanHthreshold: SUBI R23, 0x10
+goTobiggerthanHthreshold: 
+SUBI R23, 0x10
 RJMP goTowrite
-goTolowerthanLthreshold: LDI R24, 0x10
+goTolowerthanLthreshold:
+LDI R24, 0x10
 ADD R23, R24
 
 goTowrite:
+CBI PORTC,2 ;blink a LED to see if one of the two conditions on the ADC is entered
 CALL writeMiddleBit
+
 goToNotwrite:
 RJMP main
 
