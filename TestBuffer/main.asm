@@ -264,15 +264,26 @@ CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
 LDI R23,0x1D ;because writeMiddleBit changed R23
 
 ;take info from the joystick
-;LDS R19, ADCH ; R19 [0,255]   8 bits in upper reg of 10 bit ADC, drop two lsb
+;LDS R19, ADCH ; R19 [0,255] 128: middl  8 bits in upper reg of 10 bit ADC, drop two lsb
 ;init thresholds
+;LDI R25,0xC8	;upper one 200 
+;LDI R24,0x4B	;lower one 75
+
 LDI R25,0xC8	;upper one 200 
 LDI R24,0x4B	;lower one 75
 
-CP R25, R19
-BRLO goTobiggerthanHthreshold
-CP R19, R24
-BRLO goTolowerthanLthreshold
+
+CP R19, R25
+BRSH goTobiggerthanHthreshold
+
+CP R24, R19
+BRSH goTolowerthanLthreshold
+
+
+;CP R25, R19
+;BRLO goTobiggerthanHthreshold
+;CP R19, R24
+;BRLO goTolowerthanLthreshold
 RJMP goToNotwrite
 
 /*RJMP goToNotwrite
