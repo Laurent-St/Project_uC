@@ -1,9 +1,9 @@
-;
-; TestBuffer MAIN.asm
-;
-; Created: 23-04-18 13:34:45
-; Author : Laurent Storrer & Benjamin Wauthion
-;
+/*
+ * Save_detection_boat_clear_7mai.asm
+ *
+ *  Created: 07-05-18 16:45:01
+ *   Author: admin
+ */ 
 
 ; ATTENTION POINTERS X,Y AND Z OCCUPIES THE REGISTERs 26-31 --> those registers cannot be used
 ; Register X: 26-27, Register Y: 28-29, Register Z:30-31
@@ -228,8 +228,6 @@ keyboard:
 	DEC R24
 	BRNE loop3*/
 	;%%%%%%%%%%%%%%%%
-
-	;%% Erase last bit LED when key released %%
 	LDI ZL,0x00
 	LDI ZH,0x04
 	LD R23,Z
@@ -243,7 +241,6 @@ keyboard:
 	nocarry1000:
 	LDI R23, 0b00000000
 	ST Z,R23
-	;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 	RJMP keyboard
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

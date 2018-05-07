@@ -1,9 +1,9 @@
-;
-; TestBuffer MAIN.asm
-;
-; Created: 23-04-18 13:34:45
-; Author : Laurent Storrer & Benjamin Wauthion
-;
+/*
+ * Save_screen_joystick_working.asm
+ *
+ *  Created: 07-05-18 15:13:44
+ *   Author: admin
+ */ 
 
 ; ATTENTION POINTERS X,Y AND Z OCCUPIES THE REGISTERs 26-31 --> those registers cannot be used
 ; Register X: 26-27, Register Y: 28-29, Register Z:30-31
@@ -18,10 +18,10 @@ RJMP Timer0OverflowInterrupt
 ;Program memory cannot be changed at runtime, while data memory can. So what we do is to define values at "initbuffer" label to which 
 
 init:
-;%%%% Set the click of the joystick as input %%%%%
+/*;%%%% Set the click of the joystick as input %%%%%
 CBI DDRB,2;Pin PB2 is an input
 SBI PORTB,2; Enable the pull-up resistor
-;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 
 ;%%%%% LEDS AS OUTPUT %%%%%%%%
 SBI DDRC,2 ; pin PC2 is an output
@@ -218,7 +218,7 @@ keyboard:
 	;SBI PORTC,2
 
 	;%%% erase the screen if no key is pressed %%%
-/*	LDI YL,0x00 ;pointer to values in the data memory
+	LDI YL,0x00 ;pointer to values in the data memory
 	LDI YH,0x02
 	LDI R24,0x80;=128
 	loop3:
@@ -226,24 +226,8 @@ keyboard:
 	LDI R25,0b00000000
 	ST Y+,R25
 	DEC R24
-	BRNE loop3*/
+	BRNE loop3
 	;%%%%%%%%%%%%%%%%
-
-	;%% Erase last bit LED when key released %%
-	LDI ZL,0x00
-	LDI ZH,0x04
-	LD R23,Z
-	LDI ZL,0x00
-	LDI ZH,0x02
-	
-	ADD ZL,R23
-	BRCC nocarry1000
-	LDI R23,0x01
-	ADD ZH,R23 ;if there is a carry
-	nocarry1000:
-	LDI R23, 0b00000000
-	ST Z,R23
-	;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 	RJMP keyboard
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -282,12 +266,9 @@ CALL writeMiddleBit
 RJMP main
 
 Pressed1: LDI R23,0x1
-LDI ZL,0x00
-LDI ZH,0x04
-ST Z,R23
 CALL writeMiddleBit
-/*LDI R23,0x1
-CALL write5zeros*/
+;LDI R23,0x1
+;CALL write5zeros
 RJMP main
 
 EPressed: LDI R23,0x46 ;=64+6 put in hexa=0x46, to go on the next line of cases + 6 case
@@ -299,12 +280,15 @@ RJMP main
 
 
 Pressed5: 
+; MAIN PROBLEM: THE PROGRAM DOES NOT ENTER ONE OF THE 2 CONDITIONS (goTobiggerthanHtreshold or goTolowerthanHtreshold)
+
 LDI R23,0x1D ;=(5+1+32-8) put in hexa, to select the middle of the case
 CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
 LDI R23,0x1D ;because writeMiddleBit changed R23
 
 ;take info from the joystick
 LDS R19, ADCH ; R19 [0,255]   8 bits in upper reg of 10 bit ADC, drop two lsb
+CBI PORTC,3
 ;init thresholds
 LDI R25,0xC8	;upper one 200 
 LDI R24,0x4B	;lower one 75
@@ -315,6 +299,10 @@ CP R19, R24
 BRLO goTolowerthanLthreshold
 RJMP goToNotwrite
 
+/*RJMP goToNotwrite
+goTobiggerthanHthreshold: CALL biggerthanHthreshold
+RJMP goTowrite
+goTolowerthanLthreshold: CALL lowerthanLthreshold*/
 goTobiggerthanHthreshold: 
 LDI R24, 0x10
 ADD R23, R24
@@ -325,7 +313,7 @@ CALL writeMiddleBit
 LD R23,Z
 SUBI R23,0x20
 CALL write5zeros
-
+;SUBI R23, 0x10
 RJMP goToNotwrite
 
 goTolowerthanLthreshold:
@@ -339,37 +327,11 @@ LDI R24, 0x20
 ADD R23, R24
 CALL write5zeros
 
+;goTowrite:
+;CBI PORTC,2 ;blink a LED to see if one of the two conditions on the ADC is entered
+
+
 goToNotwrite:
-;get value of PINB and fire action
-IN R0,PINB ;do R0 = PINB, whre R0 is a register
-BST R0,2; copy PB2 (bit 2 of PINB) to the T flag (the T of BST refers to flag T)
-BRTC JoyPressed; BRTC = Branch if T flag is cleared
-RJMP miskintarate
-
-JoyPressed:
-	LD R23,Z
-	LDI ZL, 0x00 ;we reuse Z here, it is different from previous line
-	LDI ZH, 0x01
-	
-	ADD ZL,R23
-	BRCC nocarry2F
-	LDI R23,0x01
-	ADD ZH,R23 ;if there is a carry
-	nocarry2F:
-	
-	LD R23,Z	;put what is stocked in the adress 100+R23 in R23
-	;look if the value is a 0b00011111 (prescence of a boat) or 0b00000000
-	LDI R24, 0b00011111
-	CP R24, R23
-	BREQ ttbonbatodetektesameer
-	RJMP miskintarate
-
-ttbonbatodetektesameer:
-	CBI PORTC,3
-
-miskintarate:	
-LDI R23,0x1D
-CALL write5zeros
 
 RJMP main
 
@@ -397,11 +359,6 @@ ST Y,R23*/
 RJMP main
 
 	Timer0OverflowInterrupt:
-		PUSH R16
-		IN R16,SREG
-		PUSH R16
-
-
 		SBI PORTB,4
 
 		SBIW X,0x8 ;substract immediate
@@ -487,10 +444,6 @@ RJMP main
 		LDI R20,0x01
 		ADD XH,R20 ;if there is a carry
 		dontinitR17:
-
-		POP R16
-		OUT SREG,R16
-		POP R16
 RETI
 
 
@@ -555,9 +508,9 @@ initbuffer:
 .db 0b00000000, 0b00011111, 0b00000000, 0b00000000, 0b00000000, 0b00011111, 0b00000000, 0b00000000
 .db 0b00000000, 0b00011111, 0b00000000, 0b00000000, 0b00000000, 0b00011111, 0b00000000, 0b00000000
 .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000
-.db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000
-.db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000
-.db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000 
+.db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00011111, 0b00000000, 0b00000000
+.db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00011111, 0b00000000, 0b00000000
+.db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00011111, 0b00000000, 0b00000000 
 .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000 ; "fake column", not to display
 
 .db 0b00000000, 0b00000000, 0b00000000, 0b00011111, 0b00000000, 0b00000000, 0b00000000, 0b00000000
