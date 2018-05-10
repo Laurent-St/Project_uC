@@ -1,9 +1,5 @@
 
-<<<<<<< HEAD
-AVRASM ver. 2.2.7  C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\TestBuffer\main.asm Mon May 07 16:44:02 2018
-=======
-AVRASM ver. 2.2.7  C:\Users\Bejamin\Documents\Polytech 2017-2018\Sensor and Microsystem Electronics\Project_uC\TestBuffer\main.asm Sun May 06 16:04:33 2018
->>>>>>> origin/master
+AVRASM ver. 2.2.7  C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\TestBuffer\main.asm Thu May 10 14:41:39 2018
 
 
 EQU  SIGNATURE_000 0000001e

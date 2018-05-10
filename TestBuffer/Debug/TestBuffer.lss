@@ -1,14 +1,10 @@
 
-<<<<<<< HEAD
-AVRASM ver. 2.2.7  C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\TestBuffer\main.asm Mon May 07 16:44:02 2018
-=======
-AVRASM ver. 2.2.7  C:\Users\Bejamin\Documents\Polytech 2017-2018\Sensor and Microsystem Electronics\Project_uC\TestBuffer\main.asm Sun May 06 16:04:33 2018
->>>>>>> origin/master
+AVRASM ver. 2.2.7  C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\TestBuffer\main.asm Thu May 10 14:41:39 2018
 
-[builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.150\avrasm\inc\m328pdef.inc'
-C:\Users\Bejamin\Documents\Polytech 2017-2018\Sensor and Microsystem Electronics\Project_uC\TestBuffer\main.asm(11): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.150\avrasm\inc\m328pdef.inc'
-[builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.150\avrasm\inc\m328pdef.inc'
-C:\Users\Bejamin\Documents\Polytech 2017-2018\Sensor and Microsystem Electronics\Project_uC\TestBuffer\main.asm(11): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.150\avrasm\inc\m328pdef.inc'
+[builtin](2): Including file 'D:/Atmel\7.0\Packs\atmel\ATmega_DFP\1.2.150\avrasm\inc\m328pdef.inc'
+C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\TestBuffer\main.asm(11): Including file 'D:/Atmel\7.0\Packs\atmel\ATmega_DFP\1.2.150\avrasm\inc\m328pdef.inc'
+[builtin](2): Including file 'D:/Atmel\7.0\Packs\atmel\ATmega_DFP\1.2.150\avrasm\inc\m328pdef.inc'
+C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\TestBuffer\main.asm(11): Including file 'D:/Atmel\7.0\Packs\atmel\ATmega_DFP\1.2.150\avrasm\inc\m328pdef.inc'
                                  
                                  ;
                                  
@@ -1263,6 +1259,8 @@ C:\Users\Bejamin\Documents\Polytech 2017-2018\Sensor and Microsystem Electronics
                                  	DEC R24
                                  	BRNE loop3*/
                                  	;%%%%%%%%%%%%%%%%
+                                 
+                                 	;%% Erase last bit LED when key released %%
 0000a1 e0e0                      	LDI ZL,0x00
 0000a2 e0f4                      	LDI ZH,0x04
 0000a3 8170                      	LD R23,Z
@@ -1276,6 +1274,7 @@ C:\Users\Bejamin\Documents\Polytech 2017-2018\Sensor and Microsystem Electronics
                                  	nocarry1000:
 0000aa e070                      	LDI R23, 0b00000000
 0000ab 8370                      	ST Z,R23
+                                 	;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
                                  
 0000ac cfc1                      	RJMP keyboard
                                  ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1331,67 +1330,36 @@ C:\Users\Bejamin\Documents\Polytech 2017-2018\Sensor and Microsystem Electronics
                                  
                                  
                                  Pressed5: 
-<<<<<<< HEAD
 0000e4 e17d                      LDI R23,0x1D ;=(5+1+32-8) put in hexa, to select the middle of the case
 0000e5 940e 015e                 CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
 0000e7 e17d                      LDI R23,0x1D ;because writeMiddleBit changed R23
                                  
                                  ;take info from the joystick
+                                 ;<<<<<<< HEAD
 0000e8 9130 0079                 LDS R19, ADCH ; R19 [0,255]   8 bits in upper reg of 10 bit ADC, drop two lsb
-                                 ;init thresholds
-0000ea ec98                      LDI R25,0xC8	;upper one 200 
-0000eb e48b                      LDI R24,0x4B	;lower one 75
                                  
-0000ec 1793                      CP R25, R19
-0000ed f018                      BRLO goTobiggerthanHthreshold
-0000ee 1738                      CP R19, R24
-0000ef f068                      BRLO goTolowerthanLthreshold
-0000f0 c017                      RJMP goToNotwrite
-=======
-                                 ; MAIN PROBLEM: THE PROGRAM DOES NOT ENTER ONE OF THE 2 CONDITIONS (goTobiggerthanHtreshold or goTolowerthanHtreshold)
-                                 
-0000d5 e17d                      LDI R23,0x1D ;=(5+1+32-8) put in hexa, to select the middle of the case
-0000d6 940e 0128                 CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
-0000d8 e17d                      LDI R23,0x1D ;because writeMiddleBit changed R23
-                                 
-                                 ;take info from the joystick
                                  ;LDS R19, ADCH ; R19 [0,255] 128: middl  8 bits in upper reg of 10 bit ADC, drop two lsb
+                                 
                                  ;init thresholds
                                  ;LDI R25,0xC8	;upper one 200 
                                  ;LDI R24,0x4B	;lower one 75
                                  
-0000d9 ec98                      LDI R25,0xC8	;upper one 200 
-0000da e48b                      LDI R24,0x4B	;lower one 75
+0000ea ec98                      LDI R25,0xC8	;upper one 200 
+0000eb e48b                      LDI R24,0x4B	;lower one 75
                                  
                                  
-0000db 1739                      CP R19, R25
-0000dc f418                      BRSH goTobiggerthanHthreshold
+0000ec 1739                      CP R19, R25
+0000ed f418                      BRSH goTobiggerthanHthreshold
                                  
-0000dd 1783                      CP R24, R19
-0000de f418                      BRSH goTolowerthanLthreshold
+0000ee 1783                      CP R24, R19
+0000ef f468                      BRSH goTolowerthanLthreshold
                                  
                                  
                                  ;CP R25, R19
                                  ;BRLO goTobiggerthanHthreshold
                                  ;CP R19, R24
                                  ;BRLO goTolowerthanLthreshold
-0000df c007                      RJMP goToNotwrite
-                                 
-                                 /*RJMP goToNotwrite
-                                 goTobiggerthanHthreshold: CALL biggerthanHthreshold
-                                 RJMP goTowrite
-                                 goTolowerthanLthreshold: CALL lowerthanLthreshold*/
-                                 goTobiggerthanHthreshold: 
-0000e0 5170                      SUBI R23, 0x10
-0000e1 c002                      RJMP goTowrite
-                                 goTolowerthanLthreshold:
-0000e2 e180                      LDI R24, 0x10
-0000e3 0f78                      ADD R23, R24
-                                 
-                                 goTowrite:
-0000e4 9842                      CBI PORTC,2 ;blink a LED to see if one of the two conditions on the ADC is entered
-0000e5 940e 0128                 CALL writeMiddleBit
->>>>>>> origin/master
+0000f0 c017                      RJMP goToNotwrite
                                  
                                  goTobiggerthanHthreshold: 
 0000f1 e180                      LDI R24, 0x10
@@ -1792,17 +1760,10 @@ Registers used: 20 out of 35 (57.1%)
 "ATmega328P" instruction use summary:
 .lds  :   0 .sts  :   0 adc   :   0 add   :  16 adiw  :   0 and   :   0 
 andi  :   0 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
-<<<<<<< HEAD
 brcc  :   7 brcs  :   0 break :   0 breq  :   1 brge  :   0 brhc  :   0 
-brhs  :   0 brid  :   0 brie  :   0 brlo  :   2 brlt  :   0 brmi  :   0 
-brne  :   8 brpl  :   0 brsh  :   0 brtc  :   4 brts  :   0 brvc  :   0 
-brvs  :   0 bset  :   0 bst   :   4 call  :  23 cbi   :  18 cbr   :   0 
-=======
-brcc  :   4 brcs  :   0 break :   0 breq  :   0 brge  :   0 brhc  :   0 
 brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
-brne  :   9 brpl  :   0 brsh  :   2 brtc  :   3 brts  :   0 brvc  :   0 
-brvs  :   0 bset  :   0 bst   :   3 call  :  19 cbi   :  16 cbr   :   0 
->>>>>>> origin/master
+brne  :   8 brpl  :   0 brsh  :   2 brtc  :   4 brts  :   0 brvc  :   0 
+brvs  :   0 bset  :   0 bst   :   4 call  :  23 cbi   :  18 cbr   :   0 
 clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   0 cls   :   0 
 clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   4 cpc   :   0 
 cpi   :   0 cpse  :   0 dec   :   7 eor   :   0 fmul  :   0 fmuls :   0 
