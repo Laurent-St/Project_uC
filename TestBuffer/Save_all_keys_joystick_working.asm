@@ -1,9 +1,9 @@
-;
-; TestBuffer MAIN.asm
-;
-; Created: 23-04-18 13:34:45
-; Author : Laurent Storrer & Benjamin Wauthion
-;
+/*
+ * Save_all_keys_joystick_working.asm
+ *
+ *  Created: 10-05-18 15:41:51
+ *   Author: admin
+ */ 
 
 ; ATTENTION POINTERS X,Y AND Z OCCUPIES THE REGISTERs 26-31 --> those registers cannot be used
 ; Register X: 26-27, Register Y: 28-29, Register Z:30-31
@@ -18,30 +18,6 @@ RJMP Timer0OverflowInterrupt
 ;Program memory cannot be changed at runtime, while data memory can. So what we do is to define values at "initbuffer" label to which 
 
 init:
-.EQU NBRE_BOAT = 0x3
-.EQU MAX_TRIES = 0x5
-;%%%% Init counters for boat hits and miss %%%%%
-;number of boats
-LDI ZL, 0x01
-LDI ZH, 0x06
-LDI R23, NBRE_BOAT
-ST Z, R23
-;initialize counter of hits of boats
-LDI ZL, 0x02
-LDI ZH, 0x06
-LDI R23, 0x0
-ST Z, R23
-;max number of allowed tries
-LDI ZL, 0x03
-LDI ZH, 0x06
-LDI R23, MAX_TRIES
-ST Z, R23
-;initialize counter of tries
-LDI ZL, 0x04
-LDI ZH, 0x06
-LDI R23, 0x0
-ST Z, R23
-
 ;%%%% Set the click of the joystick as input %%%%%
 CBI DDRB,2;Pin PB2 is an input
 SBI PORTB,2; Enable the pull-up resistor
@@ -578,7 +554,7 @@ actionKey: ;% ATTENTION REQUIRES R23 AS ARGUMENT, DIFFERENT FOR EACH KEY
 	IN R0,PINB ;do R0 = PINB, whre R0 is a register
 	BST R0,2; copy PB2 (bit 2 of PINB) to the T flag (the T of BST refers to flag T)
 	BRTC JoyPressed; BRTC = Branch if T flag is cleared
-	RJMP nothing
+	RJMP missed
 
 	;%%%%%%%%%%%%%%%%% Check if a boat is hit %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	JoyPressed:
@@ -604,75 +580,9 @@ actionKey: ;% ATTENTION REQUIRES R23 AS ARGUMENT, DIFFERENT FOR EACH KEY
 
 	boatdetected:
 		CBI PORTC,3
-		CALL writeHitBoat
-		;%% Increment counter %%
-		LDI ZL,0x02
-		LDI ZH,0x06
-		LD R24,Z
-		LDI R25,0x1
-		ADD R24,R25
-		ST Z,24
-		SBIW Z,0x1
-		LD R25,Z
-		CP R24,25
-		BREQ victory
-		
-		RJMP nothing
 	missed:	
-		CALL writeMissedBoat
-	nothing:
-RET
-
-writeHitBoat:
-	LDI ZL, 0x00
-	LDI ZH, 0x04
-	LD R23, Z
-	LDI R25, 0x8
-	SUB R23, R25
-	PUSH R23
-	CALL write5bitsR23
-	POP R23
-	ADD R23, R25
-	ADD R23, R25
-	CALL write5bitsR23
-RET
-
-writeMissedBoat:
-	LDI ZL, 0x00
-	LDI ZH, 0x04
-	LD R23, Z
-	LDI R25, 0x8
-	SUB R23, R25
-	PUSH R23
-	CALL writeMiss
-	POP R23
-	ADD R23, R25
-	ADD R23, R25
-	CALL writeMiss
-RET
-
-writeMiss:
-	LDI YL,0x00 ;pointer to values in the data memory
-	LDI YH,0x02
-	ADD YL,R23 ;add the value of R23 to X to change at its position
-	BRCC nocarry55
-	LDI R23,0x01
-	ADD YH,R23 ;if there is a carry
-	nocarry55:
-	LDI R23,0b00010001 ;reuse R23, no link with previous R23
-	ST Y,R23
-RET
-
-write5bitsR23:
-	LDI YL,0x00 ;pointer to values in the data memory
-	LDI YH,0x02
-	ADD YL,R23 ;add the value of R23 to X to change at its position
-	BRCC nocarry44
-	LDI R23,0x01
-	ADD YH,R23 ;if there is a carry
-	nocarry44:
-	LDI R23,0b00011111 ;reuse R23, no link with previous R23
-	ST Y,R23
+/*	LDI R23,0x1D
+	CALL write5zeros*/
 RET
 
 writeMiddleBit:
@@ -717,6 +627,15 @@ write5bits:
 	BRNE loop_write5
 RET
 
+/*biggerthanHthreshold:
+SUBI R23, 0x10
+RET
+
+lowerthanLthreshold:
+LDI R24, 0x10
+ADD R23, R24
+RET*/
+
 ;%%%%%%%%%%%%%%%%%% BUFFERS STORED IN THE PROGRAM MEMORY: CANNOT BE CHANGED AT RUNTIME %%%%%%%%%%%%%%%%%%%%%
 ;Attention only the 5 LSB of each compartment will be used for the 5 columns
 
@@ -760,5 +679,6 @@ playerbuffer:
 .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000
 .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000 
 .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000 ; "fake column", not to display
+
 
 

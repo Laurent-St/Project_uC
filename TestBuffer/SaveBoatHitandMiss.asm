@@ -1,9 +1,9 @@
-;
-; TestBuffer MAIN.asm
-;
-; Created: 23-04-18 13:34:45
-; Author : Laurent Storrer & Benjamin Wauthion
-;
+/*
+ * SaveBoatHitandMiss.asm
+ *
+ *  Created: 10-05-18 16:30:53
+ *   Author: admin
+ */ 
 
 ; ATTENTION POINTERS X,Y AND Z OCCUPIES THE REGISTERs 26-31 --> those registers cannot be used
 ; Register X: 26-27, Register Y: 28-29, Register Z:30-31
@@ -18,30 +18,6 @@ RJMP Timer0OverflowInterrupt
 ;Program memory cannot be changed at runtime, while data memory can. So what we do is to define values at "initbuffer" label to which 
 
 init:
-.EQU NBRE_BOAT = 0x3
-.EQU MAX_TRIES = 0x5
-;%%%% Init counters for boat hits and miss %%%%%
-;number of boats
-LDI ZL, 0x01
-LDI ZH, 0x06
-LDI R23, NBRE_BOAT
-ST Z, R23
-;initialize counter of hits of boats
-LDI ZL, 0x02
-LDI ZH, 0x06
-LDI R23, 0x0
-ST Z, R23
-;max number of allowed tries
-LDI ZL, 0x03
-LDI ZH, 0x06
-LDI R23, MAX_TRIES
-ST Z, R23
-;initialize counter of tries
-LDI ZL, 0x04
-LDI ZH, 0x06
-LDI R23, 0x0
-ST Z, R23
-
 ;%%%% Set the click of the joystick as input %%%%%
 CBI DDRB,2;Pin PB2 is an input
 SBI PORTB,2; Enable the pull-up resistor
@@ -605,18 +581,6 @@ actionKey: ;% ATTENTION REQUIRES R23 AS ARGUMENT, DIFFERENT FOR EACH KEY
 	boatdetected:
 		CBI PORTC,3
 		CALL writeHitBoat
-		;%% Increment counter %%
-		LDI ZL,0x02
-		LDI ZH,0x06
-		LD R24,Z
-		LDI R25,0x1
-		ADD R24,R25
-		ST Z,24
-		SBIW Z,0x1
-		LD R25,Z
-		CP R24,25
-		BREQ victory
-		
 		RJMP nothing
 	missed:	
 		CALL writeMissedBoat
