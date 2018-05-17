@@ -1,18 +1,18 @@
 <ASSEMBLER_INFO>
  <VERSION>2.2.7</VERSION>
  <DEVICE>"ATmega328P"</DEVICE>
- <WORKING_DIR>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\Debug</WORKING_DIR>
+ <WORKING_DIR>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\Debug</WORKING_DIR>
  <INCLUDE_PATH>
-  <DIR>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.150\avrasm\inc</DIR>
-  <DIR>C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR>D:/Atmel\7.0\Packs\atmel\ATmega_DFP\1.2.150\avrasm\inc</DIR>
+  <DIR>D:\Atmel\7.0\toolchain\avr8\avrassembler\Include</DIR>
   <DIR></DIR>
  </INCLUDE_PATH>
- <SOURCE_FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</SOURCE_FILE>
+ <SOURCE_FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</SOURCE_FILE>
  <INCLUDED_FILES>
-  <FILE>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.150\avrasm\inc\m328pdef.inc</FILE>
+  <FILE>D:/Atmel\7.0\Packs\atmel\ATmega_DFP\1.2.150\avrasm\inc\m328pdef.inc</FILE>
  </INCLUDED_FILES>
  <OBJECT_FILES>
-  <FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\Debug\BattleShip.obj</FILE>
+  <FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\Debug\BattleShip.obj</FILE>
  </OBJECT_FILES>
  <HEX_FILES>
   <FILE>BattleShip.hex</FILE>
@@ -22,79 +22,84 @@
   <FILE>BattleShip.lss</FILE>
  </OUTPUT_FILES>
  <LABELS>
-  <init><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>20</LINE></init>
-  <Timer0OverflowInterrupt><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>431</LINE></Timer0OverflowInterrupt>
-  <initbuffer><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>888</LINE></initbuffer>
-  <loop><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>111</LINE></loop>
-  <playerbuffer><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>909</LINE></playerbuffer>
-  <loop2><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>129</LINE></loop2>
-  <ButtonLow2><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>153</LINE></ButtonLow2>
-  <ButtonHigh2><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>148</LINE></ButtonHigh2>
-  <follow><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>157</LINE></follow>
-  <nocarry><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>171</LINE></nocarry>
-  <main><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>185</LINE></main>
-  <keyboard><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>191</LINE></keyboard>
-  <CPressed><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>331</LINE></CPressed>
-  <BPressed><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>337</LINE></BPressed>
-  <Pressed0><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>343</LINE></Pressed0>
-  <APressed><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>349</LINE></APressed>
-  <DPressed><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>355</LINE></DPressed>
-  <Pressed3><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>361</LINE></Pressed3>
-  <Pressed2><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>367</LINE></Pressed2>
-  <Pressed1><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>374</LINE></Pressed1>
-  <EPressed><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>381</LINE></EPressed>
-  <Pressed6><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>387</LINE></Pressed6>
-  <Pressed5><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>395</LINE></Pressed5>
-  <Pressed4><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>312</LINE></Pressed4>
-  <FPressed><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>403</LINE></FPressed>
-  <Pressed9><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>409</LINE></Pressed9>
-  <Pressed8><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>318</LINE></Pressed8>
-  <Pressed7><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>324</LINE></Pressed7>
-  <nocarry1000><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>277</LINE></nocarry1000>
-  <nocarry1001><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>292</LINE></nocarry1001>
-  <writeMiddleBit><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>842</LINE></writeMiddleBit>
-  <actionKey><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>531</LINE></actionKey>
-  <firstloop1><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>446</LINE></firstloop1>
-  <write5bits><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>866</LINE></write5bits>
-  <firstloop2><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>455</LINE></firstloop2>
-  <secondloop><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>463</LINE></secondloop>
-  <not_equal><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>470</LINE></not_equal>
-  <nocarry2><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>497</LINE></nocarry2>
-  <dontinitR17><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>521</LINE></dontinitR17>
-  <ButtonLow><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>511</LINE></ButtonLow>
-  <ButtonHigh><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>507</LINE></ButtonHigh>
-  <followinitR17><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>514</LINE></followinitR17>
-  <goTobiggerthanHthreshold><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>552</LINE></goTobiggerthanHthreshold>
-  <goTolowerthanLthreshold><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>571</LINE></goTolowerthanLthreshold>
-  <goToNotwrite><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>589</LINE></goToNotwrite>
-  <write5zeros><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>854</LINE></write5zeros>
-  <JoyPressed><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>597</LINE></JoyPressed>
-  <nothing><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>673</LINE></nothing>
-  <nocarry2F><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>609</LINE></nocarry2F>
-  <boatdetected><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>618</LINE></boatdetected>
-  <missed><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>647</LINE></missed>
-  <writeHitBoat><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>790</LINE></writeHitBoat>
-  <victory><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>677</LINE></victory>
-  <writeMissedBoat><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>804</LINE></writeMissedBoat>
-  <GameOver><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>734</LINE></GameOver>
-  <victorybuffer><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>929</LINE></victorybuffer>
-  <loopvictory><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>689</LINE></loopvictory>
-  <checkreset><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>696</LINE></checkreset>
-  <ButtonLow3><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>785</LINE></ButtonLow3>
-  <ButtonHigh4><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>702</LINE></ButtonHigh4>
-  <ButtonLow4><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>727</LINE></ButtonLow4>
-  <gameoverbuffer><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>949</LINE></gameoverbuffer>
-  <loopGameOver><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>746</LINE></loopGameOver>
-  <checkreset2><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>753</LINE></checkreset2>
-  <ButtonHigh3><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>759</LINE></ButtonHigh3>
-  <write5bitsR23><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>830</LINE></write5bitsR23>
-  <writeMiss><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>818</LINE></writeMiss>
-  <nocarry55><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>825</LINE></nocarry55>
-  <nocarry44><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>837</LINE></nocarry44>
-  <nocarry3><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>849</LINE></nocarry3>
-  <nocarry4><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>861</LINE></nocarry4>
-  <loop_write5><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>868</LINE></loop_write5>
-  <write_0><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>874</LINE></write_0>
-  <write_1><FILE>C:\Users\Bejamin\Desktop\Microcontroller\BattleShip_uC\BattleShip\main.asm</FILE><LINE>872</LINE></write_1>
+  <init><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>22</LINE></init>
+  <Timer2OverflowInterrupt><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>466</LINE></Timer2OverflowInterrupt>
+  <Timer0OverflowInterrupt><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>483</LINE></Timer0OverflowInterrupt>
+  <initbuffer><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>1025</LINE></initbuffer>
+  <loop><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>121</LINE></loop>
+  <playerbuffer><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>1046</LINE></playerbuffer>
+  <loop2><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>139</LINE></loop2>
+  <ButtonLow2><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>163</LINE></ButtonLow2>
+  <ButtonHigh2><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>158</LINE></ButtonHigh2>
+  <follow><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>167</LINE></follow>
+  <nocarry><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>181</LINE></nocarry>
+  <main><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>207</LINE></main>
+  <keyboard><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>213</LINE></keyboard>
+  <CPressed><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>366</LINE></CPressed>
+  <BPressed><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>372</LINE></BPressed>
+  <Pressed0><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>378</LINE></Pressed0>
+  <APressed><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>384</LINE></APressed>
+  <DPressed><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>390</LINE></DPressed>
+  <Pressed3><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>396</LINE></Pressed3>
+  <Pressed2><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>402</LINE></Pressed2>
+  <Pressed1><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>409</LINE></Pressed1>
+  <EPressed><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>416</LINE></EPressed>
+  <Pressed6><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>422</LINE></Pressed6>
+  <Pressed5><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>430</LINE></Pressed5>
+  <Pressed4><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>347</LINE></Pressed4>
+  <FPressed><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>438</LINE></FPressed>
+  <Pressed9><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>444</LINE></Pressed9>
+  <Pressed8><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>353</LINE></Pressed8>
+  <Pressed7><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>359</LINE></Pressed7>
+  <donterasebit><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>310</LINE></donterasebit>
+  <nocarry1000><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>306</LINE></nocarry1000>
+  <nocarry1001><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>323</LINE></nocarry1001>
+  <writeMiddleBit><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>979</LINE></writeMiddleBit>
+  <actionKey><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>601</LINE></actionKey>
+  <firstloop1><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>500</LINE></firstloop1>
+  <write5bits><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>1003</LINE></write5bits>
+  <firstloop2><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>509</LINE></firstloop2>
+  <secondloop><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>517</LINE></secondloop>
+  <not_equal><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>524</LINE></not_equal>
+  <waitloop><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>547</LINE></waitloop>
+  <nocarry2><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>560</LINE></nocarry2>
+  <dontinitR17><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>584</LINE></dontinitR17>
+  <ButtonLow><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>574</LINE></ButtonLow>
+  <ButtonHigh><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>570</LINE></ButtonHigh>
+  <followinitR17><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>577</LINE></followinitR17>
+  <goTobiggerthanHthreshold><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>623</LINE></goTobiggerthanHthreshold>
+  <goTolowerthanLthreshold><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>648</LINE></goTolowerthanLthreshold>
+  <goToNotwrite><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>672</LINE></goToNotwrite>
+  <write5zeros><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>991</LINE></write5zeros>
+  <JoyPressed><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>680</LINE></JoyPressed>
+  <nothing><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>778</LINE></nothing>
+  <nocarry2F><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>698</LINE></nocarry2F>
+  <boatdetected><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>707</LINE></boatdetected>
+  <missed><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>748</LINE></missed>
+  <writeHitBoat><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>922</LINE></writeHitBoat>
+  <victory><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>782</LINE></victory>
+  <writeMissedBoat><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>941</LINE></writeMissedBoat>
+  <GameOver><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>861</LINE></GameOver>
+  <victorybuffer><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>1066</LINE></victorybuffer>
+  <loopvictory><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>798</LINE></loopvictory>
+  <checkreset><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>811</LINE></checkreset>
+  <ButtonLow3><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>917</LINE></ButtonLow3>
+  <ButtonHigh4><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>817</LINE></ButtonHigh4>
+  <loopvictoryreset><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>832</LINE></loopvictoryreset>
+  <ButtonLow4><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>854</LINE></ButtonLow4>
+  <gameoverbuffer><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>1086</LINE></gameoverbuffer>
+  <loopGameOver><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>873</LINE></loopGameOver>
+  <checkreset2><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>880</LINE></checkreset2>
+  <ButtonHigh3><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>886</LINE></ButtonHigh3>
+  <loopgameoverreset><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>898</LINE></loopgameoverreset>
+  <write5bitsR23><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>967</LINE></write5bitsR23>
+  <writeMiss><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>955</LINE></writeMiss>
+  <nocarry55><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>962</LINE></nocarry55>
+  <nocarry44><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>974</LINE></nocarry44>
+  <nocarry3><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>986</LINE></nocarry3>
+  <nocarry4><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>998</LINE></nocarry4>
+  <loop_write5><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>1005</LINE></loop_write5>
+  <write_0><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>1011</LINE></write_0>
+  <write_1><FILE>C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm</FILE><LINE>1009</LINE></write_1>
  </LABELS>
 </ASSEMBLER_INFO>

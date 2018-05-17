@@ -12,6 +12,8 @@
 
 .ORG 0x0000
 RJMP init
+.ORG 0x0012
+RJMP Timer2OverflowInterrupt
 .ORG 0x0020 ; a mettre en dehors pour juste assigner le Timer0OverflowInterrupt a l'adresse 20
 RJMP Timer0OverflowInterrupt
 
@@ -20,7 +22,7 @@ RJMP Timer0OverflowInterrupt
 init:
 .EQU NBRE_BOAT = 0x3
 .EQU MAX_TRIES = 0x5
-;%%%% Init counters for boat hits and miss %%%%%
+;%%%% INIT COUNTERS for boat hits and miss %%%%%
 ;number of boats
 LDI ZL, 0x01
 LDI ZH, 0x06
@@ -51,6 +53,14 @@ LDI ZL, 0x06
 LDI ZH, 0x06
 LDI R23, 0x0
 ST Z, R23
+
+;%%%% FLAG for erasing the last bit %%%%%
+LDI ZL, 0x00
+LDI ZH, 0x07
+LDI R23, 0x0
+ST Z, R23
+;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 ;%%%% Set the click of the joystick as input %%%%%
 CBI DDRB,2;Pin PB2 is an input
@@ -170,8 +180,20 @@ LDI R20,0x01
 ADD XH,R20 ;if there is a carry
 nocarry:
 
+;%%%%%%%%%%%% INITIALIZE SPEAKER AS OUTPUT  %%%%%%%%%%%%%%%%%%
+SBI DDRB,1 ; pin PB1 is an output
+;%%%%%%%%%%%% INITIALIZE SPEAKER TO 0  %%%%%%%%%%%%%%%%%%
+CBI PORTB,1 ; output low to put the speaker off
 ;%%%%%%%%%%%% INITIALIZE INTERRUPTS %%%%%%%%%%%%%%%%%%%%%
 SEI ; dedicated instruction for general interrupts
+;LDI R18, 0b00000001 ; specific interrupt for timer2
+;STS TIMSK2,R18
+;%%%%%%%%%%%% INITIALIZE PRESCALER %%%%%%%%%%%%%%%%%%%%%%
+LDI R16, 0b00000100
+STS TCCR2B, R16 ; prescaler = 256
+
+;%%%%%%%%%%%% INITIALIZE INTERRUPTS %%%%%%%%%%%%%%%%%%%%%
+;SEI ; dedicated instruction for general interrupts
 LDI R18, 0b00000001 ; specific interrupt for timer0
 STS TIMSK0,R18
 ;%%%%%%%%%%%% INITIALIZE PRESCALER %%%%%%%%%%%%%%%%%%%%%%
@@ -263,7 +285,14 @@ keyboard:
 	BRNE loop3*/
 	;%%%%%%%%%%%%%%%%
 
-	;%% Erase last bit LED when key released %%
+	;%% Erase last bit LED when key released, if flag is zero %%
+	LDI ZL,0x00
+	LDI ZH,0x07 ;last bit stored at data memory 0x0400
+	LD R23,Z
+	LDI R25,0x0
+	CP R23,R25
+	BRNE donterasebit ;if flag is 1, dont erase
+
 	LDI ZL,0x00
 	LDI ZH,0x04 ;last bit stored at data memory 0x0400
 	LD R23,Z
@@ -277,6 +306,8 @@ keyboard:
 	nocarry1000:
 	LDI R23, 0b00000000
 	ST Z,R23
+
+	donterasebit:
 	;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	;%% Erase last middle bit LED when key released %%
 	LDI ZL,0x00
@@ -304,6 +335,10 @@ keyboard:
 	LDI R25,0x0
 	ST Z,R25
 
+	;%% Disable Interrupt %%
+	LDI R18, 0b00000000 ; specific interrupt for timer2
+	STS TIMSK2,R18
+	;%%%%%%%%%%%%%%%%%%%%%%%
 
 	RJMP keyboard
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -428,10 +463,29 @@ ST Y,R23*/
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 RJMP main
 
+	Timer2OverflowInterrupt:
+		PUSH R23
+		PUSH R25
+		IN R25,SREG
+		PUSH R25
+
+		SBI PINB,1; by writing a 1 to the pin it will toggle the actual value of the port
+		LDI R23,0xA ; start value for TCNT
+		STS TCNT2,R23 ; on utilise OUT car R0 est categorise comme un registre I/O
+
+		POP R25
+		OUT SREG,R25
+		POP R25
+		POP R23
+	RETI
+
+
 	Timer0OverflowInterrupt:
 		PUSH R16
 		IN R16,SREG
 		PUSH R16
+
+		PUSH R18
 
 
 		SBI PORTB,4
@@ -472,12 +526,13 @@ RJMP main
 			CBI PORTB,5
 			DEC R16
 			BRNE secondloop
+		
 
 		CBI PORTB,4
 		SBI PORTB,4 ;
 		;WAIT FOR 100US
-		LDI R18,0xFF
-/*		waitloop:
+/*		LDI R18,0xFF
+		waitloop:
 			NOP
 			NOP
 			NOP
@@ -487,6 +542,14 @@ RJMP main
 			BRNE waitloop*/
 
 		CBI PORTB,4  ;put in the beginning of next interrupt to avoid making the loop of nops
+
+		LDI R18,0x5F
+		waitloop:
+			NOP
+			NOP
+			NOP
+			DEC R18
+			BRNE waitloop
 
 		;%%% ADDITION OF 72 to X, car on fait +72 et -8 au début de l'itération suivante !!!NEW!!! %%%%%
 		LDI R20,0x48;=2*64=2*(56+8) !!!!CHANGED!!!
@@ -504,7 +567,7 @@ RJMP main
 		IN R0,PINB ;do R0 = PINB
 		BST R0,0; copy PB0 (bit 0 of PINB) to the T flag (the T of BST refers to flag T)
 		BRTC ButtonLow
-		ButtonHigh: ; TO DO ONLY AT THE BEGINNING OF THE GAME
+		ButtonHigh:
 			LDI XL,0x00 ;pointer to values in the data memory
 			LDI XH,0x01
 			RJMP followinitR17
@@ -520,6 +583,13 @@ RJMP main
 		ADD XH,R20 ;if there is a carry
 		dontinitR17:
 
+		;%% Reinitialize the counter %%
+		LDI R20,0x0
+		OUT TCNT0,R20
+		;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+		POP R18
+
 		POP R16
 		OUT SREG,R16
 		POP R16
@@ -529,6 +599,7 @@ RETI
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FUNCTIONS %%%%%%%%%%%%%%%%%%%%%%%
 
 actionKey: ;% ATTENTION REQUIRES R23 AS ARGUMENT, DIFFERENT FOR EACH KEY
+
 	;%% Stores middle bit for erasing when key released %%
 	LDI ZL,0x00
 	LDI ZH,0x05
@@ -550,6 +621,12 @@ actionKey: ;% ATTENTION REQUIRES R23 AS ARGUMENT, DIFFERENT FOR EACH KEY
 	RJMP goToNotwrite
 
 	goTobiggerthanHthreshold: 
+	;% Remove flag for erasing %%%%
+	LDI ZL,0x00
+	LDI ZH,0x07
+	LDI R25,0x0
+	ST Z,R25
+	;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	LDI R24, 0x10
 	ADD R23, R24
 	LDI ZL,0x00
@@ -569,6 +646,12 @@ actionKey: ;% ATTENTION REQUIRES R23 AS ARGUMENT, DIFFERENT FOR EACH KEY
 	RJMP goToNotwrite
 
 	goTolowerthanLthreshold:
+	;% Remove flag for erasing %%%%
+	LDI ZL,0x00
+	LDI ZH,0x07
+	LDI R25,0x0
+	ST Z,R25
+	;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	SUBI R23, 0x10
 	LDI ZL,0x00
 	LDI ZH,0x03
@@ -595,6 +678,8 @@ actionKey: ;% ATTENTION REQUIRES R23 AS ARGUMENT, DIFFERENT FOR EACH KEY
 
 	;%%%%%%%%%%%%%%%%% Check if a boat is hit %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	JoyPressed:
+		CBI PORTC,2
+		CBI PORTC,3
 		;check in init buffer if a boat is present a the position
 		LDI ZL,0x00
 		LDI ZH,0x03
@@ -602,6 +687,10 @@ actionKey: ;% ATTENTION REQUIRES R23 AS ARGUMENT, DIFFERENT FOR EACH KEY
 		LDI ZL, 0x00 ;we reuse Z here, it is different from previous line
 		LDI ZH, 0x01
 		ADD ZL,R23
+
+		SBI PORTC,2
+		SBI PORTC,3
+
 		BRCC nocarry2F
 		LDI R23,0x01
 		ADD ZH,R23 ;if there is a carry
@@ -616,6 +705,10 @@ actionKey: ;% ATTENTION REQUIRES R23 AS ARGUMENT, DIFFERENT FOR EACH KEY
 	;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 	boatdetected:
+
+		LDI R18, 0b00000001 ; specific interrupt for timer2
+		STS TIMSK2,R18
+
 		;CBI PORTC,3
 		CALL writeHitBoat
 		;check if flag of hit counter is 0
@@ -627,6 +720,14 @@ actionKey: ;% ATTENTION REQUIRES R23 AS ARGUMENT, DIFFERENT FOR EACH KEY
 		BRNE nothing ;if flag is not 0, don't increment the counter
 
 		;%% Put flag to 1 and Increment counter %%
+
+		;% Put flag to avoid erasing %%% 
+		LDI ZL,0x00
+		LDI ZH,0x07
+		LDI R25,0x1
+		ST Z,R25
+		;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 		LDI ZL,0x03
 		LDI ZH,0x06
 		LDI R25,0x1
@@ -644,7 +745,11 @@ actionKey: ;% ATTENTION REQUIRES R23 AS ARGUMENT, DIFFERENT FOR EACH KEY
 		BREQ victory
 		
 		RJMP nothing
-	missed:	
+	missed:
+		
+		LDI R18, 0b00000001 ; specific interrupt for timer2
+		STS TIMSK2,R18
+
 		CALL writeMissedBoat
 		;check if flag of hit counter is 0
 		LDI ZL,0x06
@@ -675,6 +780,10 @@ RET
 
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%% Victory %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 victory:
+;CLI
+/*LDI R18, 0b00000000 ; specific interrupt for timer2
+STS TIMSK2,R18*/
+
 ;%%% LOADING VICOTRY PATTERN AT 0x0200
 LDI ZL,low(victorybuffer<<1) ;pointer to values in the program memory
 LDI ZH,high(victorybuffer<<1)
@@ -692,6 +801,12 @@ ST Y+,R20
 DEC R16
 BRNE loopvictory
 
+;SEI
+
+/*LDI R18, 0b00000001 ; specific interrupt for timer2
+STS TIMSK2,R18
+*/
+
 ;% check if reset of the game
 checkreset:
 IN R0,PINB ;do R0 = PINB
@@ -700,10 +815,13 @@ BST R0,0; copy PB0 (bit 0 of PINB) to the T flag (the T of BST refers to flag T)
 BRTC ButtonLow3
 
 ButtonHigh4:
-/*	;%%% LOADING VICOTRY PATTERN AT 0x0200
+	
+/*	LDI R18, 0b00000000 ; specific interrupt for timer2
+	STS TIMSK2,R18*/
+
+	;%%% LOADING VICOTRY PATTERN AT 0x0200
 	LDI ZL,low(playerbuffer<<1) ;pointer to values in the program memory
 	LDI ZH,high(playerbuffer<<1)
-	; ARE THE SHIFTS OK ? Yes
 
 	LDI YL,0x00 ;pointer to values in the data memory
 	LDI YH,0x02
@@ -717,11 +835,20 @@ ButtonHigh4:
 	DEC R16
 	BRNE loopvictoryreset
 
+/*	LDI R18, 0b00000001 ; specific interrupt for timer2
+	STS TIMSK2,R18*/
+
 	;%% Reinitialize the hit counter %%%%%%%
 	LDI ZL,0x02
 	LDI ZH,0x06
 	LDI R25,0x0
-	ST Z,R25*/
+	ST Z,R25
+	;%% Reinitialize the miss counter %%%%%%%
+	LDI ZL,0x05
+	LDI ZH,0x06
+	LDI R25,0x0
+	ST Z,R25
+
 	RJMP main
 
 ButtonLow4:
@@ -732,7 +859,7 @@ ButtonLow4:
 
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%% GameOver %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 GameOver:
-;%%% LOADING VICOTRY PATTERN AT 0x0200
+;%%% LOADING GAME OVER PATTERN AT 0x0200
 LDI ZL,low(gameoverbuffer<<1) ;pointer to values in the program memory
 LDI ZH,high(gameoverbuffer<<1)
 ; ARE THE SHIFTS OK ? Yes
@@ -757,7 +884,7 @@ BST R0,0; copy PB0 (bit 0 of PINB) to the T flag (the T of BST refers to flag T)
 BRTC ButtonLow3
 
 ButtonHigh3: 
-/*	;%%% reloading starting pattern
+	;%%% reloading starting pattern
 	LDI ZL,low(playerbuffer<<1) ;pointer to values in the program memory
 	LDI ZH,high(playerbuffer<<1)
 	; ARE THE SHIFTS OK ? Yes
@@ -778,7 +905,12 @@ ButtonHigh3:
 	LDI ZL,0x05
 	LDI ZH,0x06
 	LDI R25,0x0
-	ST Z,R25*/
+	ST Z,R25
+	;%% Reinitialize the hit counter %%%%%%%
+	LDI ZL,0x02
+	LDI ZH,0x06
+	LDI R25,0x0
+	ST Z,R25
 
 	RJMP main
 
@@ -797,6 +929,11 @@ writeHitBoat:
 	CALL write5bitsR23
 	POP R23
 	ADD R23, R25
+
+	PUSH R23
+	CALL write5bitsR23
+	POP R23
+
 	ADD R23, R25
 	CALL write5bitsR23
 RET
