@@ -1,9 +1,11 @@
-;
-; TestBuffer MAIN.asm
-;
-; Created: 23-04-18 13:34:45
-; Author : Laurent Storrer & Benjamin Wauthion
-;
+/*
+ * Save_working_except_buzzer.asm
+ *
+ *  Created: 17-05-18 16:14:55
+ *   Author: admin
+ */ 
+
+
 
 ; ATTENTION POINTERS X,Y AND Z OCCUPIES THE REGISTERs 26-31 --> those registers cannot be used
 ; Register X: 26-27, Register Y: 28-29, Register Z:30-31
@@ -464,38 +466,19 @@ ST Y,R23*/
 RJMP main
 
 	Timer2OverflowInterrupt:
-		PUSH ZL
-		PUSH ZH
 		PUSH R23
 		PUSH R25
 		IN R25,SREG
 		PUSH R25
 
-		LDI ZL,0x00
-		LDI ZH,0x08
-
-		LD R23,Z
-		LDI R25,0x1
-
 		SBI PINB,1; by writing a 1 to the pin it will toggle the actual value of the port
-
-		CP R23,R25
-		BRNE missfreq
-		LDI R23, 0xAA
-		STS TCNT2,R23 ; on utilise OUT car R0 est categorise comme un registre I/O
-		RJMP endinterrupt
-
-		missfreq:
-		LDI R23, 0xF
+		LDI R23,0xA ; start value for TCNT
 		STS TCNT2,R23 ; on utilise OUT car R0 est categorise comme un registre I/O
 
-		endinterrupt:
 		POP R25
 		OUT SREG,R25
 		POP R25
 		POP R23
-		POP ZH
-		POP ZL
 	RETI
 
 
@@ -728,11 +711,6 @@ actionKey: ;% ATTENTION REQUIRES R23 AS ARGUMENT, DIFFERENT FOR EACH KEY
 		LDI R18, 0b00000001 ; specific interrupt for timer2
 		STS TIMSK2,R18
 
-		LDI ZL, 0x00
-		LDI ZH, 0x08
-		LDI R18, 0x1
-		ST Z,R18
-
 		;CBI PORTC,3
 		CALL writeHitBoat
 		;check if flag of hit counter is 0
@@ -773,11 +751,6 @@ actionKey: ;% ATTENTION REQUIRES R23 AS ARGUMENT, DIFFERENT FOR EACH KEY
 		
 		LDI R18, 0b00000001 ; specific interrupt for timer2
 		STS TIMSK2,R18
-
-		LDI ZL, 0x00
-		LDI ZH, 0x08
-		LDI R18, 0x2
-		ST Z,R18
 
 		CALL writeMissedBoat
 		;check if flag of hit counter is 0

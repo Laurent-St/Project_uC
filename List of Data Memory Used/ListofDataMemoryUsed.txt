@@ -3,3 +3,6 @@
 - 0x0300: current position where we are aiming, relative to 0x0200 --> (content of 0x0200)+(content of 0x0300) = position where we are aiming
 - 0x0400: position of last up/down bit written when joystick was used
 - 0x0500: position of last middle bit written when key was used
+- 0x0600-606: flags and counters
+- 0x0700: flag for erasing last bit
+- 0x0800: value 1 or 2 to know which sound to play (missed or hit)

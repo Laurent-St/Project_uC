@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.7  C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm Thu May 17 13:09:03 2018
+AVRASM ver. 2.2.7  C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm Thu May 17 16:29:59 2018
 
 [builtin](2): Including file 'D:/Atmel\7.0\Packs\atmel\ATmega_DFP\1.2.150\avrasm\inc\m328pdef.inc'
 C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Laboratories\uC\Laurent_uC\Project\Project_uC\BattleShip_uC\BattleShip\main.asm(11): Including file 'D:/Atmel\7.0\Packs\atmel\ATmega_DFP\1.2.150\avrasm\inc\m328pdef.inc'
@@ -1046,7 +1046,7 @@ C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Labora
                                  .ORG 0x0012
 000012 c148                      RJMP Timer2OverflowInterrupt
                                  .ORG 0x0020 ; a mettre en dehors pour juste assigner le Timer0OverflowInterrupt a l'adresse 20
-000020 c147                      RJMP Timer0OverflowInterrupt
+000020 c155                      RJMP Timer0OverflowInterrupt
                                  
                                  ;Program memory cannot be changed at runtime, while data memory can. So what we do is to define values at "initbuffer" label to which 
                                  
@@ -1139,7 +1139,7 @@ C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Labora
 00005d 9a5b                      SBI PORTD,3
                                  
                                  ;%%%%%%%%%%%%%%%%%%%%%%%%% POINTER FOR 1ST BUFFER: : LOADED STARTING AT DATA ADDRESS 0x0100 %%%%%%%%
-00005e e7e2                      LDI ZL,low(initbuffer<<1) ;pointer to values in the program memory
+00005e e9ea                      LDI ZL,low(initbuffer<<1) ;pointer to values in the program memory
 00005f e0f5                      LDI ZH,high(initbuffer<<1)
                                  ; ARE THE SHIFTS OK ? Yes
                                  
@@ -1157,8 +1157,8 @@ C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Labora
                                  ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
                                  
                                  ;%%%%%%%%%%%%%%%%%%%%%%%%%%%% SECOND BUFFER: LOADED STARTING AT DATA ADDRESS 0x0200 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-000067 efe2                      LDI ZL,low(playerbuffer<<1) ;pointer to values in the program memory
-000068 e0f5                      LDI ZH,high(playerbuffer<<1)
+000067 e1ea                      LDI ZL,low(playerbuffer<<1) ;pointer to values in the program memory
+000068 e0f6                      LDI ZH,high(playerbuffer<<1)
                                  ; ARE THE SHIFTS OK ? Yes
                                  
 000069 e0a0                      LDI XL,0x00 ;pointer to values in the data memory
@@ -1377,106 +1377,106 @@ C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Labora
                                  ;%%%% when key is pressed %%%%%
                                  Pressed4:
 0000ea e17c                      LDI R23,0x1C ;(1+1+32-8)
-0000eb 940e 029c                 CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
+0000eb 940e 02b0                 CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
 0000ed e17c                      LDI R23,0x1C ;because writeMiddleBit changed R23
-0000ee 940e 01a9                 CALL actionKey
+0000ee 940e 01b7                 CALL actionKey
 0000f0 cf9d                      RJMP main
                                  Pressed8:
 0000f1 e578                      LDI R23,0x58 ;(11*8) put in hexa
-0000f2 940e 029c                 CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
+0000f2 940e 02b0                 CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
 0000f4 e578                      LDI R23,0x58 ;because writeMiddleBit changed R23
-0000f5 940e 01a9                 CALL actionKey
+0000f5 940e 01b7                 CALL actionKey
 0000f7 cf96                      RJMP main
                                  Pressed7:
 0000f8 e17f                      LDI R23,0x1F
-0000f9 940e 029c                 CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
+0000f9 940e 02b0                 CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
 0000fb e17f                      LDI R23,0x1F ;because writeMiddleBit changed R23
-0000fc 940e 01a9                 CALL actionKey
+0000fc 940e 01b7                 CALL actionKey
 0000fe cf8f                      RJMP main
                                  
                                  CPressed:  
 0000ff e57c                      LDI R23,0x5C
-000100 940e 029c                 CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
+000100 940e 02b0                 CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
 000102 e57c                      LDI R23,0x5C ;because writeMiddleBit changed R23
-000103 940e 01a9                 CALL actionKey
+000103 940e 01b7                 CALL actionKey
 000105 cf88                      RJMP main
                                  BPressed:  
 000106 e57b                      LDI R23,0x5B
-000107 940e 029c                 CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
+000107 940e 02b0                 CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
 000109 e57b                      LDI R23,0x5B ;because writeMiddleBit changed R23
-00010a 940e 01a9                 CALL actionKey
+00010a 940e 01b7                 CALL actionKey
 00010c cf81                      RJMP main
                                  Pressed0:  
 00010d e178                      LDI R23,0x18
-00010e 940e 029c                 CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
+00010e 940e 02b0                 CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
 000110 e178                      LDI R23,0x18 ;because writeMiddleBit changed R23
-000111 940e 01a9                 CALL actionKey
+000111 940e 01b7                 CALL actionKey
 000113 cf7a                      RJMP main
                                  APressed: 
 000114 e57a                      LDI R23,0x5A
-000115 940e 029c                 CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
+000115 940e 02b0                 CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
 000117 e57a                      LDI R23,0x5A ;because writeMiddleBit changed R23
-000118 940e 01a9                 CALL actionKey
+000118 940e 01b7                 CALL actionKey
 00011a cf73                      RJMP main
                                  DPressed:  
 00011b e57d                      LDI R23,0x5D
-00011c 940e 029c                 CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
+00011c 940e 02b0                 CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
 00011e e57d                      LDI R23,0x5D ;because writeMiddleBit changed R23
-00011f 940e 01a9                 CALL actionKey
+00011f 940e 01b7                 CALL actionKey
 000121 cf6c                      RJMP main
                                  Pressed3:
 000122 e17b                      LDI R23,0x1B ;(1+1+32-8)
-000123 940e 029c                 CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
+000123 940e 02b0                 CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
 000125 e17b                      LDI R23,0x1B ;because writeMiddleBit changed R23
-000126 940e 01a9                 CALL actionKey
+000126 940e 01b7                 CALL actionKey
 000128 cf65                      RJMP main
                                  Pressed2:
 000129 e17a                      LDI R23,0x1A ;(1+1+32-8)
-00012a 940e 029c                 CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
+00012a 940e 02b0                 CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
 00012c e17a                      LDI R23,0x1A ;because writeMiddleBit changed R23
-00012d 940e 01a9                 CALL actionKey
+00012d 940e 01b7                 CALL actionKey
 00012f cf5e                      RJMP main
                                  
                                  Pressed1:
 000130 e179                      LDI R23,0x19 ;(1+1+32-8)
-000131 940e 029c                 CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
+000131 940e 02b0                 CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
 000133 e179                      LDI R23,0x19 ;because writeMiddleBit changed R23
-000134 940e 01a9                 CALL actionKey
+000134 940e 01b7                 CALL actionKey
 000136 cf57                      RJMP main
                                  
                                  EPressed:  
 000137 e57e                      LDI R23,0x5E
-000138 940e 029c                 CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
+000138 940e 02b0                 CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
 00013a e57e                      LDI R23,0x5E ;because writeMiddleBit changed R23
-00013b 940e 01a9                 CALL actionKey
+00013b 940e 01b7                 CALL actionKey
 00013d cf50                      RJMP main
                                  Pressed6:
 00013e e17e                      LDI R23,0x1E ;
-00013f 940e 029c                 CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
+00013f 940e 02b0                 CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
 000141 e17e                      LDI R23,0x1E ;because writeMiddleBit changed R23
-000142 940e 01a9                 CALL actionKey
+000142 940e 01b7                 CALL actionKey
 000144 cf49                      RJMP main
                                  
                                  
                                  Pressed5: 
 000145 e17d                      LDI R23,0x1D ;=(5+1+32-8) put in hexa, to select the middle of the case
-000146 940e 029c                 CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
+000146 940e 02b0                 CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
 000148 e17d                      LDI R23,0x1D ;because writeMiddleBit changed R23
-000149 940e 01a9                 CALL actionKey
+000149 940e 01b7                 CALL actionKey
 00014b cf42                      RJMP main
                                  
                                  
                                  FPressed: 
 00014c e57f                      LDI R23,0x5F
-00014d 940e 029c                 CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
+00014d 940e 02b0                 CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
 00014f e57f                      LDI R23,0x5F ;because writeMiddleBit changed R23
-000150 940e 01a9                 CALL actionKey
+000150 940e 01b7                 CALL actionKey
 000152 cf3b                      RJMP main
                                  Pressed9:
 000153 e579                      LDI R23,0x59 ;
-000154 940e 029c                 CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
+000154 940e 02b0                 CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
 000156 e579                      LDI R23,0x59 ;because writeMiddleBit changed R23
-000157 940e 01a9                 CALL actionKey
+000157 940e 01b7                 CALL actionKey
 000159 cf34                      RJMP main
                                  ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
                                  
@@ -1495,72 +1495,91 @@ C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Labora
 00015a cf33                      RJMP main
                                  
                                  	Timer2OverflowInterrupt:
-00015b 937f                      		PUSH R23
-00015c 939f                      		PUSH R25
-00015d b79f                      		IN R25,SREG
+00015b 93ef                      		PUSH ZL
+00015c 93ff                      		PUSH ZH
+00015d 937f                      		PUSH R23
 00015e 939f                      		PUSH R25
+00015f b79f                      		IN R25,SREG
+000160 939f                      		PUSH R25
                                  
-00015f 9a19                      		SBI PINB,1; by writing a 1 to the pin it will toggle the actual value of the port
-000160 e07a                      		LDI R23,0xA ; start value for TCNT
-000161 9370 00b2                 		STS TCNT2,R23 ; on utilise OUT car R0 est categorise comme un registre I/O
+000161 e0e0                      		LDI ZL,0x00
+000162 e0f8                      		LDI ZH,0x08
                                  
-000163 919f                      		POP R25
-000164 bf9f                      		OUT SREG,R25
-000165 919f                      		POP R25
-000166 917f                      		POP R23
-000167 9518                      	RETI
+000163 8170                      		LD R23,Z
+000164 e091                      		LDI R25,0x1
+                                 
+000165 9a19                      		SBI PINB,1; by writing a 1 to the pin it will toggle the actual value of the port
+                                 
+000166 1779                      		CP R23,R25
+000167 f421                      		BRNE missfreq
+000168 ea7a                      		LDI R23, 0xAA
+000169 9370 00b2                 		STS TCNT2,R23 ; on utilise OUT car R0 est categorise comme un registre I/O
+00016b c003                      		RJMP endinterrupt
+                                 
+                                 		missfreq:
+00016c e07f                      		LDI R23, 0xF
+00016d 9370 00b2                 		STS TCNT2,R23 ; on utilise OUT car R0 est categorise comme un registre I/O
+                                 
+                                 		endinterrupt:
+00016f 919f                      		POP R25
+000170 bf9f                      		OUT SREG,R25
+000171 919f                      		POP R25
+000172 917f                      		POP R23
+000173 91ff                      		POP ZH
+000174 91ef                      		POP ZL
+000175 9518                      	RETI
                                  
                                  
                                  	Timer0OverflowInterrupt:
-000168 930f                      		PUSH R16
-000169 b70f                      		IN R16,SREG
-00016a 930f                      		PUSH R16
+000176 930f                      		PUSH R16
+000177 b70f                      		IN R16,SREG
+000178 930f                      		PUSH R16
                                  
-00016b 932f                      		PUSH R18
+000179 932f                      		PUSH R18
                                  
                                  
-00016c 9a2c                      		SBI PORTB,4
+00017a 9a2c                      		SBI PORTB,4
                                  
-00016d 9718                      		SBIW X,0x8 ;substract immediate
+00017b 9718                      		SBIW X,0x8 ;substract immediate
                                  		;SBI PORTB,3
                                  
                                  		;%%%%%% COLUMNS %%%%%%%%%%%
                                  		;correspond to first line of blocks
-00016e e008                      		LDI R16,0x8 ;compteur: 8  
+00017c e008                      		LDI R16,0x8 ;compteur: 8  
                                  		;ADIW X,0x1 ; to counteract the first pre-decrement --> not sure !!!NEW!!! 
                                  		firstloop1:
-00016f 915e                      			LD R21,-X ; attention PRE-decrement !!!NEW!!!
-000170 940e 02ae                 			CALL write5bits
-000172 950a                      			DEC R16 ;decrement counter
-000173 f7d9                      		BRNE firstloop1 ;branch if R16 is 0
+00017d 915e                      			LD R21,-X ; attention PRE-decrement !!!NEW!!!
+00017e 940e 02c2                 			CALL write5bits
+000180 950a                      			DEC R16 ;decrement counter
+000181 f7d9                      		BRNE firstloop1 ;branch if R16 is 0
                                  
                                  		;correspond to second line of blocks
-000174 97d8                      		SBIW X,0x38	;56 in block term !!!NEW!!! : put SBIW and not ADIW
-000175 e008                      		LDI R16,0x8 ;compteur: 8  
+000182 97d8                      		SBIW X,0x38	;56 in block term !!!NEW!!! : put SBIW and not ADIW
+000183 e008                      		LDI R16,0x8 ;compteur: 8  
                                  		firstloop2:
-000176 915e                      			LD R21,-X
-000177 940e 02ae                 			CALL write5bits
-000179 950a                      			DEC R16 ;decrement counter
-00017a f7d9                      		BRNE firstloop2 ;branch if R16 is 0
+000184 915e                      			LD R21,-X
+000185 940e 02c2                 			CALL write5bits
+000187 950a                      			DEC R16 ;decrement counter
+000188 f7d9                      		BRNE firstloop2 ;branch if R16 is 0
                                  
                                  
-00017b e008                      		LDI R16,0x8
+000189 e008                      		LDI R16,0x8
                                  		secondloop:
-00017c 982b                      			CBI PORTB,3
-00017d 1701                      			CP R16,R17
-00017e f409                      			BRNE not_equal
+00018a 982b                      			CBI PORTB,3
+00018b 1701                      			CP R16,R17
+00018c f409                      			BRNE not_equal
                                  
-00017f 9a2b                      			SBI PORTB,3
+00018d 9a2b                      			SBI PORTB,3
                                  
                                  			not_equal:
-000180 9a2d                      			SBI PORTB,5
-000181 982d                      			CBI PORTB,5
-000182 950a                      			DEC R16
-000183 f7c1                      			BRNE secondloop
+00018e 9a2d                      			SBI PORTB,5
+00018f 982d                      			CBI PORTB,5
+000190 950a                      			DEC R16
+000191 f7c1                      			BRNE secondloop
                                  		
                                  
-000184 982c                      		CBI PORTB,4
-000185 9a2c                      		SBI PORTB,4 ;
+000192 982c                      		CBI PORTB,4
+000193 9a2c                      		SBI PORTB,4 ;
                                  		;WAIT FOR 100US
                                  /*		LDI R18,0xFF
                                  		waitloop:
@@ -1572,59 +1591,59 @@ C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Labora
                                  			DEC R18
                                  			BRNE waitloop*/
                                  
-000186 982c                      		CBI PORTB,4  ;put in the beginning of next interrupt to avoid making the loop of nops
+000194 982c                      		CBI PORTB,4  ;put in the beginning of next interrupt to avoid making the loop of nops
                                  
-000187 e52f                      		LDI R18,0x5F
+000195 e52f                      		LDI R18,0x5F
                                  		waitloop:
-000188 0000                      			NOP
-000189 0000                      			NOP
-00018a 0000                      			NOP
-00018b 952a                      			DEC R18
-00018c f7d9                      			BRNE waitloop
+000196 0000                      			NOP
+000197 0000                      			NOP
+000198 0000                      			NOP
+000199 952a                      			DEC R18
+00019a f7d9                      			BRNE waitloop
                                  
                                  		;%%% ADDITION OF 72 to X, car on fait +72 et -8 au début de l'itération suivante !!!NEW!!! %%%%%
-00018d e448                      		LDI R20,0x48;=2*64=2*(56+8) !!!!CHANGED!!!
-00018e 0fa4                      		ADD XL,R20
-00018f f410                      		BRCC nocarry2
-000190 e041                      		LDI R20,0x01
-000191 0fb4                      		ADD XH,R20 ;if there is a carry
+00019b e448                      		LDI R20,0x48;=2*64=2*(56+8) !!!!CHANGED!!!
+00019c 0fa4                      		ADD XL,R20
+00019d f410                      		BRCC nocarry2
+00019e e041                      		LDI R20,0x01
+00019f 0fb4                      		ADD XH,R20 ;if there is a carry
                                  		nocarry2:
                                  		;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
                                  
-000192 951a                      		DEC R17
-000193 f471                      		BRNE dontinitR17
-000194 e017                      		LDI R17,0x7
+0001a0 951a                      		DEC R17
+0001a1 f471                      		BRNE dontinitR17
+0001a2 e017                      		LDI R17,0x7
                                  
-000195 b003                      		IN R0,PINB ;do R0 = PINB
-000196 fa00                      		BST R0,0; copy PB0 (bit 0 of PINB) to the T flag (the T of BST refers to flag T)
-000197 f41e                      		BRTC ButtonLow
+0001a3 b003                      		IN R0,PINB ;do R0 = PINB
+0001a4 fa00                      		BST R0,0; copy PB0 (bit 0 of PINB) to the T flag (the T of BST refers to flag T)
+0001a5 f41e                      		BRTC ButtonLow
                                  		ButtonHigh:
-000198 e0a0                      			LDI XL,0x00 ;pointer to values in the data memory
-000199 e0b1                      			LDI XH,0x01
-00019a c002                      			RJMP followinitR17
+0001a6 e0a0                      			LDI XL,0x00 ;pointer to values in the data memory
+0001a7 e0b1                      			LDI XH,0x01
+0001a8 c002                      			RJMP followinitR17
                                  		ButtonLow:
-00019b e0a0                      			LDI XL,0x00 ;pointer to values in the data memory
-00019c e0b2                      			LDI XH,0x02
+0001a9 e0a0                      			LDI XL,0x00 ;pointer to values in the data memory
+0001aa e0b2                      			LDI XH,0x02
                                  		followinitR17:
                                  		;%%% ADDITION OF 2*64 to X, need carry addition because ADIW doesn't work because 64 is too high %%%%%
-00019d e840                      		LDI R20,0x80;=2*64=2*(56+8) !!!!CHANGED!!!
-00019e 0fa4                      		ADD XL,R20
-00019f f410                      		BRCC dontinitR17
-0001a0 e041                      		LDI R20,0x01
-0001a1 0fb4                      		ADD XH,R20 ;if there is a carry
+0001ab e840                      		LDI R20,0x80;=2*64=2*(56+8) !!!!CHANGED!!!
+0001ac 0fa4                      		ADD XL,R20
+0001ad f410                      		BRCC dontinitR17
+0001ae e041                      		LDI R20,0x01
+0001af 0fb4                      		ADD XH,R20 ;if there is a carry
                                  		dontinitR17:
                                  
                                  		;%% Reinitialize the counter %%
-0001a2 e040                      		LDI R20,0x0
-0001a3 bd46                      		OUT TCNT0,R20
+0001b0 e040                      		LDI R20,0x0
+0001b1 bd46                      		OUT TCNT0,R20
                                  		;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
                                  
-0001a4 912f                      		POP R18
+0001b2 912f                      		POP R18
                                  
-0001a5 910f                      		POP R16
-0001a6 bf0f                      		OUT SREG,R16
-0001a7 910f                      		POP R16
-0001a8 9518                      RETI
+0001b3 910f                      		POP R16
+0001b4 bf0f                      		OUT SREG,R16
+0001b5 910f                      		POP R16
+0001b6 9518                      RETI
                                  
                                  
                                  ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FUNCTIONS %%%%%%%%%%%%%%%%%%%%%%%
@@ -1632,207 +1651,217 @@ C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Labora
                                  actionKey: ;% ATTENTION REQUIRES R23 AS ARGUMENT, DIFFERENT FOR EACH KEY
                                  
                                  	;%% Stores middle bit for erasing when key released %%
-0001a9 e0e0                      	LDI ZL,0x00
-0001aa e0f5                      	LDI ZH,0x05
-0001ab 8370                      	ST Z,R23
+0001b7 e0e0                      	LDI ZL,0x00
+0001b8 e0f5                      	LDI ZH,0x05
+0001b9 8370                      	ST Z,R23
                                  	;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
                                  
                                  	;take info from the joystick
-0001ac 9130 0079                 	LDS R19, ADCH ; R19 [0,255]   8 bits in upper reg of 10 bit ADC, drop two lsb
+0001ba 9130 0079                 	LDS R19, ADCH ; R19 [0,255]   8 bits in upper reg of 10 bit ADC, drop two lsb
                                  	; %%%%% init thresholds %%%%%%%%
-0001ae ec98                      	LDI R25,0xC8	;upper one 200 
-0001af e48b                      	LDI R24,0x4B	;lower one 75
+0001bc ec98                      	LDI R25,0xC8	;upper one 200 
+0001bd e48b                      	LDI R24,0x4B	;lower one 75
                                  	;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
                                  
-0001b0 1739                      	CP R19, R25
-0001b1 f418                      	BRSH goTobiggerthanHthreshold
-0001b2 1783                      	CP R24, R19
-0001b3 f4a0                      	BRSH goTolowerthanLthreshold
+0001be 1739                      	CP R19, R25
+0001bf f418                      	BRSH goTobiggerthanHthreshold
+0001c0 1783                      	CP R24, R19
+0001c1 f4a0                      	BRSH goTolowerthanLthreshold
                                  
-0001b4 c025                      	RJMP goToNotwrite
+0001c2 c025                      	RJMP goToNotwrite
                                  
                                  	goTobiggerthanHthreshold: 
                                  	;% Remove flag for erasing %%%%
-0001b5 e0e0                      	LDI ZL,0x00
-0001b6 e0f7                      	LDI ZH,0x07
-0001b7 e090                      	LDI R25,0x0
-0001b8 8390                      	ST Z,R25
+0001c3 e0e0                      	LDI ZL,0x00
+0001c4 e0f7                      	LDI ZH,0x07
+0001c5 e090                      	LDI R25,0x0
+0001c6 8390                      	ST Z,R25
                                  	;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-0001b9 e180                      	LDI R24, 0x10
-0001ba 0f78                      	ADD R23, R24
-0001bb e0e0                      	LDI ZL,0x00
-0001bc e0f3                      	LDI ZH,0x03
-0001bd 8370                      	ST Z,R23
-0001be 940e 029c                 	CALL writeMiddleBit
-0001c0 8170                      	LD R23,Z
+0001c7 e180                      	LDI R24, 0x10
+0001c8 0f78                      	ADD R23, R24
+0001c9 e0e0                      	LDI ZL,0x00
+0001ca e0f3                      	LDI ZH,0x03
+0001cb 8370                      	ST Z,R23
+0001cc 940e 02b0                 	CALL writeMiddleBit
+0001ce 8170                      	LD R23,Z
                                  	;%% Stores for erasing when key released %%
-0001c1 e0e0                      	LDI ZL,0x00
-0001c2 e0f4                      	LDI ZH,0x04
-0001c3 8370                      	ST Z,R23
+0001cf e0e0                      	LDI ZL,0x00
+0001d0 e0f4                      	LDI ZH,0x04
+0001d1 8370                      	ST Z,R23
                                  	;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
                                  	;%% Erase other point if joystick goes in other direction %%
-0001c4 5270                      	SUBI R23,0x20
-0001c5 940e 02a5                 	CALL write5zeros
+0001d2 5270                      	SUBI R23,0x20
+0001d3 940e 02b9                 	CALL write5zeros
                                  	;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-0001c7 c012                      	RJMP goToNotwrite
+0001d5 c012                      	RJMP goToNotwrite
                                  
                                  	goTolowerthanLthreshold:
                                  	;% Remove flag for erasing %%%%
-0001c8 e0e0                      	LDI ZL,0x00
-0001c9 e0f7                      	LDI ZH,0x07
-0001ca e090                      	LDI R25,0x0
-0001cb 8390                      	ST Z,R25
+0001d6 e0e0                      	LDI ZL,0x00
+0001d7 e0f7                      	LDI ZH,0x07
+0001d8 e090                      	LDI R25,0x0
+0001d9 8390                      	ST Z,R25
                                  	;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-0001cc 5170                      	SUBI R23, 0x10
-0001cd e0e0                      	LDI ZL,0x00
-0001ce e0f3                      	LDI ZH,0x03
-0001cf 8370                      	ST Z,R23
-0001d0 940e 029c                 	CALL writeMiddleBit
-0001d2 8170                      	LD R23,Z
+0001da 5170                      	SUBI R23, 0x10
+0001db e0e0                      	LDI ZL,0x00
+0001dc e0f3                      	LDI ZH,0x03
+0001dd 8370                      	ST Z,R23
+0001de 940e 02b0                 	CALL writeMiddleBit
+0001e0 8170                      	LD R23,Z
                                  	;%% Stores for erasing when key released %%
-0001d3 e0e0                      	LDI ZL,0x00
-0001d4 e0f4                      	LDI ZH,0x04
-0001d5 8370                      	ST Z,R23
+0001e1 e0e0                      	LDI ZL,0x00
+0001e2 e0f4                      	LDI ZH,0x04
+0001e3 8370                      	ST Z,R23
                                  	;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
                                  	;%% Erase other point if joystick goes in other direction %%
-0001d6 e280                      	LDI R24, 0x20
-0001d7 0f78                      	ADD R23, R24
-0001d8 940e 02a5                 	CALL write5zeros
+0001e4 e280                      	LDI R24, 0x20
+0001e5 0f78                      	ADD R23, R24
+0001e6 940e 02b9                 	CALL write5zeros
                                  	;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
                                  
                                  	goToNotwrite:
                                  	;get value of PINB and fire action (click of the joystick)
-0001da b003                      	IN R0,PINB ;do R0 = PINB, whre R0 is a register
-0001db fa02                      	BST R0,2; copy PB2 (bit 2 of PINB) to the T flag (the T of BST refers to flag T)
-0001dc f40e                      	BRTC JoyPressed; BRTC = Branch if T flag is cleared
-0001dd c04b                      	RJMP nothing
+0001e8 b003                      	IN R0,PINB ;do R0 = PINB, whre R0 is a register
+0001e9 fa02                      	BST R0,2; copy PB2 (bit 2 of PINB) to the T flag (the T of BST refers to flag T)
+0001ea f40e                      	BRTC JoyPressed; BRTC = Branch if T flag is cleared
+0001eb c053                      	RJMP nothing
                                  
                                  	;%%%%%%%%%%%%%%%%% Check if a boat is hit %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
                                  	JoyPressed:
-0001de 9842                      		CBI PORTC,2
-0001df 9843                      		CBI PORTC,3
+0001ec 9842                      		CBI PORTC,2
+0001ed 9843                      		CBI PORTC,3
                                  		;check in init buffer if a boat is present a the position
-0001e0 e0e0                      		LDI ZL,0x00
-0001e1 e0f3                      		LDI ZH,0x03
-0001e2 8170                      		LD R23,Z
-0001e3 e0e0                      		LDI ZL, 0x00 ;we reuse Z here, it is different from previous line
-0001e4 e0f1                      		LDI ZH, 0x01
-0001e5 0fe7                      		ADD ZL,R23
+0001ee e0e0                      		LDI ZL,0x00
+0001ef e0f3                      		LDI ZH,0x03
+0001f0 8170                      		LD R23,Z
+0001f1 e0e0                      		LDI ZL, 0x00 ;we reuse Z here, it is different from previous line
+0001f2 e0f1                      		LDI ZH, 0x01
+0001f3 0fe7                      		ADD ZL,R23
                                  
-0001e6 9a42                      		SBI PORTC,2
-0001e7 9a43                      		SBI PORTC,3
+0001f4 9a42                      		SBI PORTC,2
+0001f5 9a43                      		SBI PORTC,3
                                  
-0001e8 f410                      		BRCC nocarry2F
-0001e9 e071                      		LDI R23,0x01
-0001ea 0ff7                      		ADD ZH,R23 ;if there is a carry
+0001f6 f410                      		BRCC nocarry2F
+0001f7 e071                      		LDI R23,0x01
+0001f8 0ff7                      		ADD ZH,R23 ;if there is a carry
                                  
                                  		nocarry2F:
-0001eb 8170                      		LD R23,Z	;put what is stocked in the adress 100+R23 in R23
+0001f9 8170                      		LD R23,Z	;put what is stocked in the adress 100+R23 in R23
                                  		;look if the value is a 0b00011111 (prescence of a boat) or 0b00000000
-0001ec e18f                      		LDI R24, 0b00011111 ; signature of a boat
-0001ed 1787                      		CP R24, R23
-0001ee f009                      		BREQ boatdetected
-0001ef c01f                      		RJMP missed
+0001fa e18f                      		LDI R24, 0b00011111 ; signature of a boat
+0001fb 1787                      		CP R24, R23
+0001fc f009                      		BREQ boatdetected
+0001fd c023                      		RJMP missed
                                  	;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
                                  
                                  	boatdetected:
                                  
-0001f0 e021                      		LDI R18, 0b00000001 ; specific interrupt for timer2
-0001f1 9320 0070                 		STS TIMSK2,R18
+0001fe e021                      		LDI R18, 0b00000001 ; specific interrupt for timer2
+0001ff 9320 0070                 		STS TIMSK2,R18
+                                 
+000201 e0e0                      		LDI ZL, 0x00
+000202 e0f8                      		LDI ZH, 0x08
+000203 e021                      		LDI R18, 0x1
+000204 8320                      		ST Z,R18
                                  
                                  		;CBI PORTC,3
-0001f3 940e 026a                 		CALL writeHitBoat
+000205 940e 027e                 		CALL writeHitBoat
                                  		;check if flag of hit counter is 0
-0001f5 e0e3                      		LDI ZL,0x03
-0001f6 e0f6                      		LDI ZH,0x06
-0001f7 8180                      		LD R24,Z
-0001f8 e090                      		LDI R25,0x0
-0001f9 1789                      		CP R24,R25
-0001fa f571                      		BRNE nothing ;if flag is not 0, don't increment the counter
+000207 e0e3                      		LDI ZL,0x03
+000208 e0f6                      		LDI ZH,0x06
+000209 8180                      		LD R24,Z
+00020a e090                      		LDI R25,0x0
+00020b 1789                      		CP R24,R25
+00020c f591                      		BRNE nothing ;if flag is not 0, don't increment the counter
                                  
                                  		;%% Put flag to 1 and Increment counter %%
                                  
                                  		;% Put flag to avoid erasing %%% 
-0001fb e0e0                      		LDI ZL,0x00
-0001fc e0f7                      		LDI ZH,0x07
-0001fd e091                      		LDI R25,0x1
-0001fe 8390                      		ST Z,R25
+00020d e0e0                      		LDI ZL,0x00
+00020e e0f7                      		LDI ZH,0x07
+00020f e091                      		LDI R25,0x1
+000210 8390                      		ST Z,R25
                                  		;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
                                  
-0001ff e0e3                      		LDI ZL,0x03
-000200 e0f6                      		LDI ZH,0x06
-000201 e091                      		LDI R25,0x1
-000202 8390                      		ST Z,R25
-000203 e0e2                      		LDI ZL,0x02
-000204 e0f6                      		LDI ZH,0x06
-000205 8180                      		LD R24,Z
-000206 e091                      		LDI R25,0x1
-000207 0f89                      		ADD R24,R25
-000208 8380                      		ST Z,R24
-000209 e0e1                      		LDI ZL,0x01
-00020a e0f6                      		LDI ZH,0x06
-00020b 8190                      		LD R25,Z
-00020c 1789                      		CP R24,R25
-00020d f0e1                      		BREQ victory
+000211 e0e3                      		LDI ZL,0x03
+000212 e0f6                      		LDI ZH,0x06
+000213 e091                      		LDI R25,0x1
+000214 8390                      		ST Z,R25
+000215 e0e2                      		LDI ZL,0x02
+000216 e0f6                      		LDI ZH,0x06
+000217 8180                      		LD R24,Z
+000218 e091                      		LDI R25,0x1
+000219 0f89                      		ADD R24,R25
+00021a 8380                      		ST Z,R24
+00021b e0e1                      		LDI ZL,0x01
+00021c e0f6                      		LDI ZH,0x06
+00021d 8190                      		LD R25,Z
+00021e 1789                      		CP R24,R25
+00021f f101                      		BREQ victory
                                  		
-00020e c01a                      		RJMP nothing
+000220 c01e                      		RJMP nothing
                                  	missed:
                                  		
-00020f e021                      		LDI R18, 0b00000001 ; specific interrupt for timer2
-000210 9320 0070                 		STS TIMSK2,R18
+000221 e021                      		LDI R18, 0b00000001 ; specific interrupt for timer2
+000222 9320 0070                 		STS TIMSK2,R18
                                  
-000212 940e 027c                 		CALL writeMissedBoat
+000224 e0e0                      		LDI ZL, 0x00
+000225 e0f8                      		LDI ZH, 0x08
+000226 e022                      		LDI R18, 0x2
+000227 8320                      		ST Z,R18
+                                 
+000228 940e 0290                 		CALL writeMissedBoat
                                  		;check if flag of hit counter is 0
-000214 e0e6                      		LDI ZL,0x06
-000215 e0f6                      		LDI ZH,0x06
-000216 8180                      		LD R24,Z
-000217 e090                      		LDI R25,0x0
-000218 1789                      		CP R24,R25
-000219 f479                      		BRNE nothing ;if flag is not 0, don't increment the counter
+00022a e0e6                      		LDI ZL,0x06
+00022b e0f6                      		LDI ZH,0x06
+00022c 8180                      		LD R24,Z
+00022d e090                      		LDI R25,0x0
+00022e 1789                      		CP R24,R25
+00022f f479                      		BRNE nothing ;if flag is not 0, don't increment the counter
                                  
                                  		;%% Put flag to 1 and Increment counter %%
-00021a e0e6                      		LDI ZL,0x06
-00021b e0f6                      		LDI ZH,0x06
-00021c e091                      		LDI R25,0x1
-00021d 8390                      		ST Z,R25
-00021e e0e5                      		LDI ZL,0x05
-00021f e0f6                      		LDI ZH,0x06
-000220 8180                      		LD R24,Z
-000221 e091                      		LDI R25,0x1
-000222 0f89                      		ADD R24,R25
-000223 8380                      		ST Z,R24
-000224 e0e4                      		LDI ZL,0x04
-000225 e0f6                      		LDI ZH,0x06
-000226 8190                      		LD R25,Z
-000227 1789                      		CP R24,R25
-000228 f111                      		BREQ GameOver
+000230 e0e6                      		LDI ZL,0x06
+000231 e0f6                      		LDI ZH,0x06
+000232 e091                      		LDI R25,0x1
+000233 8390                      		ST Z,R25
+000234 e0e5                      		LDI ZL,0x05
+000235 e0f6                      		LDI ZH,0x06
+000236 8180                      		LD R24,Z
+000237 e091                      		LDI R25,0x1
+000238 0f89                      		ADD R24,R25
+000239 8380                      		ST Z,R24
+00023a e0e4                      		LDI ZL,0x04
+00023b e0f6                      		LDI ZH,0x06
+00023c 8190                      		LD R25,Z
+00023d 1789                      		CP R24,R25
+00023e f101                      		BREQ GameOver
                                  	nothing:
-000229 9508                      RET
+00023f 9508                      RET
                                  
                                  ;%%%%%%%%%%%%%%%%%%%%%%%%%%% Victory %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
                                  victory:
-00022a 94f8                      CLI
+                                 ;CLI
                                  /*LDI R18, 0b00000000 ; specific interrupt for timer2
                                  STS TIMSK2,R18*/
                                  
                                  ;%%% LOADING VICOTRY PATTERN AT 0x0200
-00022b e7e2                      LDI ZL,low(victorybuffer<<1) ;pointer to values in the program memory
-00022c e0f6                      LDI ZH,high(victorybuffer<<1)
+000240 e9ea                      LDI ZL,low(victorybuffer<<1) ;pointer to values in the program memory
+000241 e0f6                      LDI ZH,high(victorybuffer<<1)
                                  ; ARE THE SHIFTS OK ? Yes
                                  
-00022d e0c0                      LDI YL,0x00 ;pointer to values in the data memory
-00022e e0d2                      LDI YH,0x02
+000242 e0c0                      LDI YL,0x00 ;pointer to values in the data memory
+000243 e0d2                      LDI YH,0x02
                                  ;--> donc X=XH+XL=0x0200
                                  
                                  ;%%fill the data memory %%
-00022f e890                      LDI R25,0x80;=128
+000244 e890                      LDI R25,0x80;=128
                                  loopvictory:
-000230 9145                      LPM R20,Z+
-000231 9349                      ST Y+,R20
-000232 950a                      DEC R16
-000233 f7e1                      BRNE loopvictory
+000245 9145                      LPM R20,Z+
+000246 9349                      ST Y+,R20
+000247 959a                      DEC R25
+000248 f7e1                      BRNE loopvictory
                                  
-000234 9478                      SEI
+                                 ;SEI
                                  
                                  /*LDI R18, 0b00000001 ; specific interrupt for timer2
                                  STS TIMSK2,R18
@@ -1840,10 +1869,10 @@ C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Labora
                                  
                                  ;% check if reset of the game
                                  checkreset:
-000235 b003                      IN R0,PINB ;do R0 = PINB
-000236 fa00                      BST R0,0; copy PB0 (bit 0 of PINB) to the T flag (the T of BST refers to flag T)
+000249 b003                      IN R0,PINB ;do R0 = PINB
+00024a fa00                      BST R0,0; copy PB0 (bit 0 of PINB) to the T flag (the T of BST refers to flag T)
                                  
-000237 f58e                      BRTC ButtonLow3
+00024b f58e                      BRTC ButtonLow3
                                  
                                  ButtonHigh4:
                                  	
@@ -1851,39 +1880,39 @@ C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Labora
                                  	STS TIMSK2,R18*/
                                  
                                  	;%%% LOADING VICOTRY PATTERN AT 0x0200
-000238 efe2                      	LDI ZL,low(playerbuffer<<1) ;pointer to values in the program memory
-000239 e0f5                      	LDI ZH,high(playerbuffer<<1)
+00024c e1ea                      	LDI ZL,low(playerbuffer<<1) ;pointer to values in the program memory
+00024d e0f6                      	LDI ZH,high(playerbuffer<<1)
                                  
-00023a e0c0                      	LDI YL,0x00 ;pointer to values in the data memory
-00023b e0d2                      	LDI YH,0x02
+00024e e0c0                      	LDI YL,0x00 ;pointer to values in the data memory
+00024f e0d2                      	LDI YH,0x02
                                  	;--> donc X=XH+XL=0x0200
                                  
                                  	;%%fill the data memory %%
-00023c e890                      	LDI R25,0x80;=128
+000250 e890                      	LDI R25,0x80;=128
                                  	loopvictoryreset:
-00023d 9145                      	LPM R20,Z+
-00023e 9349                      	ST Y+,R20
-00023f 950a                      	DEC R16
-000240 f7e1                      	BRNE loopvictoryreset
+000251 9145                      	LPM R20,Z+
+000252 9349                      	ST Y+,R20
+000253 959a                      	DEC R25
+000254 f7e1                      	BRNE loopvictoryreset
                                  
                                  /*	LDI R18, 0b00000001 ; specific interrupt for timer2
                                  	STS TIMSK2,R18*/
                                  
                                  	;%% Reinitialize the hit counter %%%%%%%
-000241 e0e2                      	LDI ZL,0x02
-000242 e0f6                      	LDI ZH,0x06
-000243 e090                      	LDI R25,0x0
-000244 8390                      	ST Z,R25
+000255 e0e2                      	LDI ZL,0x02
+000256 e0f6                      	LDI ZH,0x06
+000257 e090                      	LDI R25,0x0
+000258 8390                      	ST Z,R25
                                  	;%% Reinitialize the miss counter %%%%%%%
-000245 e0e5                      	LDI ZL,0x05
-000246 e0f6                      	LDI ZH,0x06
-000247 e090                      	LDI R25,0x0
-000248 8390                      	ST Z,R25
+000259 e0e5                      	LDI ZL,0x05
+00025a e0f6                      	LDI ZH,0x06
+00025b e090                      	LDI R25,0x0
+00025c 8390                      	ST Z,R25
                                  
-000249 ce44                      	RJMP main
+00025d ce30                      	RJMP main
                                  
                                  ButtonLow4:
-00024a cfea                      	RJMP checkreset
+00025e cfea                      	RJMP checkreset
                                  
                                  ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ù
                                  
@@ -1891,238 +1920,214 @@ C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Labora
                                  ;%%%%%%%%%%%%%%%%%%%%%%%%%%% GameOver %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
                                  GameOver:
                                  ;%%% LOADING GAME OVER PATTERN AT 0x0200
-00024b efe2                      LDI ZL,low(gameoverbuffer<<1) ;pointer to values in the program memory
-00024c e0f6                      LDI ZH,high(gameoverbuffer<<1)
+00025f e1ea                      LDI ZL,low(gameoverbuffer<<1) ;pointer to values in the program memory
+000260 e0f7                      LDI ZH,high(gameoverbuffer<<1)
                                  ; ARE THE SHIFTS OK ? Yes
                                  
-00024d e0c0                      LDI YL,0x00 ;pointer to values in the data memory
-00024e e0d2                      LDI YH,0x02
+000261 e0c0                      LDI YL,0x00 ;pointer to values in the data memory
+000262 e0d2                      LDI YH,0x02
                                  ;--> donc X=XH+XL=0x0200
                                  
                                  ;%%fill the data memory %%
-00024f e890                      LDI R25,0x80;=128
+000263 e890                      LDI R25,0x80;=128
                                  loopGameOver:
-000250 9145                      LPM R20,Z+
-000251 9349                      ST Y+,R20
-000252 950a                      DEC R16
-000253 f7e1                      BRNE loopGameOver
+000264 9145                      LPM R20,Z+
+000265 9349                      ST Y+,R20
+000266 959a                      DEC R25
+000267 f7e1                      BRNE loopGameOver
                                  
                                  ;% check if reset of the game
                                  checkreset2:
-000254 b003                      IN R0,PINB ;do R0 = PINB
-000255 fa00                      BST R0,0; copy PB0 (bit 0 of PINB) to the T flag (the T of BST refers to flag T)
+000268 b003                      IN R0,PINB ;do R0 = PINB
+000269 fa00                      BST R0,0; copy PB0 (bit 0 of PINB) to the T flag (the T of BST refers to flag T)
                                  
-000256 f496                      BRTC ButtonLow3
+00026a f496                      BRTC ButtonLow3
                                  
                                  ButtonHigh3: 
                                  	;%%% reloading starting pattern
-000257 efe2                      	LDI ZL,low(playerbuffer<<1) ;pointer to values in the program memory
-000258 e0f5                      	LDI ZH,high(playerbuffer<<1)
+00026b e1ea                      	LDI ZL,low(playerbuffer<<1) ;pointer to values in the program memory
+00026c e0f6                      	LDI ZH,high(playerbuffer<<1)
                                  	; ARE THE SHIFTS OK ? Yes
                                  
-000259 e0c0                      	LDI YL,0x00 ;pointer to values in the data memory
-00025a e0d2                      	LDI YH,0x02
+00026d e0c0                      	LDI YL,0x00 ;pointer to values in the data memory
+00026e e0d2                      	LDI YH,0x02
                                  	;--> donc X=XH+XL=0x0200
                                  
                                  	;%%fill the data memory %%
-00025b e890                      	LDI R25,0x80;=128
+00026f e890                      	LDI R25,0x80;=128
                                  	loopgameoverreset:
-00025c 9145                      	LPM R20,Z+
-00025d 9349                      	ST Y+,R20
-00025e 950a                      	DEC R16
-00025f f7e1                      	BRNE loopgameoverreset
+000270 9145                      	LPM R20,Z+
+000271 9349                      	ST Y+,R20
+000272 959a                      	DEC R25
+000273 f7e1                      	BRNE loopgameoverreset
                                  
                                  	;%% Reinitialize the miss counter %%%%%%%
-000260 e0e5                      	LDI ZL,0x05
-000261 e0f6                      	LDI ZH,0x06
-000262 e090                      	LDI R25,0x0
-000263 8390                      	ST Z,R25
+000274 e0e5                      	LDI ZL,0x05
+000275 e0f6                      	LDI ZH,0x06
+000276 e090                      	LDI R25,0x0
+000277 8390                      	ST Z,R25
                                  	;%% Reinitialize the hit counter %%%%%%%
-000264 e0e2                      	LDI ZL,0x02
-000265 e0f6                      	LDI ZH,0x06
-000266 e090                      	LDI R25,0x0
-000267 8390                      	ST Z,R25
+000278 e0e2                      	LDI ZL,0x02
+000279 e0f6                      	LDI ZH,0x06
+00027a e090                      	LDI R25,0x0
+00027b 8390                      	ST Z,R25
                                  
-000268 ce25                      	RJMP main
+00027c ce11                      	RJMP main
                                  
                                  ButtonLow3:
-000269 cfea                      	RJMP checkreset2
+00027d cfea                      	RJMP checkreset2
                                  
                                  ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ù
                                  
                                  writeHitBoat:
-00026a e0e0                      	LDI ZL, 0x00
-00026b e0f4                      	LDI ZH, 0x04
-00026c 8170                      	LD R23, Z
-00026d e098                      	LDI R25, 0x8
-00026e 1b79                      	SUB R23, R25
-00026f 937f                      	PUSH R23
-000270 940e 0293                 	CALL write5bitsR23
-000272 917f                      	POP R23
-000273 0f79                      	ADD R23, R25
+00027e e0e0                      	LDI ZL, 0x00
+00027f e0f4                      	LDI ZH, 0x04
+000280 8170                      	LD R23, Z
+000281 e098                      	LDI R25, 0x8
+000282 1b79                      	SUB R23, R25
+000283 937f                      	PUSH R23
+000284 940e 02a7                 	CALL write5bitsR23
+000286 917f                      	POP R23
+000287 0f79                      	ADD R23, R25
                                  
-000274 937f                      	PUSH R23
-000275 940e 0293                 	CALL write5bitsR23
-000277 917f                      	POP R23
+000288 937f                      	PUSH R23
+000289 940e 02a7                 	CALL write5bitsR23
+00028b 917f                      	POP R23
                                  
-000278 0f79                      	ADD R23, R25
-000279 940e 0293                 	CALL write5bitsR23
-00027b 9508                      RET
+00028c 0f79                      	ADD R23, R25
+00028d 940e 02a7                 	CALL write5bitsR23
+00028f 9508                      RET
                                  
                                  writeMissedBoat:
-00027c e0e0                      	LDI ZL, 0x00
-00027d e0f4                      	LDI ZH, 0x04
-00027e 8170                      	LD R23, Z
-00027f e098                      	LDI R25, 0x8
-000280 1b79                      	SUB R23, R25
-000281 937f                      	PUSH R23
-000282 940e 028a                 	CALL writeMiss
-000284 917f                      	POP R23
-000285 0f79                      	ADD R23, R25
-000286 0f79                      	ADD R23, R25
-000287 940e 028a                 	CALL writeMiss
-000289 9508                      RET
+000290 e0e0                      	LDI ZL, 0x00
+000291 e0f4                      	LDI ZH, 0x04
+000292 8170                      	LD R23, Z
+000293 e098                      	LDI R25, 0x8
+000294 1b79                      	SUB R23, R25
+000295 937f                      	PUSH R23
+000296 940e 029e                 	CALL writeMiss
+000298 917f                      	POP R23
+000299 0f79                      	ADD R23, R25
+00029a 0f79                      	ADD R23, R25
+00029b 940e 029e                 	CALL writeMiss
+00029d 9508                      RET
                                  
                                  writeMiss:
-00028a e0c0                      	LDI YL,0x00 ;pointer to values in the data memory
-00028b e0d2                      	LDI YH,0x02
-00028c 0fc7                      	ADD YL,R23 ;add the value of R23 to X to change at its position
-00028d f410                      	BRCC nocarry55
-00028e e071                      	LDI R23,0x01
-00028f 0fd7                      	ADD YH,R23 ;if there is a carry
+00029e e0c0                      	LDI YL,0x00 ;pointer to values in the data memory
+00029f e0d2                      	LDI YH,0x02
+0002a0 0fc7                      	ADD YL,R23 ;add the value of R23 to X to change at its position
+0002a1 f410                      	BRCC nocarry55
+0002a2 e071                      	LDI R23,0x01
+0002a3 0fd7                      	ADD YH,R23 ;if there is a carry
                                  	nocarry55:
-000290 e171                      	LDI R23,0b00010001 ;reuse R23, no link with previous R23
-000291 8378                      	ST Y,R23
-000292 9508                      RET
+0002a4 e171                      	LDI R23,0b00010001 ;reuse R23, no link with previous R23
+0002a5 8378                      	ST Y,R23
+0002a6 9508                      RET
                                  
                                  write5bitsR23:
-000293 e0c0                      	LDI YL,0x00 ;pointer to values in the data memory
-000294 e0d2                      	LDI YH,0x02
-000295 0fc7                      	ADD YL,R23 ;add the value of R23 to X to change at its position
-000296 f410                      	BRCC nocarry44
-000297 e071                      	LDI R23,0x01
-000298 0fd7                      	ADD YH,R23 ;if there is a carry
+0002a7 e0c0                      	LDI YL,0x00 ;pointer to values in the data memory
+0002a8 e0d2                      	LDI YH,0x02
+0002a9 0fc7                      	ADD YL,R23 ;add the value of R23 to X to change at its position
+0002aa f410                      	BRCC nocarry44
+0002ab e071                      	LDI R23,0x01
+0002ac 0fd7                      	ADD YH,R23 ;if there is a carry
                                  	nocarry44:
-000299 e17f                      	LDI R23,0b00011111 ;reuse R23, no link with previous R23
-00029a 8378                      	ST Y,R23
-00029b 9508                      RET
+0002ad e17f                      	LDI R23,0b00011111 ;reuse R23, no link with previous R23
+0002ae 8378                      	ST Y,R23
+0002af 9508                      RET
                                  
                                  writeMiddleBit:
-00029c e0c0                      	LDI YL,0x00 ;pointer to values in the data memory
-00029d e0d2                      	LDI YH,0x02
-00029e 0fc7                      	ADD YL,R23 ;add the value of R23 to X to change at its position
-00029f f410                      	BRCC nocarry3
-0002a0 e071                      	LDI R23,0x01
-0002a1 0fd7                      	ADD YH,R23 ;if there is a carry
+0002b0 e0c0                      	LDI YL,0x00 ;pointer to values in the data memory
+0002b1 e0d2                      	LDI YH,0x02
+0002b2 0fc7                      	ADD YL,R23 ;add the value of R23 to X to change at its position
+0002b3 f410                      	BRCC nocarry3
+0002b4 e071                      	LDI R23,0x01
+0002b5 0fd7                      	ADD YH,R23 ;if there is a carry
                                  	nocarry3:
-0002a2 e074                      	LDI R23,0b00000100 ;reuse R23, no link with previous R23
-0002a3 8378                      	ST Y,R23
-0002a4 9508                      RET
+0002b6 e074                      	LDI R23,0b00000100 ;reuse R23, no link with previous R23
+0002b7 8378                      	ST Y,R23
+0002b8 9508                      RET
                                  
                                  write5zeros:
-0002a5 e0c0                      	LDI YL,0x00 ;pointer to values in the data memory
-0002a6 e0d2                      	LDI YH,0x02
-0002a7 0fc7                      	ADD YL,R23 ;add the value of R23 to X to change at its position
-0002a8 f410                      	BRCC nocarry4
-0002a9 e071                      	LDI R23,0x01
-0002aa 0fd7                      	ADD YH,R23 ;if there is a carry
+0002b9 e0c0                      	LDI YL,0x00 ;pointer to values in the data memory
+0002ba e0d2                      	LDI YH,0x02
+0002bb 0fc7                      	ADD YL,R23 ;add the value of R23 to X to change at its position
+0002bc f410                      	BRCC nocarry4
+0002bd e071                      	LDI R23,0x01
+0002be 0fd7                      	ADD YH,R23 ;if there is a carry
                                  	nocarry4:
-0002ab e070                      	LDI R23,0b00000000 ;reuse R23, no link with previous R23
-0002ac 8378                      	ST Y,R23
-0002ad 9508                      RET
+0002bf e070                      	LDI R23,0b00000000 ;reuse R23, no link with previous R23
+0002c0 8378                      	ST Y,R23
+0002c1 9508                      RET
                                  
                                  write5bits:
-0002ae e065                      	LDI R22, 0x5
+0002c2 e065                      	LDI R22, 0x5
                                  	loop_write5:
-0002af fb50                      	BST R21,0
-0002b0 982b                      	CBI PORTB,3
-0002b1 f40e                      	BRTC write_0	;0 into the T flag
+0002c3 fb50                      	BST R21,0
+0002c4 982b                      	CBI PORTB,3
+0002c5 f40e                      	BRTC write_0	;0 into the T flag
                                  	write_1:
-0002b2 9a2b                      		SBI PORTB,3
+0002c6 9a2b                      		SBI PORTB,3
                                  	write_0:
-0002b3 9a2d                      	SBI PORTB,5
-0002b4 982d                      	CBI PORTB,5
+0002c7 9a2d                      	SBI PORTB,5
+0002c8 982d                      	CBI PORTB,5
                                  
-0002b5 9556                      	LSR R21 ; logical shift register R21 to the right !!!NEW!!! -->pas sur
+0002c9 9556                      	LSR R21 ; logical shift register R21 to the right !!!NEW!!! -->pas sur
                                  
-0002b6 956a                      	DEC R22
-0002b7 f7b9                      	BRNE loop_write5
-0002b8 9508                      RET
+0002ca 956a                      	DEC R22
+0002cb f7b9                      	BRNE loop_write5
+0002cc 9508                      RET
                                  
                                  ;%%%%%%%%%%%%%%%%%% BUFFERS STORED IN THE PROGRAM MEMORY: CANNOT BE CHANGED AT RUNTIME %%%%%%%%%%%%%%%%%%%%%
                                  ;Attention only the 5 LSB of each compartment will be used for the 5 columns
                                  
                                  ;%%%%%%%%%%%%%%%%%%%%%%%%%%% BUFFER TO STORE THE SHIPS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
                                  initbuffer:
-0002b9 1f00
-0002ba 0000
-0002bb 1f00
-0002bc 0000                      .db 0b00000000, 0b00011111, 0b00000000, 0b00000000, 0b00000000, 0b00011111, 0b00000000, 0b00000000
-0002bd 1f00
-0002be 0000
-0002bf 1f00
-0002c0 0000                      .db 0b00000000, 0b00011111, 0b00000000, 0b00000000, 0b00000000, 0b00011111, 0b00000000, 0b00000000
-0002c1 1f00
-0002c2 0000
-0002c3 1f00
-0002c4 0000                      .db 0b00000000, 0b00011111, 0b00000000, 0b00000000, 0b00000000, 0b00011111, 0b00000000, 0b00000000
-0002c5 0000
-0002c6 0000
-0002c7 0000
-0002c8 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000
-0002c9 0000
-0002ca 0000
-0002cb 0000
-0002cc 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000
-0002cd 0000
+0002cd 1f00
 0002ce 0000
-0002cf 0000
-0002d0 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000
-0002d1 0000
+0002cf 1f00
+0002d0 0000                      .db 0b00000000, 0b00011111, 0b00000000, 0b00000000, 0b00000000, 0b00011111, 0b00000000, 0b00000000
+0002d1 1f00
 0002d2 0000
-0002d3 0000
-0002d4 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000 
-0002d5 0000
+0002d3 1f00
+0002d4 0000                      .db 0b00000000, 0b00011111, 0b00000000, 0b00000000, 0b00000000, 0b00011111, 0b00000000, 0b00000000
+0002d5 1f00
 0002d6 0000
-0002d7 0000
-0002d8 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000 ; "fake column", not to display
-                                 
+0002d7 1f00
+0002d8 0000                      .db 0b00000000, 0b00011111, 0b00000000, 0b00000000, 0b00000000, 0b00011111, 0b00000000, 0b00000000
 0002d9 0000
-0002da 1f00
+0002da 0000
 0002db 0000
-0002dc 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00011111, 0b00000000, 0b00000000, 0b00000000, 0b00000000
+0002dc 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000
 0002dd 0000
-0002de 1f00
+0002de 0000
 0002df 0000
-0002e0 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00011111, 0b00000000, 0b00000000, 0b00000000, 0b00000000
+0002e0 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000
 0002e1 0000
-0002e2 1f00
+0002e2 0000
 0002e3 0000
-0002e4 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00011111, 0b00000000, 0b00000000, 0b00000000, 0b00000000
+0002e4 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000
 0002e5 0000
 0002e6 0000
 0002e7 0000
-0002e8 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000
+0002e8 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000 
 0002e9 0000
 0002ea 0000
 0002eb 0000
-0002ec 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000
+0002ec 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000 ; "fake column", not to display
+                                 
 0002ed 0000
-0002ee 0000
+0002ee 1f00
 0002ef 0000
-0002f0 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000
+0002f0 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00011111, 0b00000000, 0b00000000, 0b00000000, 0b00000000
 0002f1 0000
-0002f2 0000
+0002f2 1f00
 0002f3 0000
-0002f4 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000 
+0002f4 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00011111, 0b00000000, 0b00000000, 0b00000000, 0b00000000
 0002f5 0000
-0002f6 0000
+0002f6 1f00
 0002f7 0000
-0002f8 1f00                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00011111 ; "fake column", not to display
-                                 
-                                 
-                                 ;%%%%%%%%%%%%%%%%%%%%% Second buffer for the players to try to shoot %%%%%%%%%%%%%%%%%%%%%%%%%
-                                 playerbuffer:
+0002f8 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00011111, 0b00000000, 0b00000000, 0b00000000, 0b00000000
 0002f9 0000
 0002fa 0000
 0002fb 0000
@@ -2134,15 +2139,19 @@ C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Labora
 000301 0000
 000302 0000
 000303 0000
-000304 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000 
+000304 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000
 000305 0000
 000306 0000
 000307 0000
-000308 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000
+000308 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000 
 000309 0000
 00030a 0000
 00030b 0000
-00030c 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000
+00030c 1f00                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00011111 ; "fake column", not to display
+                                 
+                                 
+                                 ;%%%%%%%%%%%%%%%%%%%%% Second buffer for the players to try to shoot %%%%%%%%%%%%%%%%%%%%%%%%%
+                                 playerbuffer:
 00030d 0000
 00030e 0000
 00030f 0000
@@ -2150,12 +2159,11 @@ C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Labora
 000311 0000
 000312 0000
 000313 0000
-000314 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000 
+000314 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000
 000315 0000
 000316 0000
 000317 0000
-000318 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000 ; "fake column", not to display
-                                 
+000318 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000 
 000319 0000
 00031a 0000
 00031b 0000
@@ -2167,15 +2175,16 @@ C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Labora
 000321 0000
 000322 0000
 000323 0000
-000324 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000 
+000324 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000
 000325 0000
 000326 0000
 000327 0000
-000328 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000
+000328 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000 
 000329 0000
 00032a 0000
 00032b 0000
-00032c 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000
+00032c 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000 ; "fake column", not to display
+                                 
 00032d 0000
 00032e 0000
 00032f 0000
@@ -2183,142 +2192,162 @@ C:\Users\admin\Documents\ULB\4e_annee\Sensors and Microsystem Electronics\Labora
 000331 0000
 000332 0000
 000333 0000
-000334 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000 
+000334 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000
 000335 0000
 000336 0000
 000337 0000
-000338 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000 ; "fake column", not to display
+000338 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000 
+000339 0000
+00033a 0000
+00033b 0000
+00033c 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000
+00033d 0000
+00033e 0000
+00033f 0000
+000340 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000
+000341 0000
+000342 0000
+000343 0000
+000344 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000
+000345 0000
+000346 0000
+000347 0000
+000348 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000 
+000349 0000
+00034a 0000
+00034b 0000
+00034c 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000 ; "fake column", not to display
                                  
                                  ;%%%%%%%%%%%%%%%%%%%%% Victory Matrix %%%%%%%%%%%%%%%%%%%%%%%%%
                                  victorybuffer:
-000339 1e00
-00033a 1f1f
-00033b 1f11
-00033c 0011                      .db 0b00000000, 0b00011110, 0b00011111, 0b00011111, 0b00010001, 0b00011111, 0b00010001, 0b00000000
-00033d 1100
-00033e 1110
-00033f 0411
-000340 0011                      .db 0b00000000, 0b00010001, 0b00010000, 0b00010001, 0b00010001, 0b00000100, 0b00010001, 0b00000000
-000341 1200
-000342 1f10
-000343 0411
-000344 0011                      .db 0b00000000, 0b00010010, 0b00010000, 0b00011111, 0b00010001, 0b00000100, 0b00010001, 0b00000000 
-000345 1e00
-000346 111f
-000347 0411
-000348 001f                      .db 0b00000000, 0b00011110, 0b00011111, 0b00010001, 0b00010001, 0b00000100, 0b00011111, 0b00000000
-000349 1200
-00034a 1110
-00034b 0411
-00034c 0004                      .db 0b00000000, 0b00010010, 0b00010000, 0b00010001, 0b00010001, 0b00000100, 0b00000100, 0b00000000
-00034d 1100
-00034e 1110
-00034f 0411
-000350 0004                      .db 0b00000000, 0b00010001, 0b00010000, 0b00010001, 0b00010001, 0b00000100, 0b00000100, 0b00000000
-000351 1e00
-000352 111f
-000353 041f
-000354 0004                      .db 0b00000000, 0b00011110, 0b00011111, 0b00010001, 0b00011111, 0b00000100, 0b00000100, 0b00000000 
-000355 0000
-000356 0000
-000357 0000
-000358 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000 ; "fake column", not to display
-                                 
-000359 1f00
-00035a 001f
-00035b 1100
-00035c 001f                      .db 0b00000000, 0b00011111, 0b00011111, 0b00000000, 0b00000000, 0b00010001, 0b00011111, 0b00000000
-00035d 1100
-00035e 0010
-00035f 1100
-000360 0010                      .db 0b00000000, 0b00010001, 0b00010000, 0b00000000, 0b00000000, 0b00010001, 0b00010000, 0b00000000
+00034d 1e00
+00034e 1f1f
+00034f 1f11
+000350 0011                      .db 0b00000000, 0b00011110, 0b00011111, 0b00011111, 0b00010001, 0b00011111, 0b00010001, 0b00000000
+000351 1100
+000352 1110
+000353 0411
+000354 0011                      .db 0b00000000, 0b00010001, 0b00010000, 0b00010001, 0b00010001, 0b00000100, 0b00010001, 0b00000000
+000355 1200
+000356 1f10
+000357 0411
+000358 0011                      .db 0b00000000, 0b00010010, 0b00010000, 0b00011111, 0b00010001, 0b00000100, 0b00010001, 0b00000000 
+000359 1e00
+00035a 111f
+00035b 0411
+00035c 001f                      .db 0b00000000, 0b00011110, 0b00011111, 0b00010001, 0b00010001, 0b00000100, 0b00011111, 0b00000000
+00035d 1200
+00035e 1110
+00035f 0411
+000360 0004                      .db 0b00000000, 0b00010010, 0b00010000, 0b00010001, 0b00010001, 0b00000100, 0b00000100, 0b00000000
 000361 1100
-000362 001f
-000363 1100
-000364 0010                      .db 0b00000000, 0b00010001, 0b00011111, 0b00000000, 0b00000000, 0b00010001, 0b00010000, 0b00000000
-000365 1100
-000366 0010
-000367 1f00
-000368 0010                      .db 0b00000000, 0b00010001, 0b00010000, 0b00000000, 0b00000000, 0b00011111, 0b00010000, 0b00000000
-000369 1100
-00036a 0010
-00036b 1000
-00036c 0010                      .db 0b00000000, 0b00010001, 0b00010000, 0b00000000, 0b00000000, 0b00010000, 0b00010000, 0b00000000
-00036d 1100
-00036e 0010
-00036f 1000
-000370 0010                      .db 0b00000000, 0b00010001, 0b00010000, 0b00000000, 0b00000000, 0b00010000, 0b00010000, 0b00000000
-000371 1f00
+000362 1110
+000363 0411
+000364 0004                      .db 0b00000000, 0b00010001, 0b00010000, 0b00010001, 0b00010001, 0b00000100, 0b00000100, 0b00000000
+000365 1e00
+000366 111f
+000367 041f
+000368 0004                      .db 0b00000000, 0b00011110, 0b00011111, 0b00010001, 0b00011111, 0b00000100, 0b00000100, 0b00000000 
+000369 0000
+00036a 0000
+00036b 0000
+00036c 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000 ; "fake column", not to display
+                                 
+00036d 1f00
+00036e 001f
+00036f 1100
+000370 001f                      .db 0b00000000, 0b00011111, 0b00011111, 0b00000000, 0b00000000, 0b00010001, 0b00011111, 0b00000000
+000371 1100
 000372 0010
-000373 1000
-000374 001f                      .db 0b00000000, 0b00011111, 0b00010000, 0b00000000, 0b00000000, 0b00010000, 0b00011111, 0b00000000 
-000375 0000
-000376 0000
-000377 0000
-000378 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000 ; "fake column", not to display
+000373 1100
+000374 0010                      .db 0b00000000, 0b00010001, 0b00010000, 0b00000000, 0b00000000, 0b00010001, 0b00010000, 0b00000000
+000375 1100
+000376 001f
+000377 1100
+000378 0010                      .db 0b00000000, 0b00010001, 0b00011111, 0b00000000, 0b00000000, 0b00010001, 0b00010000, 0b00000000
+000379 1100
+00037a 0010
+00037b 1f00
+00037c 0010                      .db 0b00000000, 0b00010001, 0b00010000, 0b00000000, 0b00000000, 0b00011111, 0b00010000, 0b00000000
+00037d 1100
+00037e 0010
+00037f 1000
+000380 0010                      .db 0b00000000, 0b00010001, 0b00010000, 0b00000000, 0b00000000, 0b00010000, 0b00010000, 0b00000000
+000381 1100
+000382 0010
+000383 1000
+000384 0010                      .db 0b00000000, 0b00010001, 0b00010000, 0b00000000, 0b00000000, 0b00010000, 0b00010000, 0b00000000
+000385 1f00
+000386 0010
+000387 1000
+000388 001f                      .db 0b00000000, 0b00011111, 0b00010000, 0b00000000, 0b00000000, 0b00010000, 0b00011111, 0b00000000 
+000389 0000
+00038a 0000
+00038b 0000
+00038c 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000 ; "fake column", not to display
                                  
                                  ;%%%%%%%%%%%%%%%%%%%%% Fail Matrix %%%%%%%%%%%%%%%%%%%%%%%%%
                                  gameoverbuffer:
-000379 1f1f
-00037a 1e1b
-00037b 110f
-00037c 1e1e                      .db 0b00011111, 0b00011111, 0b00011011, 0b00011110, 0b00001111, 0b00010001, 0b00011110, 0b00011110
-00037d 1110
-00037e 1015
-00037f 1109
-000380 1210                      .db 0b00010000, 0b00010001, 0b00010101, 0b00010000, 0b00001001, 0b00010001, 0b00010000, 0b00010010
-000381 1f10
-000382 1015
-000383 1109
-000384 1e10                      .db 0b00010000, 0b00011111, 0b00010101, 0b00010000, 0b00001001, 0b00010001, 0b00010000, 0b00011110
-000385 1110
-000386 1e11
-000387 1109
-000388 181e                      .db 0b00010000, 0b00010001, 0b00010001, 0b00011110, 0b00001001, 0b00010001, 0b00011110, 0b00011000
-000389 1116
-00038a 1011
-00038b 1109
-00038c 1410                      .db 0b00010110, 0b00010001, 0b00010001, 0b00010000, 0b00001001, 0b00010001, 0b00010000, 0b00010100
-00038d 1112
-00038e 1011
-00038f 0a09
-000390 1210                      .db 0b00010010, 0b00010001, 0b00010001, 0b00010000, 0b00001001, 0b00001010, 0b00010000, 0b00010010
-000391 111e
-000392 1e11
-000393 040f
-000394 111e                      .db 0b00011110, 0b00010001, 0b00010001, 0b00011110, 0b00001111, 0b00000100, 0b00011110, 0b00010001 
-000395 0000
-000396 0000
-000397 0000
-000398 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000 ; "fake column", not to display
+00038d 1f1f
+00038e 1e1b
+00038f 110f
+000390 1e1e                      .db 0b00011111, 0b00011111, 0b00011011, 0b00011110, 0b00001111, 0b00010001, 0b00011110, 0b00011110
+000391 1110
+000392 1015
+000393 1109
+000394 1210                      .db 0b00010000, 0b00010001, 0b00010101, 0b00010000, 0b00001001, 0b00010001, 0b00010000, 0b00010010
+000395 1f10
+000396 1015
+000397 1109
+000398 1e10                      .db 0b00010000, 0b00011111, 0b00010101, 0b00010000, 0b00001001, 0b00010001, 0b00010000, 0b00011110
+000399 1110
+00039a 1e11
+00039b 1109
+00039c 181e                      .db 0b00010000, 0b00010001, 0b00010001, 0b00011110, 0b00001001, 0b00010001, 0b00011110, 0b00011000
+00039d 1116
+00039e 1011
+00039f 1109
+0003a0 1410                      .db 0b00010110, 0b00010001, 0b00010001, 0b00010000, 0b00001001, 0b00010001, 0b00010000, 0b00010100
+0003a1 1112
+0003a2 1011
+0003a3 0a09
+0003a4 1210                      .db 0b00010010, 0b00010001, 0b00010001, 0b00010000, 0b00001001, 0b00001010, 0b00010000, 0b00010010
+0003a5 111e
+0003a6 1e11
+0003a7 040f
+0003a8 111e                      .db 0b00011110, 0b00010001, 0b00010001, 0b00011110, 0b00001111, 0b00000100, 0b00011110, 0b00010001 
+0003a9 0000
+0003aa 0000
+0003ab 0000
+0003ac 0000                      .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000 ; "fake column", not to display
                                  
-000399 0300
-00039a 001e
-00039b 0000
-00039c 0000                      .db 0b00000000, 0b00000011, 0b00011110, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000
-00039d 0400
-00039e 1f01
-00039f 1f1f
-0003a0 001e                      .db 0b00000000, 0b00000100, 0b00000001, 0b00011111, 0b00011111, 0b00011111, 0b00011110, 0b00000000
-0003a1 0400
-0003a2 0001
-0003a3 0400
-0003a4 0001                      .db 0b00000000, 0b00000100, 0b00000001, 0b00000000, 0b00000000, 0b00000100, 0b00000001, 0b00000000
-0003a5 0700
-0003a6 001f
-0003a7 0700
-0003a8 001f                      .db 0b00000000, 0b00000111, 0b00011111, 0b00000000, 0b00000000, 0b00000111, 0b00011111, 0b00000000
-0003a9 0400
-0003aa 0001
-0003ab 0400
-0003ac 0001                      .db 0b00000000, 0b00000100, 0b00000001, 0b00000000, 0b00000000, 0b00000100, 0b00000001, 0b00000000
-0003ad 0400
-0003ae 1f01
-0003af 1f1f
-0003b0 001e                      .db 0b00000000, 0b00000100, 0b00000001, 0b00011111, 0b00011111, 0b00011111, 0b00011110, 0b00000000
-0003b1 0300
-0003b2 001e
-0003b3 0000
+0003ad 0300
+0003ae 001e
+0003af 0000
+0003b0 0000                      .db 0b00000000, 0b00000011, 0b00011110, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000
+0003b1 0400
+0003b2 1f01
+0003b3 1f1f
+0003b4 001e                      .db 0b00000000, 0b00000100, 0b00000001, 0b00011111, 0b00011111, 0b00011111, 0b00011110, 0b00000000
+0003b5 0400
+0003b6 0001
+0003b7 0400
+0003b8 0001                      .db 0b00000000, 0b00000100, 0b00000001, 0b00000000, 0b00000000, 0b00000100, 0b00000001, 0b00000000
+0003b9 0700
+0003ba 001f
+0003bb 0700
+0003bc 001f                      .db 0b00000000, 0b00000111, 0b00011111, 0b00000000, 0b00000000, 0b00000111, 0b00011111, 0b00000000
+0003bd 0400
+0003be 0001
+0003bf 0400
+0003c0 0001                      .db 0b00000000, 0b00000100, 0b00000001, 0b00000000, 0b00000000, 0b00000100, 0b00000001, 0b00000000
+0003c1 0400
+0003c2 1f01
+0003c3 1f1f
+0003c4 001e                      .db 0b00000000, 0b00000100, 0b00000001, 0b00011111, 0b00011111, 0b00011111, 0b00011110, 0b00000000
+0003c5 0300
+0003c6 001e
+0003c7 0000
 
 
 RESOURCE USE INFORMATION
@@ -2336,11 +2365,11 @@ counted separately from r26..r31 here.
 .dseg memory usage only counts static data declared with .byte
 
 "ATmega328P" register use summary:
-x  :   6 y  :   8 z  :  48 r0 :  10 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
+x  :   6 y  :   8 z  :  51 r0 :  10 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
 r5 :   0 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
-r13:   0 r14:   0 r15:   0 r16:  31 r17:   4 r18:  12 r19:   4 r20:  26 
-r21:   4 r22:   2 r23: 116 r24:  20 r25:  60 r26:   9 r27:   9 r28:  12 
-r29:  12 r30:  47 r31:  47 
+r13:   0 r14:   0 r15:   0 r16:  27 r17:   4 r18:  16 r19:   4 r20:  26 
+r21:   4 r22:   2 r23: 120 r24:  20 r25:  66 r26:   9 r27:   9 r28:  12 
+r29:  12 r30:  52 r31:  52 
 Registers used: 20 out of 35 (57.1%)
 
 "ATmega328P" instruction use summary:
@@ -2348,27 +2377,27 @@ Registers used: 20 out of 35 (57.1%)
 andi  :   0 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
 brcc  :  10 brcs  :   0 break :   0 breq  :   3 brge  :   0 brhc  :   0 
 brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
-brne  :  16 brpl  :   0 brsh  :   2 brtc  :   6 brts  :   0 brvc  :   0 
+brne  :  17 brpl  :   0 brsh  :   2 brtc  :   6 brts  :   0 brvc  :   0 
 brvs  :   0 bset  :   0 bst   :   6 call  :  45 cbi   :  20 cbr   :   0 
-clc   :   0 clh   :   0 cli   :   1 cln   :   0 clr   :   0 cls   :   0 
-clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   9 cpc   :   0 
+clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   0 cls   :   0 
+clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :  10 cpc   :   0 
 cpi   :   0 cpse  :   0 dec   :  12 eor   :   0 fmul  :   0 fmuls :   0 
 fmulsu:   0 icall :   0 ijmp  :   0 in    :   7 inc   :   0 jmp   :   0 
-ld    :  17 ldd   :   0 ldi   : 224 lds   :   2 lpm   :   6 lsl   :   0 
+ld    :  18 ldd   :   0 ldi   : 234 lds   :   2 lpm   :   6 lsl   :   0 
 lsr   :   1 mov   :   0 movw  :   0 mul   :   0 muls  :   0 mulsu :   0 
-neg   :   0 nop   :   7 or    :   0 ori   :   0 out   :   5 pop   :   9 
-push  :   9 rcall :   0 ret   :   8 reti  :   2 rjmp  :  48 rol   :   0 
+neg   :   0 nop   :   7 or    :   0 ori   :   0 out   :   5 pop   :  11 
+push  :  11 rcall :   0 ret   :   8 reti  :   2 rjmp  :  49 rol   :   0 
 ror   :   0 sbc   :   0 sbci  :   0 sbi   :  36 sbic  :   0 sbis  :  16 
 sbiw  :   2 sbr   :   0 sbrc  :   0 sbrs  :   0 sec   :   0 seh   :   0 
-sei   :   2 sen   :   0 ser   :   0 ses   :   0 set   :   0 sev   :   0 
-sez   :   0 sleep :   0 spm   :   0 st    :  37 std   :   0 sts   :  10 
+sei   :   1 sen   :   0 ser   :   0 ses   :   0 set   :   0 sev   :   0 
+sez   :   0 sleep :   0 spm   :   0 st    :  39 std   :   0 sts   :  11 
 sub   :   2 subi  :   2 swap  :   0 tst   :   0 wdr   :   0 
-Instructions used: 33 out of 113 (29.2%)
+Instructions used: 32 out of 113 (28.3%)
 
 "ATmega328P" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x00076a   1334    504   1838   32768   5.6%
+[.cseg] 0x000000 0x000792   1374    504   1878   32768   5.7%
 [.dseg] 0x000100 0x000100      0      0      0    2048   0.0%
 [.eseg] 0x000000 0x000000      0      0      0    1024   0.0%
 
