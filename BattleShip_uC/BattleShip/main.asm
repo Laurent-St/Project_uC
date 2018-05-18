@@ -5,7 +5,7 @@
 ; Author : Laurent Storrer & Benjamin Wauthion
 ;
 
-; ATTENTION POINTERS X,Y AND Z OCCUPIES THE REGISTERs 26-31 --> those registers cannot be used
+; WARNING POINTERS X,Y AND Z OCCUPIES THE REGISTERs 26-31 --> those registers cannot be used
 ; Register X: 26-27, Register Y: 28-29, Register Z:30-31
 
 .INCLUDE "m328pdef.inc"
@@ -14,14 +14,18 @@
 RJMP init
 .ORG 0x0012
 RJMP Timer2OverflowInterrupt
-.ORG 0x0020 ; a mettre en dehors pour juste assigner le Timer0OverflowInterrupt a l'adresse 20
+.ORG 0x0020
 RJMP Timer0OverflowInterrupt
 
 ;Program memory cannot be changed at runtime, while data memory can. So what we do is to define values at "initbuffer" label to which 
 
 init:
+
+;%%%%%%%%% Parameters of the game: number of hits to win and max number of tries before losing %%%%%%%%%%
 .EQU NBRE_BOAT = 0x3
 .EQU MAX_TRIES = 0x5
+;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 ;%%%% INIT COUNTERS for boat hits and miss %%%%%
 ;number of boats
 LDI ZL, 0x01
@@ -69,9 +73,9 @@ SBI PORTB,2; Enable the pull-up resistor
 
 ;%%%%% LEDS AS OUTPUT %%%%%%%%
 SBI DDRC,2 ; pin PC2 is an output
-SBI PORTC,2 ; output Vcc => LED1 is turned off! (car la LED est active low, cf schema)
+SBI PORTC,2 ; output Vcc => LED1 is turned off! (because LED active low)
 SBI DDRC,3 ; pin PC3 is an output
-SBI PORTC,3 ; output Vcc => LED1 is turned off! (car la LED est active low, cf schema)
+SBI PORTC,3 ; output Vcc => LED1 is turned off!
 
 ;%%%%% JOYSTICK AS INPUT %%%%%%%%;
 CBI DDRC,1 ;choose potentiometer along direction y
@@ -89,7 +93,6 @@ STS PRR,R16
 ;%%%%%%%%%%%% PIN PB0 (switch) INITIALIZATION %%%%%%%%%%
 CBI DDRB,0;Pin PB0 is an input
 SBI PORTB,0; Enable the pull-up resistor
-
 
 ;%%%%% KEYBOARD INITIALIZATION %%%%%%
 CBI DDRD,0 ;set columns as inputs
@@ -110,11 +113,10 @@ SBI PORTD,3
 ;%%%%%%%%%%%%%%%%%%%%%%%%% POINTER FOR 1ST BUFFER: : LOADED STARTING AT DATA ADDRESS 0x0100 %%%%%%%%
 LDI ZL,low(initbuffer<<1) ;pointer to values in the program memory
 LDI ZH,high(initbuffer<<1)
-; ARE THE SHIFTS OK ? Yes
 
 LDI XL,0x00 ;pointer to values in the data memory
 LDI XH,0x01
-;--> donc X=XH+XL=0x0100
+;--> thus X=XH+XL=0x0100
 
 ;%%fill the data memory %%
 LDI R16,0x80;=128
@@ -128,11 +130,10 @@ BRNE loop
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%% SECOND BUFFER: LOADED STARTING AT DATA ADDRESS 0x0200 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 LDI ZL,low(playerbuffer<<1) ;pointer to values in the program memory
 LDI ZH,high(playerbuffer<<1)
-; ARE THE SHIFTS OK ? Yes
 
 LDI XL,0x00 ;pointer to values in the data memory
 LDI XH,0x02
-;--> donc X=XH+XL=0x0200
+;--> thus X=XH+XL=0x0200
 
 ;%%fill the data memory %%
 LDI R16,0x80;=128
@@ -148,14 +149,12 @@ SBI DDRB,3
 SBI DDRB,4
 SBI DDRB,5
 
-;SBI PORTB,3
-
 IN R0,PINB ;do R0 = PINB
 BST R0,0; copy PB0 (bit 0 of PINB) to the T flag (the T of BST refers to flag T)
 
 BRTC ButtonLow2
 
-ButtonHigh2: ; TO DO ONLY AT THE BEGINNING OF THE GAME
+ButtonHigh2:
 	LDI XL,0x00 ;pointer to values in the data memory
 	LDI XH,0x01
 	RJMP follow
@@ -170,10 +169,9 @@ LDI R17,0x7 ;DON'T MODIFY R17 AFTER, it is the counter of the line
 
 ; because of the shift register, the first data that you input will be displayed the last, thus we begin by sending the last row of the data matrix
 ; and we decrement the counter
-;ADIW X,0x40 ;=56
 
 ;%%% ADDITION OF 2*64 to X, need carry addition because ADIW doesn't work because 64 is too high %%%%%
-LDI R20,0x80;=2*64=2*(56+8) !!!!CHANGED!!!
+LDI R20,0x80;=2*64=2*(56+8) 
 ADD XL,R20
 BRCC nocarry
 LDI R20,0x01
@@ -184,31 +182,26 @@ nocarry:
 SBI DDRB,1 ; pin PB1 is an output
 ;%%%%%%%%%%%% INITIALIZE SPEAKER TO 0  %%%%%%%%%%%%%%%%%%
 CBI PORTB,1 ; output low to put the speaker off
-;%%%%%%%%%%%% INITIALIZE INTERRUPTS %%%%%%%%%%%%%%%%%%%%%
+
+;%%%%%%%%%%%% INITIALIZE GLOBAL INTERRUPTS %%%%%%%%%%%%%%%%%%%%%
 SEI ; dedicated instruction for general interrupts
-;LDI R18, 0b00000001 ; specific interrupt for timer2
-;STS TIMSK2,R18
-;%%%%%%%%%%%% INITIALIZE PRESCALER %%%%%%%%%%%%%%%%%%%%%%
+;%%%%%%%%%%%% INITIALIZE PRESCALER OF TIMER2 %%%%%%%%%%%%%%%%%%%%%%
 LDI R16, 0b00000100
 STS TCCR2B, R16 ; prescaler = 256
-
-;%%%%%%%%%%%% INITIALIZE INTERRUPTS %%%%%%%%%%%%%%%%%%%%%
-;SEI ; dedicated instruction for general interrupts
+;%%%%%%%%%%%% INITIALIZE INTERRUPTS FOR TIMER0 %%%%%%%%%%%%%%%%%%%%%
 LDI R18, 0b00000001 ; specific interrupt for timer0
 STS TIMSK0,R18
-;%%%%%%%%%%%% INITIALIZE PRESCALER %%%%%%%%%%%%%%%%%%%%%%
-; CBI TCCR0B,WGM02 ; 0b000 ;initialize timer --> no need car deja a zero
+;%%%%%%%%%%%% INITIALIZE PRESCALER OF TIMER0 %%%%%%%%%%%%%%%%%%%%%%
 LDI R25, 0b00000010
-OUT TCCR0B, R25 ; prescaler = 64
-;%%%%%%%%%%%% INITIALIZE TCNT %%%%%%%%%%%%%%%%%%%%%%%%%%%
+OUT TCCR0B, R25 ; prescaler = 8
+;%%%%%%%%%%%% INITIALIZE TCNT OF TIMER0 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 LDI R25,0xFF ; start value for TCNT
-OUT TCNT0,R25 ; on utilise OUT car R0 est categorise comme un registre I/O
+OUT TCNT0,R25 ; we use OUT because R0 is a I/O register
 
 main: 
 
 ;%%%%%%%%%%%%%%%%%%%% KEYBOARD LOOP %%%%%%%%%%%%%%%%%%%%%%%%%
 LDI R23,0x0 ;reinitialization of column position
-;LDI R24,0x0 ;initialization of row position
 
 keyboard:
 	;take info from the joystick
@@ -232,7 +225,7 @@ keyboard:
 	RJMP Pressed0
 	SBIS PIND,3
 	RJMP APressed
-	SBI PORTD,4 ;write a zero on the first row (starting from below)
+	SBI PORTD,4 ;write a one on the first row (starting from below)
 
 	CBI PORTD,5;write a zero on the second row
 	nop
@@ -244,7 +237,7 @@ keyboard:
 	RJMP Pressed2
 	SBIS PIND,3
 	RJMP Pressed1
-	SBI PORTD,5 ;write a zero on the first row (starting from below)
+	SBI PORTD,5 ;write a one on the second row (starting from below)
 
 	CBI PORTD,6;write a zero on the third row
 	nop
@@ -256,7 +249,7 @@ keyboard:
 	RJMP Pressed5
 	SBIS PIND,3
 	RJMP Pressed4
-	SBI PORTD,6 ;write a zero on the first row (starting from below)
+	SBI PORTD,6 ;write a one on the third row (starting from below)
 
 	CBI PORTD,7;write a zero on the 4th row
 	nop
@@ -268,22 +261,7 @@ keyboard:
 	RJMP Pressed8
 	SBIS PIND,3
 	RJMP Pressed7
-	SBI PORTD,7 ;write a zero on the first row (starting from below)
-
-	;SBI PORTC,3
-	;SBI PORTC,2
-
-	;%%% erase the screen if no key is pressed %%%
-/*	LDI YL,0x00 ;pointer to values in the data memory
-	LDI YH,0x02
-	LDI R24,0x80;=128
-	loop3:
-	;LPM R20,Z+
-	LDI R25,0b00000000
-	ST Y+,R25
-	DEC R24
-	BRNE loop3*/
-	;%%%%%%%%%%%%%%%%
+	SBI PORTD,7 ;write a one on the 4th row (starting from below)
 
 	;%% Erase last bit LED when key released, if flag is zero %%
 	LDI ZL,0x00
@@ -345,124 +323,115 @@ keyboard:
 
 ;%%%% when key is pressed %%%%%
 Pressed4:
-LDI R23,0x1C ;(1+1+32-8)
-CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
+LDI R23,0x1C
+CALL writeMiddleBit ;WARNING writeMiddleBit changes R23
 LDI R23,0x1C ;because writeMiddleBit changed R23
 CALL actionKey
 RJMP main
 Pressed8:
 LDI R23,0x58 ;(11*8) put in hexa
-CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
-LDI R23,0x58 ;because writeMiddleBit changed R23
+CALL writeMiddleBit
+LDI R23,0x58
 CALL actionKey
 RJMP main
 Pressed7:
 LDI R23,0x1F
-CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
-LDI R23,0x1F ;because writeMiddleBit changed R23
+CALL writeMiddleBit 
+LDI R23,0x1F
 CALL actionKey
 RJMP main
 
 CPressed:  
 LDI R23,0x5C
-CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
-LDI R23,0x5C ;because writeMiddleBit changed R23
+CALL writeMiddleBit
+LDI R23,0x5C
 CALL actionKey
 RJMP main
 BPressed:  
 LDI R23,0x5B
-CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
-LDI R23,0x5B ;because writeMiddleBit changed R23
+CALL writeMiddleBit
+LDI R23,0x5B
 CALL actionKey
 RJMP main
 Pressed0:  
 LDI R23,0x18
-CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
-LDI R23,0x18 ;because writeMiddleBit changed R23
+CALL writeMiddleBit
+LDI R23,0x18
 CALL actionKey
 RJMP main
 APressed: 
 LDI R23,0x5A
-CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
-LDI R23,0x5A ;because writeMiddleBit changed R23
+CALL writeMiddleBit
+LDI R23,0x5A
 CALL actionKey
 RJMP main
 DPressed:  
 LDI R23,0x5D
-CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
-LDI R23,0x5D ;because writeMiddleBit changed R23
+CALL writeMiddleBit
+LDI R23,0x5D 
 CALL actionKey
 RJMP main
 Pressed3:
-LDI R23,0x1B ;(1+1+32-8)
-CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
-LDI R23,0x1B ;because writeMiddleBit changed R23
+LDI R23,0x1B
+CALL writeMiddleBit
+LDI R23,0x1B
 CALL actionKey
 RJMP main
 Pressed2:
-LDI R23,0x1A ;(1+1+32-8)
-CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
-LDI R23,0x1A ;because writeMiddleBit changed R23
+LDI R23,0x1A
+CALL writeMiddleBit
+LDI R23,0x1A
 CALL actionKey
 RJMP main
 
 Pressed1:
-LDI R23,0x19 ;(1+1+32-8)
-CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
-LDI R23,0x19 ;because writeMiddleBit changed R23
+LDI R23,0x19
+CALL writeMiddleBit
+LDI R23,0x19
 CALL actionKey
 RJMP main
 
 EPressed:  
 LDI R23,0x5E
-CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
-LDI R23,0x5E ;because writeMiddleBit changed R23
+CALL writeMiddleBit
+LDI R23,0x5E
 CALL actionKey
 RJMP main
 Pressed6:
 LDI R23,0x1E ;
-CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
-LDI R23,0x1E ;because writeMiddleBit changed R23
+CALL writeMiddleBit 
+LDI R23,0x1E
 CALL actionKey
 RJMP main
 
 
 Pressed5: 
-LDI R23,0x1D ;=(5+1+32-8) put in hexa, to select the middle of the case
-CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
-LDI R23,0x1D ;because writeMiddleBit changed R23
+LDI R23,0x1D
+CALL writeMiddleBit
+LDI R23,0x1D
 CALL actionKey
 RJMP main
-
 
 FPressed: 
 LDI R23,0x5F
-CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
-LDI R23,0x5F ;because writeMiddleBit changed R23
+CALL writeMiddleBit
+LDI R23,0x5F
 CALL actionKey
 RJMP main
+
 Pressed9:
 LDI R23,0x59 ;
-CALL writeMiddleBit ;ATTENTION writeMiddleBit changes R23
-LDI R23,0x59 ;because writeMiddleBit changed R23
+CALL writeMiddleBit
+LDI R23,0x59
 CALL actionKey
 RJMP main
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-/*noKeyboard: ;thus here X=0x200
-LDI YL,0x00 ;pointer to values in the data memory
-LDI YH,0x02
-ADD YL,R23 ;add the value of R23 to X to change at its position
-BRCC nocarry3
-LDI R23,0x01
-ADD YH,R23 ;if there is a carry
-nocarry3:
-LDI R23,0b00000100 ;reuse R23, no link with previous R23
-ST Y,R23*/
 
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 RJMP main
 
+;%%%%%%%%%%%%%%%%%%%%%%%%%%% INTERRUPT TIMER2 FOR BUZZER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	Timer2OverflowInterrupt:
 		PUSH ZL
 		PUSH ZH
@@ -471,6 +440,7 @@ RJMP main
 		IN R25,SREG
 		PUSH R25
 
+		;%% Check if boat was hit or missed and choose one of the 2 frequencies %%%
 		LDI ZL,0x00
 		LDI ZH,0x08
 
@@ -482,12 +452,12 @@ RJMP main
 		CP R23,R25
 		BRNE missfreq
 		LDI R23, 0xAA
-		STS TCNT2,R23 ; on utilise OUT car R0 est categorise comme un registre I/O
+		STS TCNT2,R23
 		RJMP endinterrupt
 
 		missfreq:
 		LDI R23, 0xF
-		STS TCNT2,R23 ; on utilise OUT car R0 est categorise comme un registre I/O
+		STS TCNT2,R23
 
 		endinterrupt:
 		POP R25
@@ -499,39 +469,35 @@ RJMP main
 	RETI
 
 
+;%%%%%%%%%%%%%%%%%%%%%%%%%%% INTERRUPT TIMER0 FOR DISPLAY %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	Timer0OverflowInterrupt:
 		PUSH R16
 		IN R16,SREG
 		PUSH R16
-
 		PUSH R18
-
 
 		SBI PORTB,4
 
 		SBIW X,0x8 ;substract immediate
-		;SBI PORTB,3
 
 		;%%%%%% COLUMNS %%%%%%%%%%%
 		;correspond to first line of blocks
 		LDI R16,0x8 ;compteur: 8  
-		;ADIW X,0x1 ; to counteract the first pre-decrement --> not sure !!!NEW!!! 
 		firstloop1:
-			LD R21,-X ; attention PRE-decrement !!!NEW!!!
+			LD R21,-X ; warning PRE-decrement
 			CALL write5bits
 			DEC R16 ;decrement counter
 		BRNE firstloop1 ;branch if R16 is 0
 
 		;correspond to second line of blocks
-		SBIW X,0x38	;56 in block term !!!NEW!!! : put SBIW and not ADIW
-		LDI R16,0x8 ;compteur: 8  
+		SBIW X,0x38	;56 in block term
+		LDI R16,0x8 ;counter  
 		firstloop2:
 			LD R21,-X
 			CALL write5bits
 			DEC R16 ;decrement counter
 		BRNE firstloop2 ;branch if R16 is 0
-
-
+		;%%%% ROWS %%%%%
 		LDI R16,0x8
 		secondloop:
 			CBI PORTB,3
@@ -546,31 +512,20 @@ RJMP main
 			DEC R16
 			BRNE secondloop
 		
-
 		CBI PORTB,4
 		SBI PORTB,4 ;
-		;WAIT FOR 100US
-/*		LDI R18,0xFF
-		waitloop:
-			NOP
-			NOP
-			NOP
-			NOP
-			NOP
-			DEC R18
-			BRNE waitloop*/
 
-		CBI PORTB,4  ;put in the beginning of next interrupt to avoid making the loop of nops
+		CBI PORTB,4
 
 		LDI R18,0x5F
-		waitloop:
+		waitloop: ;to increase brightness, wait a bit more time
 			NOP
 			NOP
 			NOP
 			DEC R18
 			BRNE waitloop
 
-		;%%% ADDITION OF 72 to X, car on fait +72 et -8 au début de l'itération suivante !!!NEW!!! %%%%%
+		;%%% ADDITION OF 72 to X, because we do +72 and -8 at next iteration
 		LDI R20,0x48;=2*64=2*(56+8) !!!!CHANGED!!!
 		ADD XL,R20
 		BRCC nocarry2
@@ -595,7 +550,7 @@ RJMP main
 			LDI XH,0x02
 		followinitR17:
 		;%%% ADDITION OF 2*64 to X, need carry addition because ADIW doesn't work because 64 is too high %%%%%
-		LDI R20,0x80;=2*64=2*(56+8) !!!!CHANGED!!!
+		LDI R20,0x80;=2*64=2*(56+8)
 		ADD XL,R20
 		BRCC dontinitR17
 		LDI R20,0x01
@@ -716,7 +671,7 @@ actionKey: ;% ATTENTION REQUIRES R23 AS ARGUMENT, DIFFERENT FOR EACH KEY
 
 		nocarry2F:
 		LD R23,Z	;put what is stocked in the adress 100+R23 in R23
-		;look if the value is a 0b00011111 (prescence of a boat) or 0b00000000
+		;look if the value is a 0b00011111 (presence of a boat) or 0b00000000
 		LDI R24, 0b00011111 ; signature of a boat
 		CP R24, R23
 		BREQ boatdetected
@@ -733,7 +688,6 @@ actionKey: ;% ATTENTION REQUIRES R23 AS ARGUMENT, DIFFERENT FOR EACH KEY
 		LDI R18, 0x1
 		ST Z,R18
 
-		;CBI PORTC,3
 		CALL writeHitBoat
 		;check if flag of hit counter is 0
 		LDI ZL,0x03
@@ -809,9 +763,6 @@ RET
 
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%% Victory %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 victory:
-;CLI
-/*LDI R18, 0b00000000 ; specific interrupt for timer2
-STS TIMSK2,R18*/
 
 ;%%% LOADING VICOTRY PATTERN AT 0x0200
 LDI ZL,low(victorybuffer<<1) ;pointer to values in the program memory
@@ -820,7 +771,6 @@ LDI ZH,high(victorybuffer<<1)
 
 LDI YL,0x00 ;pointer to values in the data memory
 LDI YH,0x02
-;--> donc X=XH+XL=0x0200
 
 ;%%fill the data memory %%
 LDI R25,0x80;=128
@@ -829,12 +779,6 @@ LPM R20,Z+
 ST Y+,R20
 DEC R25
 BRNE loopvictory
-
-;SEI
-
-/*LDI R18, 0b00000001 ; specific interrupt for timer2
-STS TIMSK2,R18
-*/
 
 ;% check if reset of the game
 checkreset:
@@ -845,16 +789,12 @@ BRTC ButtonLow3
 
 ButtonHigh4:
 	
-/*	LDI R18, 0b00000000 ; specific interrupt for timer2
-	STS TIMSK2,R18*/
-
-	;%%% LOADING VICOTRY PATTERN AT 0x0200
+	;%%% RELOADING STARTING PATTERN AT 0x0200
 	LDI ZL,low(playerbuffer<<1) ;pointer to values in the program memory
 	LDI ZH,high(playerbuffer<<1)
 
 	LDI YL,0x00 ;pointer to values in the data memory
 	LDI YH,0x02
-	;--> donc X=XH+XL=0x0200
 
 	;%%fill the data memory %%
 	LDI R25,0x80;=128
@@ -863,9 +803,6 @@ ButtonHigh4:
 	ST Y+,R20
 	DEC R25
 	BRNE loopvictoryreset
-
-/*	LDI R18, 0b00000001 ; specific interrupt for timer2
-	STS TIMSK2,R18*/
 
 	;%% Reinitialize the hit counter %%%%%%%
 	LDI ZL,0x02
@@ -891,11 +828,9 @@ GameOver:
 ;%%% LOADING GAME OVER PATTERN AT 0x0200
 LDI ZL,low(gameoverbuffer<<1) ;pointer to values in the program memory
 LDI ZH,high(gameoverbuffer<<1)
-; ARE THE SHIFTS OK ? Yes
 
 LDI YL,0x00 ;pointer to values in the data memory
 LDI YH,0x02
-;--> donc X=XH+XL=0x0200
 
 ;%%fill the data memory %%
 LDI R25,0x80;=128
@@ -916,11 +851,9 @@ ButtonHigh3:
 	;%%% reloading starting pattern
 	LDI ZL,low(playerbuffer<<1) ;pointer to values in the program memory
 	LDI ZH,high(playerbuffer<<1)
-	; ARE THE SHIFTS OK ? Yes
 
 	LDI YL,0x00 ;pointer to values in the data memory
 	LDI YH,0x02
-	;--> donc X=XH+XL=0x0200
 
 	;%%fill the data memory %%
 	LDI R25,0x80;=128
