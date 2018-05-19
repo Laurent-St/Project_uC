@@ -69,6 +69,12 @@
     <Compile Include="main.asm">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Save_final_v1.asm">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Save_final_v2.asm">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Save_ok.asm">
       <SubType>Code</SubType>
     </Compile>

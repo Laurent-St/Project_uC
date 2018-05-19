@@ -1,9 +1,9 @@
-;
-; TestBuffer MAIN.asm
-;
-; Created: 23-04-18 13:34:45
-; Author : Laurent Storrer & Benjamin Wauthion
-;
+/*
+ * Save_final_v1.asm
+ *
+ *  Created: 19-05-18 10:25:05
+ *   Author: admin
+ */ 
 
 ; WARNING POINTERS X,Y AND Z OCCUPIES THE REGISTERs 26-31 --> those registers cannot be used
 ; Register X: 26-27, Register Y: 28-29, Register Z:30-31
@@ -263,7 +263,7 @@ keyboard:
 	RJMP Pressed7
 	SBI PORTD,7 ;write a one on the 4th row (starting from below)
 
-	;%%%%%%%% Erase last bit LED when key released, if flag is zero %%%%%%%
+	;%% Erase last bit LED when key released, if flag is zero %%
 	LDI ZL,0x00
 	LDI ZH,0x07 ;last bit stored at data memory 0x0400
 	LD R23,Z
@@ -274,21 +274,8 @@ keyboard:
 	LDI ZL,0x00
 	LDI ZH,0x04 ;last bit stored at data memory 0x0400
 	LD R23,Z
-
-
-	IN R0,PINB ;do R0 = PINB
-	BST R0,0; copy PB0 (bit 0 of PINB) to the T flag (the T of BST refers to flag T)
-	BRTC ButtonLow11
-	ButtonHigh11:
-		LDI ZL,0x00 ;pointer to values in the data memory
-		LDI ZH,0x01
-		RJMP follow11
-	ButtonLow11:
-		LDI ZL,0x00 ;pointer to values in the data memory
-		LDI ZH,0x02
-	follow11:
-	;LDI ZL,0x00
-	;LDI ZH,0x02
+	LDI ZL,0x00
+	LDI ZH,0x02
 	
 	ADD ZL,R23
 	BRCC nocarry1000
@@ -304,21 +291,8 @@ keyboard:
 	LDI ZL,0x00
 	LDI ZH,0x05 ;last bit stored at data memory 0x0500
 	LD R23,Z
-
-	IN R0,PINB ;do R0 = PINB
-	BST R0,0; copy PB0 (bit 0 of PINB) to the T flag (the T of BST refers to flag T)
-	BRTC ButtonLow10
-	ButtonHigh10:
-		LDI ZL,0x00 ;pointer to values in the data memory
-		LDI ZH,0x01
-		RJMP follow10
-	ButtonLow10:
-		LDI ZL,0x00 ;pointer to values in the data memory
-		LDI ZH,0x02
-	follow10:
-
-	;LDI ZL,0x00
-	;LDI ZH,0x02
+	LDI ZL,0x00
+	LDI ZH,0x02
 	
 	ADD ZL,R23
 	BRCC nocarry1001
@@ -599,15 +573,6 @@ RETI
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FUNCTIONS %%%%%%%%%%%%%%%%%%%%%%%
 
 actionKey: ;% ATTENTION REQUIRES R23 AS ARGUMENT, DIFFERENT FOR EACH KEY
-	
-	;IN R0,PINB ;do R0 = PINB
-	;BST R0,0; copy PB0 (bit 0 of PINB) to the T flag (the T of BST refers to flag T)
-
-	;BRTC player2key ;if switch is LOW
-
-	;RJMP player1key ; if switch is HIGH
-
-	;player2key:
 
 	;%% Stores middle bit for erasing when key released %%
 	LDI ZL,0x00
@@ -650,28 +615,7 @@ actionKey: ;% ATTENTION REQUIRES R23 AS ARGUMENT, DIFFERENT FOR EACH KEY
 	;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	;%% Erase other point if joystick goes in other direction %%
 	SUBI R23,0x20
-
-	PUSH R23
-
-	IN R0,PINB ;do R0 = PINB
-	BST R0,0; copy PB0 (bit 0 of PINB) to the T flag (the T of BST refers to flag T)
-	BRTC ButtonLow44
-	ButtonHigh44:
-		LDI YL,0x00 ;pointer to values in the data memory
-		LDI YH,0x01
-		RJMP follow44
-	ButtonLow44:
-		LDI YL,0x00 ;pointer to values in the data memory
-		LDI YH,0x02
-	follow44:
-	LD R23,Y
-	LDI R25,0b00000100
-	CP R23,R25
-	BRNE donteraseboat
 	CALL write5zeros
-	
-	donteraseboat:
-	POP R23
 	;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	RJMP goToNotwrite
 
@@ -696,30 +640,6 @@ actionKey: ;% ATTENTION REQUIRES R23 AS ARGUMENT, DIFFERENT FOR EACH KEY
 	;%% Erase other point if joystick goes in other direction %%
 	LDI R24, 0x20
 	ADD R23, R24
-
-	PUSH R23
-
-	IN R0,PINB ;do R0 = PINB
-	BST R0,0; copy PB0 (bit 0 of PINB) to the T flag (the T of BST refers to flag T)
-	BRTC ButtonLow442
-	ButtonHigh442:
-		LDI YL,0x00 ;pointer to values in the data memory
-		LDI YH,0x01
-		RJMP follow442
-	ButtonLow442:
-		LDI YL,0x00 ;pointer to values in the data memory
-		LDI YH,0x02
-	follow442:
-	LD R23,Y
-	LDI R25,0b00000100
-	CP R23,R25
-	BRNE donteraseboat2
-	CALL write5zeros
-	
-	donteraseboat2:
-	POP R23
-
-
 	CALL write5zeros
 	;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -732,23 +652,6 @@ actionKey: ;% ATTENTION REQUIRES R23 AS ARGUMENT, DIFFERENT FOR EACH KEY
 
 	;%%%%%%%%%%%%%%%%% Check if a boat is hit %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	JoyPressed:
-		IN R0,PINB ;do R0 = PINB
-		BST R0,0; copy PB0 (bit 0 of PINB) to the T flag (the T of BST refers to flag T)
-
-		BRTC Player2Playing
-
-		Player1PlacingBoats: 
-			CALL writeHitBoat
-			;% Put flag to avoid erasing %%% 
-			LDI ZL,0x00
-			LDI ZH,0x07
-			LDI R25,0x1
-			ST Z,R25
-			;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-			RJMP nothing
-
-		Player2Playing:
-
 		CBI PORTC,2
 		CBI PORTC,3
 		;check in init buffer if a boat is present a the position
@@ -855,7 +758,6 @@ actionKey: ;% ATTENTION REQUIRES R23 AS ARGUMENT, DIFFERENT FOR EACH KEY
 		LD R25,Z
 		CP R24,R25
 		BREQ GameOver
-		RJMP nothing
 	nothing:
 RET
 
@@ -883,11 +785,11 @@ checkreset:
 IN R0,PINB ;do R0 = PINB
 BST R0,0; copy PB0 (bit 0 of PINB) to the T flag (the T of BST refers to flag T)
 
-BRTC ButtonLowVictory
+BRTC ButtonLow3
 
-ButtonHighVictory:
+ButtonHigh4:
 	
-	;%%% RELOADING STARTING PATTERN AT 0x0200 (player2)
+	;%%% RELOADING STARTING PATTERN AT 0x0200
 	LDI ZL,low(playerbuffer<<1) ;pointer to values in the program memory
 	LDI ZH,high(playerbuffer<<1)
 
@@ -902,21 +804,6 @@ ButtonHighVictory:
 	DEC R25
 	BRNE loopvictoryreset
 
-	;%%% RELOADING STARTING PATTERN AT 0x0100 (player1)
-	LDI ZL,low(initbuffer<<1) ;pointer to values in the program memory
-	LDI ZH,high(initbuffer<<1)
-
-	LDI YL,0x00 ;pointer to values in the data memory
-	LDI YH,0x01
-
-	;%%fill the data memory %%
-	LDI R25,0x80;=128
-	loopvictoryreset2:
-	LPM R20,Z+
-	ST Y+,R20
-	DEC R25
-	BRNE loopvictoryreset2
-
 	;%% Reinitialize the hit counter %%%%%%%
 	LDI ZL,0x02
 	LDI ZH,0x06
@@ -930,7 +817,7 @@ ButtonHighVictory:
 
 	RJMP main
 
-ButtonLowVictory:
+ButtonLow4:
 	RJMP checkreset
 
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ù
@@ -961,7 +848,7 @@ BST R0,0; copy PB0 (bit 0 of PINB) to the T flag (the T of BST refers to flag T)
 BRTC ButtonLow3
 
 ButtonHigh3: 
-	;%%% reloading starting pattern for player2
+	;%%% reloading starting pattern
 	LDI ZL,low(playerbuffer<<1) ;pointer to values in the program memory
 	LDI ZH,high(playerbuffer<<1)
 
@@ -975,22 +862,6 @@ ButtonHigh3:
 	ST Y+,R20
 	DEC R25
 	BRNE loopgameoverreset
-
-	;%%% reloading starting pattern for player1
-	LDI ZL,low(initbuffer<<1) ;pointer to values in the program memory
-	LDI ZH,high(initbuffer<<1)
-
-	LDI YL,0x00 ;pointer to values in the data memory
-	LDI YH,0x01
-
-	;%%fill the data memory %%
-	LDI R25,0x80;=128
-	loopgameoverreset2:
-	LPM R20,Z+
-	ST Y+,R20
-	DEC R25
-	BRNE loopgameoverreset2
-
 
 	;%% Reinitialize the miss counter %%%%%%%
 	LDI ZL,0x05
@@ -1056,20 +927,8 @@ writeMiss:
 RET
 
 write5bitsR23:
-	IN R0,PINB ;do R0 = PINB
-	BST R0,0; copy PB0 (bit 0 of PINB) to the T flag (the T of BST refers to flag T)
-	BRTC ButtonLow5
-	ButtonHigh5:
-		LDI YL,0x00 ;pointer to values in the data memory
-		LDI YH,0x01
-		RJMP follow5
-	ButtonLow5:
-		LDI YL,0x00 ;pointer to values in the data memory
-		LDI YH,0x02
-	follow5:
-
-	;LDI YL,0x00 ;pointer to values in the data memory
-	;LDI YH,0x02
+	LDI YL,0x00 ;pointer to values in the data memory
+	LDI YH,0x02
 	ADD YL,R23 ;add the value of R23 to X to change at its position
 	BRCC nocarry44
 	LDI R23,0x01
@@ -1080,20 +939,8 @@ write5bitsR23:
 RET
 
 writeMiddleBit:
-	IN R0,PINB ;do R0 = PINB
-	BST R0,0; copy PB0 (bit 0 of PINB) to the T flag (the T of BST refers to flag T)
-	BRTC ButtonLow24
-	ButtonHigh24:
-		LDI YL,0x00 ;pointer to values in the data memory
-		LDI YH,0x01
-		RJMP follow24
-	ButtonLow24:
-		LDI YL,0x00 ;pointer to values in the data memory
-		LDI YH,0x02
-	follow24:
-
-	;LDI YL,0x00 ;pointer to values in the data memory
-	;LDI YH,0x02
+	LDI YL,0x00 ;pointer to values in the data memory
+	LDI YH,0x02
 	ADD YL,R23 ;add the value of R23 to X to change at its position
 	BRCC nocarry3
 	LDI R23,0x01
@@ -1103,20 +950,9 @@ writeMiddleBit:
 	ST Y,R23
 RET
 
-write5zeros: ;takes R23 as argument
-	IN R0,PINB ;do R0 = PINB
-	BST R0,0; copy PB0 (bit 0 of PINB) to the T flag (the T of BST refers to flag T)
-	BRTC ButtonLow4
-	ButtonHigh4:
-		LDI YL,0x00 ;pointer to values in the data memory
-		LDI YH,0x01
-		RJMP follow4
-	ButtonLow4:
-		LDI YL,0x00 ;pointer to values in the data memory
-		LDI YH,0x02
-	follow4:
-	;LDI YL,0x00 ;pointer to values in the data memory
-	;LDI YH,0x02
+write5zeros:
+	LDI YL,0x00 ;pointer to values in the data memory
+	LDI YH,0x02
 	ADD YL,R23 ;add the value of R23 to X to change at its position
 	BRCC nocarry4
 	LDI R23,0x01
@@ -1149,23 +985,23 @@ RET
 
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%% BUFFER TO STORE THE SHIPS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 initbuffer:
-.db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000
-.db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000
-.db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000
+.db 0b00000000, 0b00011111, 0b00000000, 0b00000000, 0b00000000, 0b00011111, 0b00000000, 0b00000000
+.db 0b00000000, 0b00011111, 0b00000000, 0b00000000, 0b00000000, 0b00011111, 0b00000000, 0b00000000
+.db 0b00000000, 0b00011111, 0b00000000, 0b00000000, 0b00000000, 0b00011111, 0b00000000, 0b00000000
 .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000
 .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000
 .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000
 .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000 
 .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000 ; "fake column", not to display
 
-.db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000
-.db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000
-.db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000
+.db 0b00000000, 0b00000000, 0b00000000, 0b00011111, 0b00000000, 0b00000000, 0b00000000, 0b00000000
+.db 0b00000000, 0b00000000, 0b00000000, 0b00011111, 0b00000000, 0b00000000, 0b00000000, 0b00000000
+.db 0b00000000, 0b00000000, 0b00000000, 0b00011111, 0b00000000, 0b00000000, 0b00000000, 0b00000000
 .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000
 .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000
 .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000
 .db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000 
-.db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000 ; "fake column", not to display
+.db 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00011111 ; "fake column", not to display
 
 
 ;%%%%%%%%%%%%%%%%%%%%% Second buffer for the players to try to shoot %%%%%%%%%%%%%%%%%%%%%%%%%
