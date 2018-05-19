@@ -1,9 +1,11 @@
-;
-; TestBuffer MAIN.asm
-;
-; Created: 23-04-18 13:34:45
-; Author : Laurent Storrer & Benjamin Wauthion
-;
+/*
+ * Save_final_v3_bugs_inter_screenasm.asm
+ *
+ *  Created: 19-05-18 16:27:41
+ *   Author: admin
+ */ 
+
+
 ; WARNING POINTERS X,Y AND Z OCCUPIES THE REGISTERs 26-31 --> those registers cannot be used
 ; Register X: 26-27, Register Y: 28-29, Register Z:30-31
 
@@ -264,7 +266,7 @@ keyboard:
 
 	;%%%%%%%% Erase last bit LED when key released, if flag is zero %%%%%%%
 	LDI ZL,0x00
-	LDI ZH,0x07
+	LDI ZH,0x07 ;last bit stored at data memory 0x0400
 	LD R23,Z
 	LDI R25,0x0
 	CP R23,R25
@@ -282,7 +284,6 @@ keyboard:
 		LDI ZL,0x00 ;pointer to values in the data memory
 		LDI ZH,0x01
 		RJMP follow11
-
 	ButtonLow11:
 		LDI ZL,0x00 ;pointer to values in the data memory
 		LDI ZH,0x02
@@ -477,7 +478,7 @@ RJMP main
 
 		CP R23,R25
 		BRNE missfreq
-		LDI R23, 0x31
+		LDI R23, 0xAA
 		STS TCNT2,R23
 		RJMP endinterrupt
 
@@ -664,22 +665,21 @@ actionKey: ;% ATTENTION REQUIRES R23 AS ARGUMENT, DIFFERENT FOR EACH KEY
 		LDI YL,0x00 ;pointer to values in the data memory
 		LDI YH,0x02
 	follow44:
-	
+
 	ADD YL,R23
 	BRCC nocarry4444
 	LDI R24,0x01
 	ADD YH,R24 ;if there is a carry
 	nocarry4444:
 
-
 	LD R24,Y
-	LDI R25,0b00000100
+	LDI R25,0b00011111
 	CP R24,R25
-	BRNE donteraseboat
+	BREQ donteraseboat
 	CALL write5zeros
 	
 	donteraseboat:
-	;POP R23
+
 	;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	RJMP goToNotwrite
 
@@ -707,29 +707,30 @@ actionKey: ;% ATTENTION REQUIRES R23 AS ARGUMENT, DIFFERENT FOR EACH KEY
 
 	IN R0,PINB ;do R0 = PINB
 	BST R0,0; copy PB0 (bit 0 of PINB) to the T flag (the T of BST refers to flag T)
-	BRTC ButtonLow44
+	BRTC ButtonLow442
 	ButtonHigh442:
 		LDI YL,0x00 ;pointer to values in the data memory
 		LDI YH,0x01
-		RJMP follow442
+		RJMP follow44
 	ButtonLow442:
 		LDI YL,0x00 ;pointer to values in the data memory
 		LDI YH,0x02
 	follow442:
-	
 	ADD YL,R23
+
 	BRCC nocarry44442
 	LDI R24,0x01
 	ADD YH,R24 ;if there is a carry
 	nocarry44442:
 
 	LD R24,Y
-	LDI R25,0b00000100
+	LDI R25,0b00011111
 	CP R24,R25
-	BRNE donteraseboat2
+	BREQ donteraseboat2
 	CALL write5zeros
 	
 	donteraseboat2:
+
 	;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 	goToNotwrite:

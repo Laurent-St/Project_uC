@@ -75,7 +75,13 @@
     <Compile Include="Save_final_v2.asm">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Save_final_v3_bugs_inter_screenasm.asm">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Save_ok.asm">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Save_v4_tjrs_bug_inter_screen.asm">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Save_working_except_buzzer.asm">
